@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">  <!-- يدعم جميع اللغات -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- يضمن عرض المحتوى بشكل جيد على جميع الأجهزة -->
+    <title>ShotSpot Store </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="price-format.js"></script>
+    <!-- إضافة مكتبة Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- إضافة معالجة الأخطاء -->
+    <script>
+        // معالجة أخطاء تحميل الصور
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.target.src = 'https://via.placeholder.com/150?text=ShotSpot';
+            }
+        }, true);
+    </script>
+    <style>
+        /* الأنماط الأساسية */
+        .hero-section {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            padding: 30px 0;
+        }
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            color: white;
+            text-align: right;
+            max-width: 600px;
+        }
+        .hero-content h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .hero-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .hero-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+        
+        /* نافذة العرض المنبثقة */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .product-images {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .main-image {
+            width: 60%;
+            padding: 10px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+        .thumbnails {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+        }
+        
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .thumbnail.active {
+            border-color: #3498db;
+        }
+        
+        .product-details {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .product-details h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .product-details p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #165b8a;
+            margin: 15px 0;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .add-to-cart-btn, .add-to-favorites-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .add-to-cart-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .add-to-favorites-btn {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .add-to-favorites-btn:hover {
+            background-color: #f1f1f1;
+        }
+        
+        /* الفئات المميزة */
+        .featured-categories {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .category-card {
+            position: relative;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+        
+        /* فلاتر البحث */
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 15px;
+        }
+        
+        /* العناوين الرئيسية */
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        /* تجاوب مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 28px;
+            }
+            .hero-content p {
+                font-size: 14px;
+            }
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+            .category-card {
+                height: 200px;
+            }
+        }
+
+        .camera-bg {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 20px;
+            text-align: center;
+        }
+        
+        .shop-now-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        /* أنماط أقسام التصنيفات */
+        .categories-section {
+            margin-bottom: 40px;
+            padding: 0 15px;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .category-header h2 {
+            font-size: 22px;
+            color: #333;
+            margin: 0;
+        }
+        
+        .view-all {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        
+        .category-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            background-color: white;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .category-card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .category-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover .category-card-image img {
+            transform: scale(1.05);
+        }
+        
+        .category-card-content {
+            padding: 12px;
+        }
+        
+        .category-card-content h3 {
+            margin: 0 0 5px;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .category-card-content p {
+            margin: 0;
+            font-size: 14px;
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .category-card-image {
+                height: 140px;
+            }
+            
+            .category-card-content h3 {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* تعديل شريط الخدمات ليكون العناصر بالنص ومتقاربة */
+        .services-ticker-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #000000;
+            padding: 7px 0;
+        }
+        
+        .services-ticker {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        /* تنسيق المحتوى ليكون بالنص تماماً */
+        .ticker-content {
+            display: flex;
+            justify-content: center; /* توسيط العناصر */
+            align-items: center;
+            gap: 15px; /* مسافات متقاربة بين العناصر */
+            flex-wrap: nowrap;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        
+        .ticker-item {
+            color: #ffffff;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            padding: 0;
+        }
+        
+        .ticker-item i {
+            margin-left: 3px;
+            font-size: 12px;
+        }
+        
+        /* تعديل للشاشات المتوسطة والصغيرة */
+        @media (max-width: 992px) {
+            .ticker-content {
+                gap: 10px;
+            }
+            
+            .ticker-item {
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .ticker-content {
+                overflow-x: auto;
+                justify-content: flex-start;
+                scrollbar-width: none;
+                padding: 0 10px;
+            }
+            
+            .ticker-content::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        /* أنماط قسم الأكثر شيوعاً */
+        .most-popular {
+            padding: 50px 0 40px;
+            background-color: #f8f9fa !important;
+            position: relative;
+        }
+
+        .most-popular:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #165b8a, #3498db, #165b8a);
+        }
+
+        .most-popular .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .most-popular-title {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .most-popular-title h2 {
+            font-size: 28px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 12px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+        }
+
+        .most-popular-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background-color: #165b8a;
+        }
+
+        .most-popular-title p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* تنسيق البطاقات الأكثر شيوعاً */
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .popular-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        .popular-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .popular-image {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popular-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+            padding: 10px;
+        }
+
+        .popular-card:hover .popular-image img {
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #165b8a;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .popular-content {
+            padding: 15px;
+        }
+
+        .popular-content h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            height: 42px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #165b8a;
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .sar-symbol {
+            font-size: 16px;
+            margin-right: 5px;
+        }
+
+        .rating {
+            color: #ffc107;
+            font-size: 14px;
+        }
+
+        .rating span {
+            color: #777;
+            margin-right: 5px;
+        }
+
+        /* أنماط النافذة المنبثقة */
+        .popular-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease;
+            padding: 15px;
+            transition: opacity 0.3s, transform 0.3s;
+            overflow-y: auto;
+        }
+
+        .popular-card:hover .product-popup {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-header {
+            margin-bottom: 12px;
+        }
+
+        .popup-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .popup-details {
+            margin-bottom: 15px;
+        }
+
+        .popup-detail {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .popup-thumbs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup-thumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .popup-thumb:hover {
+            border-color: #165b8a;
+        }
+
+        .popup-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popup-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            direction: rtl;
+            flex-direction: row-reverse;
+        }
+
+        .popup-sar-symbol {
+            margin-left: 5px;
+        }
+
+        .popup-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .popup-availability {
+            color: #4caf50;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .popup-availability i {
+            margin-left: 5px;
+        }
+
+        .popup-rating {
+            color: #ffc107;
+            font-size: 12px;
+        }
+
+        .popup-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .popup-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .popup-cart {
+            background: #165b8a;
+            color: white;
+        }
+
+        .popup-favorite {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .popup-cart:hover {
+            background: #134a6d;
+        }
+
+        .popup-favorite:hover {
+            background: #e9ecef;
+        }
+
+        /* أنماط الفئات الدائرية */
+        .category-circles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .category-circle-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 180px;
+            transition: all 0.4s ease;
+        }
+        
+        .category-circle-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .category-circle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s ease;
+        }
+        
+        .circle-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            border: 4px solid #fff;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .circle-image:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0) 70%, rgba(52,152,219,0.15) 100%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .category-circle:hover .circle-image {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(52,152,219,0.3);
+            border-color: rgba(52,152,219,0.1);
+        }
+        
+        .circle-image img {
+            width: 75%;
+            height: 75%;
+            object-fit: contain;
+            transition: all 0.5s ease;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .category-circle:hover .circle-image img {
+            transform: scale(1.1);
+        }
+        
+        .category-circle h3 {
+            font-size: 16px;
+            text-align: center;
+            margin: 0 0 8px;
+            color: #333;
+            font-weight: bold;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .category-circle:hover h3 {
+            color: #3498db;
+        }
+        
+        .category-circle h3:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #3498db;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        
+        .category-circle:hover h3:after {
+            width: 70%;
+        }
+        
+        .circle-view-all {
+            font-size: 14px;
+            padding: 3px 12px;
+        }
+        
+        .category-circle .category-icon {
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+        }
+        
+        /* تعديلات التجاوب للشاشات المختلفة */
+        @media (max-width: 992px) {
+            .category-circles {
+                gap: 20px;
+            }
+            
+            .category-circle-item {
+                width: 160px;
+            }
+            
+            .circle-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .category-circles {
+                gap: 15px;
+            }
+            
+            .category-circle-item {
+                width: 140px;
+            }
+            
+            .circle-image {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .category-circle h3 {
+                font-size: 14px;
+            }
+            
+            .circle-view-all {
+                font-size: 12px;
+                padding: 2px 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .category-circle-item {
+                width: 120px;
+            }
+            
+            .circle-image {
+                width: 110px;
+                height: 110px;
+            }
+            
+            .category-circle h3 {
+                font-size: 12px;
+            }
+            
+            .category-circle .category-icon {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+        }
+
+        /* أنماط قسم تأجير المعدات على غرار صفحة الخدمات */
+        .rental-section {
+            background-color: #eee;
+            padding: 50px 0;
+        }
+        
+        .rental-container {
+            max-width: 900px; /* تقليل العرض لتركيز المحتوى */
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .rental-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            width: 50%; /* جعل البطاقة تأخذ العرض الكامل */
+            max-width: 600px; /* تحديد الحد الأقصى للعرض */
+        }
+
+        .rental-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .rental-card-image {
+            width: 100%;
+            height: 100px; /* زيادة ارتفاع الصورة */
+            overflow: hidden;
+            position: relative;
+            background-color: #f7f7f7;
+        }
+        
+        .rental-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .rental-card:hover .rental-card-image img {
+            transform: scale(1.08);
+        }
+
+        .rental-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(52, 152, 219, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .rental-card-image:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .rental-card-content {
+            padding: 25px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rental-card-content h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .rental-card-content p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .rental-btn {
+            width: 60%; /* زيادة عرض الزر */
+            padding: 12px 25px;
+            margin: 0 auto; /* توسيط الزر */
+            margin-top: 15px; /* إضافة مساحة فوق الزر */
+        }
+        
+        .rental-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .rental-grid {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .rental-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .rental-title h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .rental-title p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 992px) {
+            .rental-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rental-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .rental-card-image {
+                height: 160px;
+            }
+            
+            .rental-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+        }
+
+        /* تحديث زر تصفح الكل */
+        .view-all-btn-container {
+            text-align: center;
+            margin: 30px 0 40px;
+            position: relative;
+        }
+
+        .view-all-btn-container:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+
+        .view-all-products-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 14px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .view-all-products-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .view-all-products-btn i {
+            margin-left: 8px;
+        }
+
+        /* تنسيق عنوان تصفح المنتجات */
+        .categories-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .categories-title h2 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .categories-title h2:after {
+            display: none;
+        }
+
+        .categories-title p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        /* تحسين مظهر قسم الفئات */
+        .category-circles {
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <img src="camera-logo.png" alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+                </a>
+            </div>
+
+            <div class="main-menu">
+                <a href="index.html" class="active">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icons-group">
+                    <div class="account-dropdown">
+                        <a href="#" class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html">حساب جديد</a>
+                            <a href="rent-request.html">طلب تأجير</a>
+                        </div>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-count">0</span>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- شريط متحرك للخدمات -->
+    <div class="services-ticker-container">
+        <div class="services-ticker">
+            <div class="ticker-content">
+                <div class="ticker-item"><i class="fas fa-truck"></i> توصيل سريع لجميع مناطق المملكة</div>
+                <div class="ticker-item"><i class="fas fa-shield-alt"></i> ضمان على جميع المنتجات</div>
+                <div class="ticker-item"><i class="fas fa-headset"></i> دعم فني على مدار الساعة</div>
+                <div class="ticker-item"><i class="fas fa-tools"></i> خدمات صيانة احترافية</div>
+                <div class="ticker-item"><i class="fas fa-graduation-cap"></i> دورات تدريبية في التصوير</div>
+                <div class="ticker-item"><i class="fas fa-camera"></i> أحدث معدات التصوير</div>
+                <div class="ticker-item"><i class="fas fa-percent"></i> عروض وخصومات دورية</div>
+            </div>
+        </div>
+    </div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-container">
+        <div class="hero-image-box">
+            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" alt="معدات تصوير احترافية">
+        </div>
+        <div class="hero-action-box">
+            <h2>متجر ShotSpot</h2>
+            <p>المتجر الأول لمعدات التصوير الاحترافية</p>
+            <a href="all-products.html" class="shop-now-btn">تسوق الآن</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        padding: 30px 0;
+        background-color: #eee;
+    }
+    
+    .hero-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 20px;
+        height: 380px;
+    }
+    
+    .hero-image-box {
+        flex: 3;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .hero-image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .hero-action-box {
+        flex: 1;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .hero-action-box h2 {
+        font-size: 26px;
+        color: #333;
+        margin-bottom: 12px;
+    }
+    
+    .hero-action-box p {
+        font-size: 15px;
+        color: #666;
+        margin-bottom: 25px;
+    }
+    
+    .shop-now-btn {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 25px;
+        font-size: 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .shop-now-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-3px);
+    }
+    
+    /* تعديل للشاشات الصغيرة */
+    @media (max-width: 768px) {
+        .hero-container {
+            flex-direction: column;
+            height: auto;
+        }
+        
+        .hero-image-box {
+            height: 250px;
+        }
+        
+        .hero-action-box {
+            padding: 20px;
+        }
+    }
+</style>
+
+<!-- تغيير ترتيب الأقسام - وضع قسم فئات المنتجات الدائرية أولاً -->
+<section id="product-categories" style="padding: 40px 0 20px; background-color: #eee !important;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
+        <!-- عنوان تصفح المنتجات بتنسيق جديد بدون خط -->
+        <div class="categories-title">
+            <h2>تصفح منتجاتنا</h2>
+            <p>اختر من مجموعتنا الواسعة من معدات التصوير الاحترافية بأفضل الأسعار وأعلى جودة</p>
+        </div>
+
+        <!-- فئات المنتجات الدائرية بدون أيقونات -->
+        <div class="category-circles">
+            <div class="category-circle-item">
+                <a href="all-cameras.html" class="category-circle">
+                    <div class="circle-image">
+                        <img src="Fujifilm-X-T30 (1).jpg" alt="الكاميرات">
+                    </div>
+                    <h3>الكاميرات</h3>
+                </a>
+            </div>
+            
+            <div class="category-circle-item">
+                <a href="all-lenses.html" class="category-circle">
+                    <div class="circle-image">
+                        <img src="sigma 24-70 (1).jpg" alt="العدسات">
+                    </div>
+                    <h3>العدسات</h3>
+                </a>
+            </div>
+            
+            <div class="category-circle-item">
+                <a href="all-accessories.html" class="category-circle">
+                    <div class="circle-image">
+                        <img src="Camera Tripod Stand 170cm (1).jpg" alt="اكسسوارات التصوير">
+                    </div>
+                    <h3>اكسسوارات التصوير</h3>
+                </a>
+            </div>
+            
+            <div class="category-circle-item">
+                <a href="all-audio.html" class="category-circle">
+                    <div class="circle-image">
+                        <img src="Rode VideoMic Pro (1).jpg" alt="معدات الصوت">
+                    </div>
+                    <h3>معدات الصوت</h3>
+                </a>
+            </div>
+            
+            <div class="category-circle-item">
+                <a href="all-bags.html" class="category-circle">
+                    <div class="circle-image">
+                        <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقائب وأدوات تنقل">
+                    </div>
+                    <h3>حقائب وأدوات تنقل</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- زر تصفح جميع المنتجات بتنسيق جديد -->
+<div class="view-all-btn-container">
+    <a href="all-products.html" class="view-all-products-btn">
+        <i class="fas fa-th-large"></i>
+        تصفح جميع المنتجات
+    </a>
+</div>
+
+<!-- قسم المنتجات الأكثر شيوعاً - تصميم محسن -->
+<section class="most-popular">
+        <div class="container">
+        <div class="most-popular-title">
+            <h2>الأكثر شيوعاً</h2>
+            <p>تصفح مجموعة من أفضل منتجاتنا وأكثرها شعبية لدى عملائنا</p>
+        </div>
+        
+        <div class="popular-grid">
+            <a class="popular-card">
+                <div class="popular-image">
+                    <img src="Fujifilm-X-T30 (1).jpg" alt="كاميرا X-T30ll">
+                    <span class="popular-badge">الأكثر مبيعاً</span>
+        </div>
+                <div class="popular-content">
+                    <h3>كاميرا X-T30ll بدقة 26 ميجابكسل</h3>
+                    <div class="price">
+                        <span>٢,٥٨٠</span>
+                        <span class="sar-symbol">﷼</span>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(٤٥)</span>
+                    </div>
+                </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">كاميرا X-T30ll بدقة 26 ميجابكسل</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">الدقة:</span>
+                            <span class="detail-value">26 ميجابكسل</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">نوع الكاميرا:</span>
+                            <span class="detail-value">كاميرات عديمة المرآة</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الفيديو:</span>
+                            <span class="detail-value">4K</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="Fujifilm-X-T30 (1).jpg" alt="كاميرا X-T30ll - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="Fujifilm-X-T30 (2).jpg" alt="كاميرا X-T30ll - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="Fujifilm-X-T30 (3).jpg" alt="كاميرا X-T30ll - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٢,٥٨٠</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (4.5)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
+                    </div>
+                </div>
+            </a>
+
+            <a class="popular-card">
+                <div class="popular-image">
+                    <img src="sigma 24-70 (1).jpg" alt="عدسة سيجما">
+                    <span class="popular-badge">مميز</span>
+                </div>
+                <div class="popular-content">
+                    <h3>عدسة سيجما بزاوية واسعة</h3>
+                    <div class="price">
+                        <span>٤,٨٠٠</span>
+                        <span class="sar-symbol">﷼</span>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(٣٢)</span>
+                    </div>
+                </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">عدسة سيجما بزاوية واسعة</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">البعد البؤري:</span>
+                            <span class="detail-value">35mm</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الفتحة:</span>
+                            <span class="detail-value">f/1.4</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الوزن:</span>
+                            <span class="detail-value">665 جرام</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="sigma 24-70 (1).jpg" alt="عدسة سيجما - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="sigma 24-70 (2).jpg" alt="عدسة سيجما - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="sigma 24-70 (3).jpg" alt="عدسة سيجما - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٤,٨٠٠</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (4.0)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
+                    </div>
+                </div>
+            </a>
+
+            <a class="popular-card">
+                <div class="popular-image">
+                    <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون Rode VideoMic Pro+">
+                    <span class="popular-badge">جديد</span>
+                </div>
+                <div class="popular-content">
+                    <h3>ميكروفون Rode VideoMic Pro+</h3>
+                    <div class="price">
+                        <span>١٢٩٩</span>
+                        <span class="sar-symbol">﷼</span>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(٣٥)</span>
+                    </div>
+                </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">ميكروفون Rode VideoMic Pro+</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">النوع:</span>
+                            <span class="detail-value">ميكروفون اتجاهي</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">المميزات:</span>
+                            <span class="detail-value">بطارية قابلة للشحن، فلتر قطع التردد المنخفض</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">التوافق:</span>
+                            <span class="detail-value">كاميرات الفيديو، كاميرات DSLR</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون Rode - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="Rode VideoMic Pro (2).jpg" alt="ميكروفون Rode - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="Rode VideoMic Pro (3).jpg" alt="ميكروفون Rode - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>١٢٩٩</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (4.5)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
+                    </div>
+                </div>
+            </a>
+
+            <a class="popular-card">
+                <div class="popular-image">
+                    <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو">
+                    <span class="popular-badge">توفير ٢٠٪</span>
+                </div>
+                <div class="popular-content">
+                    <h3>حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
+                    <div class="price">
+                        <span>٧٩٩</span>
+                        <span class="sar-symbol">﷼</span>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(٣٨)</span>
+                    </div>
+                </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">السعة:</span>
+                            <span class="detail-value">2 كاميرا DSLR + 8 عدسات</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">المميزات:</span>
+                            <span class="detail-value">مقاومة للماء، حماية من الصدمات</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الأبعاد:</span>
+                            <span class="detail-value">34.8 × 27 × 48.3 سم</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="Lowepro ProTactic 450 AW II (2).jpg" alt="حقيبة ظهر لوبرو - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="Lowepro ProTactic 450 AW II (3).jpg" alt="حقيبة ظهر لوبرو - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٧٩٩</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (4.5)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- قسم تأجير المعدات على غرار صفحة الخدمات -->
+<section class="rental-section">
+    <div class="rental-container">
+        <div class="rental-title">
+            <h2>خدمات التأجير</h2>
+            <p>انضم إلى منصة ShotSpot لتأجير معدات التصوير الاحترافية</p>
+        </div>
+        
+        <div class="rental-grid">
+            <div class="rental-card">
+                <div class="rental-card-image">
+                    <img src="https://images.unsplash.com/photo-1520390138845-fd2d229dd553?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="تأجير معدات التصوير">
+                    <div class="rental-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <div class="rental-card-content">
+                    <h3>أجّر معداتك</h3>
+                    <p>حوّل معدات التصوير الخاصة بك إلى مصدر دخل إضافي عن طريق تأجيرها للمصورين المحترفين والهواة. نوفر لك منصة آمنة لعرض معداتك والتواصل مع المهتمين، مع تأمين شامل ودعم فني على مدار الساعة.</p>
+                    <a href="rent-request.html" class="rental-btn">سجّل معداتك</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p><i class="fas fa-phone"></i> +966 11 234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- نافذة عرض تفاصيل المنتج -->
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="product-images">
+                <div class="main-image">
+                    <img id="mainProductImage" src="11125 Case (1)-220x220 camera case for canon powershot G7X.jpg" alt="حقيبة كاميرا">
+                </div>
+                <div class="thumbnails">
+                    <div class="thumbnail active" onclick="changeImage('11125 Case (1)-220x220 camera case for canon powershot G7X.jpg')">
+                        <img src="11125 Case (1)-220x220 camera case for canon powershot G7X.jpg" alt="حقيبة كاميرا - صورة 1">
+                    </div>
+                    <div class="thumbnail" onclick="changeImage('https://www.camtime.sa/image/cache/catalog/00004/11125%20Case%20(2)-800x1000.jpg')">
+                        <img src="https://www.camtime.sa/image/cache/catalog/00004/11125%20Case%20(2)-800x1000.jpg" alt="حقيبة كاميرا - صورة 2">
+                    </div>
+                    <div class="thumbnail" onclick="changeImage('https://www.camtime.sa/image/cache/catalog/00004/11125%20Case%20(3)-432x432.jpg')">
+                        <img src="https://www.camtime.sa/image/cache/catalog/00004/11125%20Case%20(3)-432x432.jpg" alt="حقيبة كاميرا - صورة 3">
+                    </div>
+                    <div class="thumbnail" onclick="changeImage('https://www.camtime.sa/image/cache/catalog/00004/11125%20Case%20(4)-800x1000.jpg')">
+                        <img src="https://www.camtime.sa/image/cache/catalog/00004/11125%20Case%20(4)-800x1000.jpg" alt="حقيبة كاميرا - صورة 4">
+                    </div>
+                </div>
+            </div>
+            <div class="product-details">
+                <h2>حقيبة كاميرا</h2>
+                <div class="product-price">٨٠ ﷼</div>
+                <p>حقيبة كاميرا - صندوق الكاميرا الرقمية متوافق مع العديد من الماركات مثل: Zheozeig، Duluvulu، TEBNGIHNM، Oiadek، KVUTCIEIN، Femivo، Fulealfly، AiTechny، VAHOIALD، Bifevsr، IWEUKJLO، Jumobuis للكاميرات الرقمية بدقة 4K.</p>
+                <p>حقيبة كاميرا الفيديو مناسبة أيضًا لكاميرا كانون باورشوت الرقمية [G7 X Mark II/III] وكاميرات XNSIAKXA للتصوير الفوتوغرافي. الأبعاد الداخلية لحامل كانون G7X هي 5.1 × 2.9 × 1.8 بوصة. (حقيبة حمل فقط، لا تشمل الكاميرا)</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCartFromModal()"><i class="fas fa-shopping-cart"></i> إضافة إلى السلة</button>
+                    <button class="add-to-favorites-btn" onclick="addToFavoritesFromModal()"><i class="fas fa-heart"></i> إضافة إلى المفضلة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="all-products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة مستمعي أحداث لأزرار إغلاق النوافذ المنبثقة
+            document.querySelectorAll('.popup-close').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const popup = this.closest('.product-popup');
+                    popup.style.display = 'none';
+                });
+            });
+
+            // إضافة مستمعي أحداث لأزرار النوافذ المنبثقة
+            document.querySelectorAll('.popup-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    alert('تمت إضافة المنتج إلى سلة التسوق');
+                });
+            });
+
+            document.querySelectorAll('.popup-favorite').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    alert('تمت إضافة المنتج إلى المفضلة');
+                    this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة';
+                });
+            });
+
+            // منع انتقال الضغط على البوب أب إلى بطاقة المنتج
+            document.querySelectorAll('.product-popup').forEach(popup => {
+                popup.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+        });
+    });
+    </script>
+</body>
+</html>

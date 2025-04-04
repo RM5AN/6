@@ -1,0 +1,2467 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جميع المنتجات - ShotSpot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط صفحة عرض جميع المنتجات فقط */
+        .cameras-page {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .filters-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filter-group select {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .price-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .price-range input {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .cameras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 60px;
+        }
+
+        .camera-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .camera-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .camera-image {
+            position: relative;
+            height: 180px;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .camera-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        .camera-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #165b8a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .camera-info {
+            padding: 20px;
+        }
+
+        .camera-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.4;
+        }
+
+        .camera-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+            color: #666;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .camera-specs span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .camera-price {
+            font-weight: bold;
+            color: #165b8a;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .camera-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .camera-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart {
+            background: #165b8a;
+            color: white;
+        }
+
+        .add-to-favorites {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .add-to-cart:hover {
+            background: #134a6d;
+        }
+
+        .add-to-favorites:hover {
+            background: #e9ecef;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination button {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button.active {
+            background: #165b8a;
+            color: white;
+            border-color: #165b8a;
+        }
+
+        .pagination button:hover:not(.active) {
+            background: #f8f9fa;
+        }
+
+        /* للشاشات المتوسطة والصغيرة */
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cameras-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+
+            .camera-image {
+                height: 200px;
+            }
+        }
+
+        /* تنسيق عرض السعر ورمز الريال */
+        .price-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #165b8a;
+        }
+
+        .sar-symbol {
+            font-size: 16px;
+            color: #165b8a;
+            margin-left: 5px;
+        }
+
+        /* أنماط النافذة المنبثقة */
+        .product-popup {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: auto;
+            max-height: 80%;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            padding: 15px;
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .camera-card .product-popup {
+            display: none;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .popup-header {
+            margin-bottom: 12px;
+        }
+
+        .popup-title {
+            font-size: 17px;
+        }
+
+        .popup-details {
+            margin-bottom: 15px;
+        }
+
+        .popup-detail {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .popup-thumbs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .popup-thumb:hover {
+            border-color: #165b8a;
+        }
+
+        .popup-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popup-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            direction: rtl;
+        }
+
+        .popup-sar-symbol {
+            margin-left: 5px;
+        }
+
+        .popup-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-availability {
+            color: #4caf50;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .popup-availability i {
+            margin-left: 5px;
+        }
+
+        .popup-rating {
+            color: #ffc107;
+            font-size: 12px;
+        }
+
+        /* أنماط النافذة المنبثقة الرئيسية (بوب أب) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            direction: rtl;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            width: 85%;
+            max-width: 900px;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #666;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #e74c3c;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #165b8a;
+            font-weight: 700;
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 30px;
+        }
+
+        .modal-image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #modalMainImage {
+            width: 100%;
+            height: 350px;
+            object-fit: contain;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .modal-thumbnails {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-thumb {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-thumb:hover {
+            transform: scale(1.05);
+            border-color: #165b8a;
+        }
+
+        .modal-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-specs {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-spec {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .modal-spec i {
+            color: #165b8a;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .modal-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 24px;
+            margin: 10px 0;
+            direction: rtl;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-add-to-cart {
+            background-color: #165b8a;
+            color: white;
+        }
+
+        .modal-add-to-favorites {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .modal-add-to-cart:hover {
+            background-color: #134a6d;
+        }
+
+        .modal-add-to-favorites:hover {
+            background-color: #e9ecef;
+        }
+
+        .modal-availability {
+            color: #2ecc71;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        /* إضافة زر عرض التفاصيل */
+        .view-details-btn {
+            display: block;
+            padding: 5px 10px;
+            background-color: #165b8a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .view-details-btn:hover {
+            background-color: #0d3b5a;
+        }
+
+        /* إضافة تفاعلية للنقر */
+        .camera-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .camera-card:hover .product-popup {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* إضافة إغلاق النافذة */
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .pagination button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .pagination button.active {
+            background-color: #165b8a;
+            color: white;
+            border-color: #165b8a;
+        }
+        
+        .pagination button:hover:not(.active):not(:disabled) {
+            background-color: #f5f5f5;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn {
+            background-color: #f8f8f8;
+        }
+        
+        .filtered-in {
+            /* إضافة صنف للتحكم في المنتجات المعروضة بعد التصفية */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+                </a>
+            </div>
+
+            <div class="main-menu">
+                <a href="index.html" class="active">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icons-group">
+                    <div class="account-dropdown">
+                        <a href="#" class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html">حساب جديد</a>
+                            <a href="rent-request.html">طلب تأجير</a>
+                        </div>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="cameras-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>جميع المنتجات</h1>
+                <p>اكتشف مجموعتنا الكاملة من معدات التصوير الفوتوغرافي والفيديو بأفضل الأسعار</p>
+            </div>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>الفئة</label>
+                        <select name="category">
+                            <option value="">الكل</option>
+                            <option value="cameras">الكاميرات</option>
+                            <option value="lenses">العدسات</option>
+                            <option value="audio">الصوتيات</option>
+                            <option value="bags">الحقائب</option>
+                            <option value="accessories">الإكسسوارات</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>العلامة التجارية</label>
+                        <select name="brand">
+                            <option value="">الكل</option>
+                            <option value="canon">كانون</option>
+                            <option value="sony">سوني</option>
+                            <option value="nikon">نيكون</option>
+                            <option value="sigma">سيجما</option>
+                            <option value="tamron">تامرون</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>السعر</label>
+                        <select name="price">
+                            <option value="">الكل</option>
+                            <option value="0-500">حتى 500 ريال</option>
+                            <option value="501-1000">501 - 1000 ريال</option>
+                            <option value="1001-2000">1001 - 2000 ريال</option>
+                            <option value="2001-5000">2001 - 5000 ريال</option>
+                            <option value="5001+">أكثر من 5000 ريال</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الترتيب</label>
+                        <select name="sort">
+                            <option value="featured">الأكثر مبيعاً</option>
+                            <option value="price-asc">السعر: من الأقل إلى الأعلى</option>
+                            <option value="price-desc">السعر: من الأعلى إلى الأقل</option>
+                            <option value="newest">الأحدث</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- المنتجات -->
+            <section class="cameras-grid">
+                <!-- منتجات بترتيب عشوائي -->
+                
+                <!-- ميكروفون رود -->
+                <div class="camera-card" data-category="audio" data-brand="rode">
+                    <div class="camera-image">
+                        <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون رود">
+                        <div class="camera-badge" style="background: #e74c3c;">الأكثر مبيعاً</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">ميكروفون Rode VideoMic Pro+</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-music"></i> نوع: اتجاهي</span>
+                            <span><i class="fas fa-battery-full"></i> بطارية قابلة للشحن</span>
+                            <span><i class="fas fa-filter"></i> فلتر قطع التردد المنخفض</span>
+                        </div>
+                        <div class="camera-price">١٢٩٩ ﷼</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">ميكروفون Rode VideoMic Pro+</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">تقنية الاتصال:</span>
+                                <span class="detail-value">USB</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الأجهزة المتوافقة:</span>
+                                <span class="detail-value">كاميرات الفيديو، كاميرات DSLR ومسجلات الصوت المحمولة</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون رود - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Rode VideoMic Pro (2).jpg" alt="ميكروفون رود - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Rode VideoMic Pro (3).jpg" alt="ميكروفون رود - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٢٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- كاميرا X-T30ll -->
+                <div class="camera-card" data-category="cameras" data-brand="fujifilm">
+                    <div class="camera-image">
+                        <img src="Fujifilm-X-T30 (1).jpg" alt="كاميرا X-T30ll">
+                        <div class="camera-badge">جديد</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">كاميرا X-T30ll</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microchip"></i> دقة 26 ميجابكسل</span>
+                            <span><i class="fas fa-film"></i> تصوير 4K</span>
+                            <span><i class="fas fa-battery-full"></i> عمر بطارية 380 صورة</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٢,٥٨٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">كاميرا X-T30ll</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الدقة:</span>
+                                <span class="detail-value">26 ميجابكسل</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الكاميرا:</span>
+                                <span class="detail-value">كاميرات عديمة المرآة</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفيديو:</span>
+                                <span class="detail-value">4K</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">شاشة:</span>
+                                <span class="detail-value">3 بوصة LCD</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Fujifilm-X-T30 (1).jpg" alt="كاميرا X-T30ll - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Fujifilm-X-T30 (2).jpg" alt="كاميرا X-T30ll - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Fujifilm-X-T30 (3).jpg" alt="كاميرا X-T30ll - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٢,٥٨٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- حقيبة ظهر Lowepro -->
+                <div class="camera-card" data-category="bags" data-brand="lowepro">
+                    <div class="camera-image">
+                        <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-camera"></i> تتسع لـ: 2 كاميرا DSLR</span>
+                            <span><i class="fas fa-laptop"></i> مساحة للاب توب 15 بوصة</span>
+                            <span><i class="fas fa-tint"></i> مقاومة للماء</span>
+                        </div>
+                        <div class="camera-price">٧٩٩ ﷼</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">السعة:</span>
+                                <span class="detail-value">2 كاميرا DSLR + 8 عدسات</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الأبعاد:</span>
+                                <span class="detail-value">34.8 × 27 × 48.3 سم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المميزات:</span>
+                                <span class="detail-value">مقاومة للماء، حماية من الصدمات</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Lowepro ProTactic 450 AW II (2).jpg" alt="حقيبة ظهر لوبرو - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Lowepro ProTactic 450 AW II (3).jpg" alt="حقيبة ظهر لوبرو - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٧٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- فلتر Hoya UV -->
+                <div class="camera-card" data-category="accessories" data-brand="hoya">
+                    <div class="camera-image">
+                        <img src="Filter,K&F Concept 77mm (1).jpg" alt="فلتر هويا">
+                        <div class="camera-badge">جديد</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">فلتر Hoya UV</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-circle"></i> مقاس: 77mm</span>
+                            <span><i class="fas fa-shield-alt"></i> طبقة مضادة للخدش</span>
+                            <span><i class="fas fa-sun"></i> حماية UV</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">١٩٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">فلتر Hoya UV</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">المقاس:</span>
+                                <span class="detail-value">77mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المميزات:</span>
+                                <span class="detail-value">طبقة مضادة للخدش</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الحماية:</span>
+                                <span class="detail-value">UV</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Filter,K&F Concept 77mm (1).jpg" alt="فلتر هويا - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Filter,K&F Concept 77mm (2).jpg" alt="فلتر هويا - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Filter,K&F Concept 77mm (3).jpg" alt="فلتر هويا - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- عدسة كانون مايكرو -->
+                <div class="camera-card" data-category="lenses" data-brand="canon">
+                    <div class="camera-image">
+                        <img src="canon RF24mm (1).jpg" alt="عدسة كانون مايكرو">
+                        <div class="camera-badge">جديد</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">عدسة كانون مايكرو</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-camera"></i> فتحة عدسة: f/1.8</span>
+                            <span><i class="fas fa-ruler"></i> البعد البؤري: 24mm</span>
+                            <span><i class="fas fa-search"></i> تكبير 1:1</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٢,٠٠٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة كانون مايكرو</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">24mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/1.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الحالة:</span>
+                                <span class="detail-value">جديد</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="canon RF24mm (1).jpg" alt="عدسة كانون مايكرو - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="canon RF24mm (2).jpg" alt="عدسة كانون مايكرو - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="canon RF24mm (3).jpg" alt="عدسة كانون مايكرو - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٢,٠٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                (5.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- كرت ذاكرة SanDisk -->
+                <div class="camera-card" data-category="accessories" data-brand="sandisk">
+                    <div class="camera-image">
+                        <img src="SanDisk 128 (1).jpg" alt="كرت ذاكرة سانديسك">
+                        <div class="camera-badge" style="background: #2ecc71;">خصم 20%</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">كرت ذاكرة SanDisk Extreme Pro</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-memory"></i> سعة: 128GB</span>
+                            <span><i class="fas fa-tachometer-alt"></i> سرعة: 170MB/s</span>
+                            <span><i class="fas fa-shield-alt"></i> مقاوم للماء</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٢٩٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">كرت ذاكرة SanDisk Extreme Pro</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">السعة:</span>
+                                <span class="detail-value">128GB</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">السرعة:</span>
+                                <span class="detail-value">170MB/s</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المميزات:</span>
+                                <span class="detail-value">مقاوم للماء</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الخصم:</span>
+                                <span class="detail-value">20%</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="SanDisk 128 (1).jpg" alt="كرت ذاكرة سانديسك - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="SanDisk 128 (2).jpg" alt="كرت ذاكرة سانديسك - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="SanDisk 128 (3).jpg" alt="كرت ذاكرة سانديسك - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٢٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- كاميرا كانون EOS R8 -->
+                <div class="camera-card" data-category="cameras" data-brand="canon">
+                    <div class="camera-image">
+                        <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون EOS R8">
+                        <div class="camera-badge" style="background: #e74c3c;">الأكثر مبيعاً</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">كاميرا كانون EOS R8</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microchip"></i> دقة 30 ميجابكسل</span>
+                            <span><i class="fas fa-film"></i> تصوير 4K</span>
+                            <span><i class="fas fa-battery-full"></i> عمر بطارية 370 صورة</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٣,٢٥٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">كاميرا كانون EOS R8</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الدقة:</span>
+                                <span class="detail-value">30 ميجابكسل</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الكاميرا:</span>
+                                <span class="detail-value">كاميرات عديمة المرآة</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفيديو:</span>
+                                <span class="detail-value">4K</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">شاشة:</span>
+                                <span class="detail-value">3.2 بوصة LCD</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (2)-800x1000.jpg" alt="كاميرا كانون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (3)-432x432.jpg" alt="كاميرا كانون - صورة 3">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (6)-432x432.jpg" alt="كاميرا كانون - صورة 4">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٣,٢٥٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                (5.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطارية Godox WB87 -->
+                <div class="camera-card" data-category="accessories" data-brand="godox">
+                    <div class="camera-image">
+                        <img src="Godox WB87 (1).jpg" alt="بطارية جودوكس">
+                        <div class="camera-badge" style="background: #3498db;">متوفر</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">بطارية Godox WB87</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-battery-full"></i> سعة: 11.1V/8700mAh</span>
+                            <span><i class="fas fa-bolt"></i> سرعة شحن عالية</span>
+                            <span><i class="fas fa-redo"></i> 500 دورة شحن</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٣٤٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">بطارية Godox WB87</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">السعة:</span>
+                                <span class="detail-value">11.1V/8700mAh</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">السرعة:</span>
+                                <span class="detail-value">شحن عالية</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الدورات:</span>
+                                <span class="detail-value">500 دورة</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Godox WB87 (1).jpg" alt="بطارية جودوكس - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Godox WB87 (2).jpg" alt="بطارية جودوكس - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Godox WB87 (3).jpg" alt="بطارية جودوكس - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٣٤٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- سماعات Beyerdynamic -->
+                <div class="camera-card" data-category="audio" data-brand="beyerdynamic">
+                    <div class="camera-image">
+                        <img src="Beyerdynamic DT 770 Pro (1).jpg" alt="سماعات باير">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">سماعات Beyerdynamic DT 770 Pro</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-headphones"></i> نوع: مغلقة</span>
+                            <span><i class="fas fa-music"></i> استجابة التردد: 5-35,000 Hz</span>
+                            <span><i class="fas fa-plug"></i> كابل: 3 متر</span>
+                        </div>
+                        <div class="camera-price">٩٩٩ ﷼</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">سماعات Beyerdynamic DT 770 Pro</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">المقاومة:</span>
+                                <span class="detail-value">250 أوم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">التحكم في الضوضاء:</span>
+                                <span class="detail-value">عزل سلبي للضوضاء</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الحساسية:</span>
+                                <span class="detail-value">96 ديسيبل</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Beyerdynamic DT 770 Pro (1).jpg" alt="سماعات باير - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Beyerdynamic DT 770 Pro (2).jpg" alt="سماعات باير - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Beyerdynamic DT 770 Pro (3).jpg" alt="سماعات باير - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٩٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- عدسة كانون RF24-105mm -->
+                <div class="camera-card" data-category="lenses" data-brand="canon">
+                    <div class="camera-image">
+                        <img src="canon RF24-105mm (1).jpg" alt="عدسة كانون RF24-105mm">
+                        <div class="camera-badge" style="background: #2ecc71;">خصم 15%</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">عدسة كانون RF24-105mm</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-camera"></i> فتحة عدسة: f/1.8</span>
+                            <span><i class="fas fa-ruler"></i> البعد البؤري: 50mm</span>
+                            <span><i class="fas fa-shield-alt"></i> مقاومة للماء والغبار</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">١,٣٤٨</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة كانون RF24-105mm</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">50mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/1.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الخصم:</span>
+                                <span class="detail-value">15%</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="canon RF24-105mm (1).jpg" alt="عدسة كانون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="canon RF24-105mm (2).jpg" alt="عدسة كانون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="canon RF24-105mm (3).jpg" alt="عدسة كانون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١,٣٤٨</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- حقيبة حماية Think Tank -->
+                <div class="camera-card" data-category="bags" data-brand="think-tank">
+                    <div class="camera-image">
+                        <img src="Think Tank Airport Security V3.0 (1).jpg" alt="حقيبة حماية ثينك تانك">
+                        <div class="camera-badge">جديد</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">حقيبة حماية Think Tank Airport Security V3.0</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-plane"></i> مناسبة للسفر الجوي</span>
+                            <span><i class="fas fa-lock"></i> قفل TSA متوافق</span>
+                            <span><i class="fas fa-dolly"></i> عجلات سيليكون صامتة</span>
+                        </div>
+                        <div class="camera-price">١٣٩٩ ﷼</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">حقيبة حماية Think Tank Airport Security V3.0</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الأبعاد:</span>
+                                <span class="detail-value">35.6 × 20.3 × 53.3 سم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الوزن:</span>
+                                <span class="detail-value">5.4 كجم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المميزات:</span>
+                                <span class="detail-value">مقاومة للصدمات، نظام حماية متطور</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Think Tank Airport Security V3.0 (1).jpg" alt="حقيبة حماية ثينك تانك - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Think Tank Airport Security V3.0 (2).jpg" alt="حقيبة حماية ثينك تانك - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Think Tank Airport Security V3.0 (3).jpg" alt="حقيبة حماية ثينك تانك - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٣٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                (5.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مسجل صوت Zoom H5 -->
+                <div class="camera-card" data-category="audio" data-brand="zoom">
+                    <div class="camera-image">
+                        <img src="Zoom H5 Handy Recorder (1).jpg" alt="مسجل صوت زوم">
+                        <div class="camera-badge" style="background: #2ecc71;">خصم 15%</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">مسجل صوت Zoom H5 Handy Recorder</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microphone"></i> ميكروفونات متعددة الاتجاهات</span>
+                            <span><i class="fas fa-sd-card"></i> يدعم بطاقة SD حتى 32GB</span>
+                            <span><i class="fas fa-clock"></i> تسجيل حتى 15 ساعة</span>
+                        </div>
+                        <div class="camera-price">١٥٩٩ ﷼</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">مسجل صوت Zoom H5 Handy Recorder</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">واجهة الأجهزة:</span>
+                                <span class="detail-value">USB</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الميكروفون:</span>
+                                <span class="detail-value">مدمج</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الصيغة:</span>
+                                <span class="detail-value">WAV, MP3 Audio</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">منفذ سماعة الرأس:</span>
+                                <span class="detail-value">3.5 مليمتر</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Zoom H5 Handy Recorder (1).jpg" alt="مسجل صوت زوم - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Zoom H5 Handy Recorder (2).jpg" alt="مسجل صوت زوم - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Zoom H5 Handy Recorder (3).jpg" alt="مسجل صوت زوم - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٥٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- كاميرا سوني Z6 -->
+                <div class="camera-card" data-category="cameras" data-brand="sony">
+                    <div class="camera-image">
+                        <img src="4548736092440 sony camera (1)-432x432.jpg" alt="كاميرا سوني Z6">
+                        <div class="camera-badge" style="background: #2ecc71;">خصم 15%</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">كاميرا سوني Z6</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microchip"></i> دقة 24 ميجابكسل</span>
+                            <span><i class="fas fa-film"></i> تصوير 4K</span>
+                            <span><i class="fas fa-battery-full"></i> عمر بطارية 310 صورة</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٩٨٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">كاميرا سوني Z6</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الدقة:</span>
+                                <span class="detail-value">24 ميجابكسل</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الكاميرا:</span>
+                                <span class="detail-value">كاميرات عديمة المرآة</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفيديو:</span>
+                                <span class="detail-value">4K</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الخصم:</span>
+                                <span class="detail-value">15%</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4548736092440 sony camera (1)-432x432.jpg" alt="كاميرا سوني - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4548736092440 sony camera (5)-432x432.jpg" alt="كاميرا سوني - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4548736092440 sony camera (9)-432x432.jpg" alt="كاميرا سوني - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٩٨٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- حقيبة كتف Peak Design -->
+                <div class="camera-card" data-category="bags" data-brand="peak-design">
+                    <div class="camera-image">
+                        <img src="Peak Design Everyday Sling 10L (1).jpg" alt="حقيبة كتف بيك ديزاين">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-weight-hanging"></i> الوزن: 0.9 كجم</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> السعة: 10 لتر</span>
+                            <span><i class="fas fa-shield-alt"></i> تصميم مقاوم للسرقة</span>
+                        </div>
+                        <div class="camera-price">٦٤٩ ﷼</div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">المواد:</span>
+                                <span class="detail-value">نايلون مضاد للماء 100%</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">السعة:</span>
+                                <span class="detail-value">كاميرا + عدستين + ملحقات</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Peak Design Everyday Sling 10L (1).jpg" alt="حقيبة كتف بيك ديزاين - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Peak Design Everyday Sling 10L (2).jpg" alt="حقيبة كتف بيك ديزاين - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Peak Design Everyday Sling 10L (3).jpg" alt="حقيبة كتف بيك ديزاين - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٦٤٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- عدسة سيجما -->
+                <div class="camera-card" data-category="lenses" data-brand="sigma">
+                    <div class="camera-image">
+                        <img src="sigma 24-70 (1).jpg" alt="عدسة سيجما">
+                        <div class="camera-badge" style="background: #e74c3c;">الأكثر مبيعاً</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">عدسة سيجما</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-camera"></i> فتحة عدسة: f/2.8</span>
+                            <span><i class="fas fa-ruler"></i> البعد البؤري: 24-70mm</span>
+                            <span><i class="fas fa-shield-alt"></i> مقاومة للماء والغبار</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٤,٨٠٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة سيجما</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">24-70mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/2.8</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="sigma 24-70 (1).jpg" alt="عدسة سيجما - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="sigma 24-70 (2).jpg" alt="عدسة سيجما - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="sigma 24-70 (3).jpg" alt="عدسة سيجما - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٤,٨٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ستاند مانفروتو -->
+                <div class="camera-card" data-category="accessories" data-brand="manfrotto">
+                    <div class="camera-image">
+                        <img src="Camera Tripod Stand 170cm (1).jpg" alt="ستاند مانفروتو">
+                        <div class="camera-badge" style="background: #e74c3c;">الأكثر مبيعاً</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">ستاند مانفروتو MT190XPRO4</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-ruler-vertical"></i> ارتفاع: 160 سم</span>
+                            <span><i class="fas fa-weight-hanging"></i> وزن: 2 كجم</span>
+                            <span><i class="fas fa-box"></i> قابل للطي</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٨٩٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">ستاند مانفروتو MT190XPRO4</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الارتفاع:</span>
+                                <span class="detail-value">160 سم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الوزن:</span>
+                                <span class="detail-value">1.7 كجم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المميزات:</span>
+                                <span class="detail-value">قابل للطي</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Camera Tripod Stand 170cm (1).jpg" alt="ستاند مانفروتو - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Camera Tripod Stand 170cm (2).jpg" alt="ستاند مانفروتو - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Camera Tripod Stand 170cm (3).jpg" alt="ستاند مانفروتو - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٨٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- عدسة تامرون -->
+                <div class="camera-card" data-category="lenses" data-brand="tamron">
+                    <div class="camera-image">
+                        <img src="Tamron 17-70mm (1).jpg" alt="عدسة تامرون">
+                        <div class="camera-badge" style="background: #9b59b6;">للإيجار</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">عدسة تامرون 70-200mm</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-camera"></i> فتحة عدسة: f/2.8</span>
+                            <span><i class="fas fa-ruler"></i> البعد البؤري: 70-200mm</span>
+                            <span><i class="fas fa-clock"></i> إيجار يومي</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">١٥٠ ﷼/يوم</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> حجز الآن</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة تامرون 70-200mm</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">70-200mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/2.8</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="Tamron 17-70mm (1).jpg" alt="عدسة تامرون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Tamron 17-70mm (2).jpg" alt="عدسة تامرون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="Tamron 17-70mm (3).jpg" alt="عدسة تامرون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٥٠ ﷼/يوم</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر للحجز
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- كاميرا كانون 5D -->
+                <div class="camera-card" data-category="cameras" data-brand="canon">
+                    <div class="camera-image">
+                        <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون 5D Mark IV">
+                        <div class="camera-badge" style="background: #9b59b6;">للإيجار</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">كاميرا كانون 5D Mark IV</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microchip"></i> دقة 30.4 ميجابكسل</span>
+                            <span><i class="fas fa-film"></i> تصوير 4K</span>
+                            <span><i class="fas fa-clock"></i> إيجار يومي</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">١٥٠ ﷼/يوم</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> حجز الآن</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">كاميرا كانون 5D Mark IV</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الكاميرا:</span>
+                                <span class="detail-value">DSLR</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">مدة الإيجار:</span>
+                                <span class="detail-value">يومي / أسبوعي</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون 5D - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (2)-800x1000.jpg" alt="كاميرا كانون 5D - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (3)-432x432.jpg" alt="كاميرا كانون 5D - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٥٠ ﷼/يوم</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر للإيجار
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الترقيم -->
+            <div class="pagination-container">
+                <div class="pagination">
+                    <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-chevron-right"></i> السابق</button>
+                    <button class="page-btn active" data-page="1">1</button>
+                    <button class="page-btn" data-page="2">2</button>
+                    <button class="page-btn" data-page="3">3</button>
+                    <button class="page-btn" data-page="4">4</button>
+                    <button class="page-btn" data-page="5">5</button>
+                    <button id="next-btn" class="nav-btn">التالي <i class="fas fa-chevron-left"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p><i class="fas fa-phone"></i> +966 11 234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modalMainImage" src="" alt="صورة المنتج">
+                    <div class="modal-thumbnails" id="modalThumbnails"></div>
+                </div>
+                <div class="modal-details">
+                    <div class="modal-specs" id="modalSpecs"></div>
+                    <div class="modal-price" id="modalPrice"></div>
+                    <div class="modal-actions">
+                        <button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // وظائف التصفية والفرز
+        function filterProducts() {
+            const category = document.querySelector('select[name="category"]').value;
+            const brand = document.querySelector('select[name="brand"]').value;
+            const price = document.querySelector('select[name="price"]').value;
+            
+            const products = document.querySelectorAll('.camera-card');
+            let visibleCount = 0;
+            let visibleProducts = [];
+            
+            products.forEach(product => {
+                const matchCategory = !category || product.dataset.category === category;
+                const matchBrand = !brand || product.dataset.brand === brand;
+                // يمكن إضافة تصفية السعر هنا
+                
+                if (matchCategory && matchBrand) {
+                    product.classList.add('filtered-in');
+                    visibleCount++;
+                    visibleProducts.push(product);
+                } else {
+                    product.classList.remove('filtered-in');
+                    product.style.display = 'none';
+                }
+            });
+            
+            // إظهار رسالة إذا لم يتم العثور على نتائج
+            const noResults = document.getElementById('no-results');
+            if (visibleCount === 0) {
+                if (!noResults) {
+                    const message = document.createElement('div');
+                    message.id = 'no-results';
+                    message.style.textAlign = 'center';
+                    message.style.padding = '20px';
+                    message.style.width = '100%';
+                    message.innerHTML = 'لا توجد منتجات تطابق معايير البحث';
+                    document.querySelector('.cameras-grid').appendChild(message);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+            
+            // تحديث الترقيم بناءً على عدد المنتجات المرئية
+            updatePagination(visibleProducts);
+            
+            // إعادة عرض الصفحة الأولى بعد التصفية
+            showPage(1, visibleProducts);
+        }
+        
+        // تحديث الترقيم بناءً على عدد المنتجات
+        function updatePagination(visibleProducts) {
+            const totalProducts = visibleProducts.length;
+            const productsPerPage = 8;
+            const totalPages = Math.ceil(totalProducts / productsPerPage);
+            
+            // تحديث أزرار الصفحات
+            const paginationContainer = document.querySelector('.pagination');
+            const pageButtons = paginationContainer.querySelectorAll('.page-btn');
+            
+            // إخفاء أو إظهار أزرار الصفحات حسب العدد الإجمالي للصفحات
+            pageButtons.forEach((btn, index) => {
+                if (index < totalPages) {
+                    btn.style.display = 'inline-block';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+            
+            // تحديث زر "السابق" و "التالي"
+            document.getElementById('prev-btn').disabled = true;
+            document.getElementById('next-btn').disabled = totalPages <= 1;
+            
+            // إعادة تنشيط الصفحة الأولى
+            pageButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (pageButtons.length > 0) {
+                pageButtons[0].classList.add('active');
+            }
+        }
+        
+        // عرض الصفحة المحددة من المنتجات
+        function showPage(pageNumber, visibleProducts) {
+            const productsPerPage = 8;
+            const startIndex = (pageNumber - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            
+            // إخفاء جميع المنتجات أولاً
+            visibleProducts.forEach(product => {
+                product.style.display = 'none';
+            });
+            
+            // إظهار المنتجات في النطاق المحدد فقط
+            for (let i = startIndex; i < endIndex && i < visibleProducts.length; i++) {
+                visibleProducts[i].style.display = 'block';
+            }
+            
+            // تحديث حالة الأزرار
+            const pageButtons = document.querySelectorAll('.page-btn');
+            pageButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.dataset.page) === pageNumber) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // تحديث حالة زر "السابق" و "التالي"
+            document.getElementById('prev-btn').disabled = pageNumber === 1;
+            document.getElementById('next-btn').disabled = pageNumber === Math.ceil(visibleProducts.length / productsPerPage);
+            
+            // تمرير إلى أعلى الصفحة
+            window.scrollTo({
+                top: document.querySelector('.cameras-grid').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+
+        // إضافة event listeners للتصفية
+        document.querySelectorAll('.filters-section select').forEach(select => {
+            select.addEventListener('change', filterProducts);
+        });
+
+        // تهيئة الصفحة والترقيم وإضافة وظائف عرض التفاصيل
+        document.addEventListener('DOMContentLoaded', function() {
+            // وظائف النافذة المنبثقة (بوب أب)
+            const modal = document.getElementById('productModal');
+            const closeModal = document.querySelector('.close-modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMainImage = document.getElementById('modalMainImage');
+            const modalThumbnails = document.getElementById('modalThumbnails');
+            const modalSpecs = document.getElementById('modalSpecs');
+            const modalPrice = document.getElementById('modalPrice');
+
+            // إغلاق النافذة عند النقر على زر الإغلاق
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            // إغلاق النافذة عند النقر خارج المحتوى
+            window.addEventListener('click', function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // إضافة وظيفة زر عرض التفاصيل لكل بطاقة منتج
+            document.querySelectorAll('.camera-card').forEach(card => {
+                // التحقق إذا كان الزر موجوداً بالفعل
+                if (!card.querySelector('.view-details-btn')) {
+                    const viewDetailsBtn = document.createElement('button');
+                    viewDetailsBtn.className = 'view-details-btn';
+                    viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus"></i> عرض التفاصيل';
+                    
+                    // إضافة الزر إلى حاوية بطاقة المنتج
+                    const cardInfo = card.querySelector('.camera-info');
+                    cardInfo.appendChild(viewDetailsBtn);
+                    
+                    // إضافة مستمع الحدث للزر
+                    viewDetailsBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // استخراج البيانات من البطاقة
+                        const title = card.querySelector('.camera-title').textContent;
+                        const image = card.querySelector('.camera-image img').src;
+                        const price = card.querySelector('.camera-price').textContent;
+                        const specs = card.querySelectorAll('.camera-specs span');
+
+                        // تحديث محتوى النافذة المنبثقة
+                        modalTitle.textContent = title;
+                        modalMainImage.src = image;
+                        modalMainImage.alt = title;
+                        modalPrice.innerHTML = `<span class="popup-sar-symbol"></span><span>${price}</span>`;
+
+                        // إضافة الصور المصغرة من النافذة المنبثقة إذا وجدت
+                        modalThumbnails.innerHTML = '';
+                        const thumbnails = card.querySelectorAll('.popup-thumbs .popup-thumb img');
+                        
+                        if (thumbnails && thumbnails.length > 0) {
+                            thumbnails.forEach((thumbImg, index) => {
+                                const thumb = document.createElement('div');
+                                thumb.className = 'modal-thumb';
+                                thumb.innerHTML = `<img src="${thumbImg.src}" alt="${title} - صورة ${index+1}">`;
+                                
+                                // تغيير الصورة الرئيسية عند النقر على المصغرة
+                                thumb.addEventListener('click', function() {
+                                    modalMainImage.src = this.querySelector('img').src;
+                                });
+                                
+                                modalThumbnails.appendChild(thumb);
+                            });
+                            
+                            // تعيين الصورة الأولى كصورة رئيسية
+                            modalMainImage.src = thumbnails[0].src;
+                        } else {
+                            // إذا لم توجد صور مصغرة، استخدم الصورة الرئيسية 3 مرات
+                            for (let i = 0; i < 3; i++) {
+                                const thumb = document.createElement('div');
+                                thumb.className = 'modal-thumb';
+                                thumb.innerHTML = `<img src="${image}" alt="${title} - صورة ${i+1}">`;
+                                
+                                // تغيير الصورة الرئيسية عند النقر على المصغرة
+                                thumb.addEventListener('click', function() {
+                                    modalMainImage.src = this.querySelector('img').src;
+                                });
+                                
+                                modalThumbnails.appendChild(thumb);
+                            }
+                        }
+
+                        // إضافة المواصفات
+                        modalSpecs.innerHTML = '<h3>المواصفات</h3>';
+                        specs.forEach(spec => {
+                            const specElement = document.createElement('div');
+                            specElement.className = 'modal-spec';
+                            specElement.innerHTML = spec.innerHTML;
+                            modalSpecs.appendChild(specElement);
+                        });
+
+                        // إضافة بيانات إضافية من النافذة المنبثقة الحالية إذا وجدت
+                        const popupDetails = card.querySelector('.product-popup .popup-details');
+                        if (popupDetails) {
+                            const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
+                            popupDetailItems.forEach(item => {
+                                const label = item.querySelector('.detail-label').textContent;
+                                const value = item.querySelector('.detail-value').textContent;
+                                
+                                const specElement = document.createElement('div');
+                                specElement.className = 'modal-spec';
+                                specElement.innerHTML = `<i class="fas fa-info-circle"></i> ${label} ${value}`;
+                                modalSpecs.appendChild(specElement);
+                            });
+                        }
+
+                        // إضافة التوفر ومعلومات أخرى
+                        const availabilityElement = document.createElement('div');
+                        availabilityElement.className = 'modal-availability';
+                        availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
+                        modalSpecs.appendChild(availabilityElement);
+
+                        // عرض النافذة المنبثقة
+                        modal.style.display = 'block';
+                    });
+                }
+            });
+
+            // إضافة مستمعي أحداث للأزرار في النافذة المنبثقة
+            document.querySelector('.modal-add-to-cart').addEventListener('click', function() {
+                alert('تمت إضافة المنتج إلى سلة التسوق');
+            });
+
+            document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
+                alert('تمت إضافة المنتج إلى المفضلة');
+                this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
+            });
+
+            // إغلاق النافذة المنبثقة الصغيرة
+            document.querySelectorAll('.popup-close').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const popup = this.closest('.product-popup');
+                    popup.style.display = 'none';
+                });
+            });
+            
+            // عند تحميل الصفحة، عرض المنتجات في الصفحة الأولى فقط
+            const allProducts = document.querySelectorAll('.camera-card');
+            allProducts.forEach(product => {
+                product.classList.add('filtered-in');
+            });
+            
+            const visibleProducts = Array.from(allProducts);
+            updatePagination(visibleProducts);
+            showPage(1, visibleProducts);
+            
+            // إضافة event listeners لأزرار الصفحات
+            document.querySelectorAll('.page-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const pageNumber = parseInt(this.dataset.page);
+                    const visibleProducts = Array.from(document.querySelectorAll('.camera-card.filtered-in'));
+                    showPage(pageNumber, visibleProducts);
+                });
+            });
+            
+            // إضافة event listeners لزر "السابق" و "التالي"
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                const currentPage = parseInt(document.querySelector('.page-btn.active').dataset.page);
+                if (currentPage > 1) {
+                    const visibleProducts = Array.from(document.querySelectorAll('.camera-card.filtered-in'));
+                    showPage(currentPage - 1, visibleProducts);
+                }
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', function() {
+                const currentPage = parseInt(document.querySelector('.page-btn.active').dataset.page);
+                const visibleProducts = Array.from(document.querySelectorAll('.camera-card.filtered-in'));
+                const totalPages = Math.ceil(visibleProducts.length / 8);
+                if (currentPage < totalPages) {
+                    showPage(currentPage + 1, visibleProducts);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
