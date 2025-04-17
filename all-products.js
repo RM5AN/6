@@ -406,4 +406,36 @@ function improveResponsiveness() {
     `;
     
     document.head.appendChild(style);
-} 
+}
+
+// إضافة فلتر البيع/التأجير إلى وظيفة الفلترة
+function filterProducts() {
+    // الكود الحالي للفلترة...
+    
+    // إضافة فلترة البيع/التأجير
+    const saleFilter = document.querySelector('input[value="sale"]').checked;
+    const rentFilter = document.querySelector('input[value="rent"]').checked;
+    
+    // تطبيق الفلتر على المنتجات
+    productCards.forEach(card => {
+        // استمر في كود الفلترة الموجود...
+        
+        // تحقق من توفر المنتج للبيع/التأجير
+        const isForSale = card.querySelector('.for-sale-badge') !== null;
+        const isForRent = card.querySelector('.for-rent-badge') !== null;
+        
+        const matchesAvailability = 
+            (saleFilter && isForSale) || 
+            (rentFilter && isForRent);
+            
+        // أضف شرط التوفر إلى شروط الفلترة
+        const shouldShow = matchesCategory && matchesBrand && matchesPrice && matchesAvailability;
+        
+        // الكود المستمر للفلترة...
+    });
+}
+
+// استدعاء وظيفة الفلترة عند تغيير فلاتر البيع/التأجير
+document.querySelectorAll('input[name="availability"]').forEach(checkbox => {
+    checkbox.addEventListener('change', filterProducts);
+}); 

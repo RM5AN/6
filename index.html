@@ -157,7 +157,7 @@
         .product-price {
             font-size: 24px;
             font-weight: bold;
-            color: #165b8a;
+            color: #222222;
             margin: 15px 0;
         }
         
@@ -577,7 +577,7 @@
 
         .price {
             font-weight: bold;
-            color: #165b8a;
+            color: #222222;
             font-size: 18px;
             margin-bottom: 8px;
             display: flex;
@@ -689,7 +689,7 @@
         .popup-price {
             display: flex;
             align-items: center;
-            color: #165b8a;
+            color: #222222;
             font-weight: 700;
             font-size: 18px;
             margin-bottom: 10px;
@@ -958,9 +958,10 @@
             transition: all 0.3s ease;
             text-align: center;
             display: flex;
-            flex-direction: column;
-            width: 50%; /* جعل البطاقة تأخذ العرض الكامل */
-            max-width: 600px; /* تحديد الحد الأقصى للعرض */
+            flex-direction: row;
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .rental-card:hover {
@@ -969,8 +970,9 @@
         }
 
         .rental-card-image {
-            width: 100%;
-            height: 100px; /* زيادة ارتفاع الصورة */
+            width: 40%;
+            height: auto;
+            min-height: 220px;
             overflow: hidden;
             position: relative;
             background-color: #f7f7f7;
@@ -1017,10 +1019,13 @@
         }
 
         .rental-card-content {
-            padding: 25px 20px;
+            padding: 25px 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            width: 60%;
+            text-align: right;
         }
 
         .rental-card-content h3 {
@@ -1039,16 +1044,26 @@
         }
         
         .rental-btn {
-            width: 60%; /* زيادة عرض الزر */
+            width: 60%;
             padding: 12px 25px;
-            margin: 0 auto; /* توسيط الزر */
-            margin-top: 15px; /* إضافة مساحة فوق الزر */
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            margin: 0 auto;
+            margin-top: 15px;
+            text-align: center;
         }
         
         .rental-btn:hover {
             background-color: #2980b9;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .rental-grid {
@@ -1065,6 +1080,7 @@
         .rental-title h2 {
             font-size: 30px;
             margin-bottom: 15px;
+            color: #165b8a;
         }
 
         .rental-title p {
@@ -1086,8 +1102,19 @@
                 gap: 20px;
             }
             
+            .rental-card {
+                flex-direction: column;
+                width: 95%;
+            }
+            
             .rental-card-image {
-                height: 160px;
+                width: 100%;
+                min-height: 180px;
+            }
+            
+            .rental-card-content {
+                width: 100%;
+                padding: 20px 15px;
             }
             
             .rental-icon {
@@ -1104,17 +1131,12 @@
             position: relative;
         }
 
+        /* إزالة الخط الأفقي خلف زر تصفح جميع المنتجات */
         .view-all-btn-container:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: #ddd;
-            z-index: 1;
+            display: none; /* إخفاء الخط */
         }
 
+        /* الحفاظ على باقي تنسيقات الزر كما هي */
         .view-all-products-btn {
             display: inline-block;
             background-color: #3498db;
@@ -1172,7 +1194,259 @@
             margin-top: 30px;
             margin-bottom: 40px;
         }
-    </style>
+
+        /* تنسيق عام للأسعار - تغيير اللون إلى أسود داكن */
+        .price, .product-price, .cart-price, .summary-price, .total-price {
+            color: #222222; /* تغيير اللون من #165b8a إلى #222222 (أسود داكن) */
+            font-family: 'Tajawal', sans-serif;
+            font-size: 18px;
+            font-weight: 700; /* زيادة سماكة الخط لتحسين القراءة */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: ltr;
+        }
+
+        /* تطبيق شعار الريال على كل أسعار الموقع */
+        .price span, .product-price span, .cart-price span, .summary-price span, .total-price span {
+            margin-left: 5px;
+        }
+
+        /* تنسيقات خاصة للأسعار المختلفة */
+        .product-details .product-price {
+            font-size: 24px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            color: #222222; /* تأكيد تطبيق اللون الجديد */
+        }
+
+        /* إضافة خط تحت السعر في صفحة تفاصيل المنتج */
+        .product-details .product-price {
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .product-details .product-price:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 2px;
+            background-color: #222222;
+            opacity: 0.5;
+        }
+
+        /* تنسيق سعر بطاقة المنتج في الصفحة الرئيسية */
+        .product-card .price {
+            color: #222222;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        /* تنسيق أسعار المقارنة أو الخصومات */
+        .old-price {
+            color: #777777;
+            text-decoration: line-through;
+            margin-left: 8px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        /* تثبيت الهيدر ومنع الرجفة */
+        header {
+            background: var(--gray-100);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            height: auto;
+            min-height: 70px;
+            transition: none;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
+            height: 100%;
+        }
+
+        /* منع انتقال العناصر في الهيدر */
+        .logo, .main-menu, .header-actions {
+            position: relative;
+            transform: none;
+            transition: none;
+        }
+
+        /* أنماط عرض عدد المنتجات في السلة والمفضلة */
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+        align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+        display: inline-block;
+        }
+
+        /* تنسيق تأثير النبض */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 0.5s ease-in-out;
+    }
+
+    /* أضف هذه الأنماط داخل وسم style في ملف index.html */
+    .search-results {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 1000;
+        display: none;
+    }
+
+    .search-results ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .search-results li {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .search-results li:last-child {
+        border-bottom: none;
+    }
+
+    .search-results li:hover {
+        background-color: #f5f5f5;
+    }
+
+    .search-results img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .result-info {
+        flex: 1;
+    }
+
+    .result-info h4 {
+        margin: 0 0 5px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .result-info p {
+        margin: 0;
+        font-size: 13px;
+        color: #165b8a;
+        font-weight: bold;
+    }
+
+    /* أنماط رسائل الإشعارات */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toast-message {
+        background-color: white;
+        color: #333;
+        padding: 12px 15px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        transform: translateX(-110%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+    }
+
+    .toast-message.show {
+        transform: translateX(0);
+    }
+
+    .toast-message i {
+        font-size: 18px;
+    }
+
+    .toast-message.success i {
+        color: #2ecc71;
+    }
+
+    .toast-message.error i {
+        color: #e74c3c;
+    }
+
+    .toast-message.info i {
+        color: #3498db;
+    }
+
+    .toast-message.wishlist i {
+        color: #e74c3c;
+    }
+
+    .toast-message.cart i {
+        color: #3498db;
+    }
+
+    .toast-close {
+        margin-left: auto;
+        background: none;
+        border: none;
+        color: #777;
+        cursor: pointer;
+        padding: 0;
+        font-size: 14px;
+    }
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -1242,7 +1516,7 @@
     <div class="hero-container">
         <div class="hero-image-box">
             <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" alt="معدات تصوير احترافية">
-        </div>
+    </div>
         <div class="hero-action-box">
             <h2>متجر ShotSpot</h2>
             <p>المتجر الأول لمعدات التصوير الاحترافية</p>
@@ -1398,10 +1672,9 @@
     </div>
 </section>
 
-<!-- زر تصفح جميع المنتجات بتنسيق جديد -->
+<!-- زر تصفح جميع المنتجات -->
 <div class="view-all-btn-container">
     <a href="all-products.html" class="view-all-products-btn">
-        <i class="fas fa-th-large"></i>
         تصفح جميع المنتجات
     </a>
 </div>
@@ -1866,6 +2139,292 @@
                     e.stopPropagation();
                 });
         });
+    });
+
+    // إضافة كود جافاسكريبت لتفعيل أزرار السلة والمفضلة
+    document.addEventListener('DOMContentLoaded', function() {
+        // تفعيل أزرار إضافة للسلة
+        document.querySelectorAll('.add-to-cart-btn, .add-to-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = Math.floor(Math.random() * 1000);
+                const productName = document.querySelector('.product-details h2')?.textContent || 'منتج';
+                const productPrice = document.querySelector('.product-price')?.textContent.replace(/[^\d]/g, '') || '100';
+                const productImage = document.querySelector('.main-image img')?.src || '';
+                
+                // استخدام الدالة الموجودة سابقاً
+                addToCart(productId, productName, productPrice, productImage);
+                
+                // إظهار رسالة نجاح
+                showToast('تمت إضافة المنتج إلى السلة بنجاح!', 'success', 'cart');
+            });
+        });
+        
+        // تفعيل أزرار إضافة للمفضلة
+        document.querySelectorAll('.add-to-favorites-btn, .wishlist-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = Math.floor(Math.random() * 1000);
+                const productName = document.querySelector('.product-details h2')?.textContent || 'منتج';
+                const productPrice = document.querySelector('.product-price')?.textContent.replace(/[^\d]/g, '') || '100';
+                const productImage = document.querySelector('.main-image img')?.src || '';
+                
+                // استخدام الدالة الموجودة سابقاً
+                toggleWishlist(productId, productName, productPrice, productImage);
+                
+                // إظهار رسالة نجاح
+                showToast('تمت إضافة المنتج إلى المفضلة', 'success', 'wishlist');
+            });
+        });
+    });
+
+    // تفعيل وظيفة البحث
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.querySelector('.search-container input');
+        const searchIcon = document.querySelector('.search-icon');
+        
+        if (searchInput && searchIcon) {
+            // إضافة حدث للبحث عند الضغط على Enter
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // إضافة حدث للبحث عند النقر على أيقونة البحث
+            searchIcon.addEventListener('click', function() {
+                performSearch();
+            });
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm.length > 0) {
+                    // عرض نتائج البحث
+                    showSearchResults(searchTerm);
+                }
+            }
+            
+            function showSearchResults(searchTerm) {
+                // إنشاء عنصر لعرض نتائج البحث
+                let searchResults = document.querySelector('.search-results');
+                if (!searchResults) {
+                    searchResults = document.createElement('div');
+                    searchResults.className = 'search-results';
+                    document.querySelector('.search-container').appendChild(searchResults);
+                }
+                
+                // عرض نتائج وهمية للتوضيح
+                searchResults.innerHTML = `
+                    <ul>
+                        <li>
+                            <img src="Fujifilm-X-T30 (1).jpg" alt="نتيجة البحث">
+                            <div class="result-info">
+                                <h4>كاميرا ${searchTerm}</h4>
+                                <p>1200 ر.س</p>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="canon.png" alt="نتيجة البحث">
+                            <div class="result-info">
+                                <h4>عدسة ${searchTerm}</h4>
+                                <p>850 ر.س</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+                
+                // إظهار نتائج البحث
+                searchResults.style.display = 'block';
+                
+                // إغلاق نتائج البحث عند النقر خارجها
+                document.addEventListener('click', function closeResults(e) {
+                    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                        searchResults.style.display = 'none';
+                        document.removeEventListener('click', closeResults);
+                    }
+                });
+            }
+        }
+    });
+    </script>
+    <!-- أضف هذا السطر قبل إغلاق وسم body مباشرة -->
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+
+    <!-- إصلاح مشكلة عدم القدرة على النقر على الروابط -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // إضافة تنسيقات CSS المطلوبة
+        const fixInteractionStyles = document.createElement('style');
+        fixInteractionStyles.textContent = `
+            /* ضمان استقبال النقر على جميع العناصر التفاعلية */
+            a, button, .logo, .main-menu a, .icons-group a, .search-container, .shop-now-btn,
+            .product-card, .add-to-cart, .wishlist-btn, input, select, .category-circle {
+                pointer-events: auto !important;
+                cursor: pointer !important;
+                position: relative !important;
+                z-index: 10 !important;
+            }
+            
+            /* إلغاء أي عناصر overlay تغطي الصفحة */
+            .modal, .overlay, .product-modal, .toast-container {
+                position: absolute !important;
+                height: auto !important;
+                width: auto !important;
+                display: none !important;
+            }
+            
+            /* إعادة ضبط تنسيقات header */
+            header {
+                position: relative !important;
+                height: auto !important;
+                min-height: 80px !important;
+                z-index: 100 !important;
+                top: auto !important;
+                left: auto !important;
+                width: 100% !important;
+            }
+            
+            /* إعادة ضبط أي عناصر fixed مخفية */
+            body::before, body::after {
+                display: none !important;
+                content: none !important;
+            }
+            
+            /* التأكد من عدم وجود عناصر تغطي الصفحة كاملة */
+            body > div:not(.main-content):not(header):not(footer) {
+                position: relative !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+            
+            /* إزالة أي تنسيقات قد تمنع التفاعل */
+            * {
+                touch-action: auto !important;
+            }
+        `;
+        document.head.appendChild(fixInteractionStyles);
+        
+        // إصلاح وسوم alt في بعض الصفحات
+        document.querySelectorAll('alt').forEach(brokenTag => {
+            const newImg = document.createElement('img');
+            newImg.src = "camera-logo.png";
+            
+            // نقل جميع الخصائص
+            Array.from(brokenTag.attributes).forEach(attr => {
+                newImg.setAttribute(attr.name, attr.value);
+            });
+            
+            // استبدال العنصر
+            if (brokenTag.parentNode) {
+                brokenTag.parentNode.replaceChild(newImg, brokenTag);
+            }
+        });
+        
+        // التأكد من أن كل الروابط تحتوي على href
+        document.querySelectorAll('a').forEach(link => {
+            if (!link.getAttribute('href')) {
+                if (link.closest('.logo')) {
+                    link.setAttribute('href', 'index.html');
+                } else if (link.closest('.heart-icon')) {
+                    link.setAttribute('href', 'favorites.html');
+                } else if (link.closest('.cart-icon')) {
+                    link.setAttribute('href', 'cart.html');
+                } else if (link.closest('.user-icon')) {
+                    link.setAttribute('href', 'login.html');
+                } else {
+                    link.setAttribute('href', '#');
+                }
+            }
+        });
+        
+        // إزالة أي عناصر مخفية تغطي الصفحة
+        document.querySelectorAll('.modal, .overlay, .product-modal').forEach(el => {
+            el.style.display = 'none';
+        });
+        
+        console.log('تم تطبيق إصلاحات التفاعل');
+    });
+    </script>
+
+    <!-- إصلاح أزرار السلة والمفضلة -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // تفعيل زر السلة
+        const cartButtons = document.querySelectorAll('.add-to-cart, .cart-icon');
+        cartButtons.forEach(button => {
+            // إزالة أي مستمعات أحداث سابقة
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
+            newButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                
+                // مسار الصفحة حسب نوع الزر
+                let targetUrl = 'cart.html';
+                
+                // توجيه المستخدم للصفحة المناسبة
+                window.location.href = targetUrl;
+            });
+        });
+        
+        // تفعيل زر المفضلة
+        const wishlistButtons = document.querySelectorAll('.wishlist-btn, .heart-icon');
+        wishlistButtons.forEach(button => {
+            // إزالة أي مستمعات أحداث سابقة
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
+            newButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                
+                // تغيير أيقونة القلب (إن وجدت)
+                const heartIcon = this.querySelector('i');
+                if (heartIcon) {
+                    if (heartIcon.classList.contains('far')) {
+                        heartIcon.classList.remove('far');
+                        heartIcon.classList.add('fas');
+                    } else {
+                        heartIcon.classList.remove('fas');
+                        heartIcon.classList.add('far');
+                    }
+                }
+                
+                // توجيه المستخدم للصفحة المناسبة
+                window.location.href = 'favorites.html';
+            });
+        });
+        
+        // تصحيح روابط الكاميرات والعدسات والاكسسوارات
+        const categoryLinks = {
+            'cameras': 'all-cameras.html',
+            'lenses': 'all-lenses.html',
+            'accessories': 'all-accessories.html',
+            'audio': 'all-audio.html',
+            'bags': 'all-bags.html'
+        };
+        
+        // تفعيل روابط الفئات
+        for (const [category, url] of Object.entries(categoryLinks)) {
+            document.querySelectorAll(`.${category}, [data-category="${category}"]`).forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.location.href = url;
+                });
+            });
+        }
+        
+        // تفعيل روابط المنتجات
+        document.querySelectorAll('.product-card, .product-link').forEach(product => {
+            product.addEventListener('click', function(event) {
+                // الحصول على فئة المنتج
+                const category = this.dataset.category || 'cameras';
+                // توجيه المستخدم لصفحة المنتج
+                window.location.href = categoryLinks[category] || 'all-cameras.html';
+            });
+        });
+        
+        console.log('تم تفعيل أزرار السلة والمفضلة وروابط المنتجات');
     });
     </script>
 </body>

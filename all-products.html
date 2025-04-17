@@ -17,20 +17,20 @@
             text-align: center;
             margin-bottom: 40px;
         }
-
+        
         .page-header h1 {
             font-size: 32px;
             color: #333;
             margin-bottom: 15px;
         }
-
+        
         .page-header p {
             color: #666;
             font-size: 16px;
             max-width: 600px;
             margin: 0 auto;
         }
-
+        
         .filters-section {
             background: white;
             padding: 15px;
@@ -48,7 +48,7 @@
             gap: 15px;
             margin-bottom: 20px;
         }
-
+        
         .filter-group {
             display: flex;
             flex-direction: column;
@@ -100,7 +100,7 @@
         .camera-card:hover {
             transform: translateY(-5px);
         }
-
+        
         .camera-image {
             position: relative;
             height: 180px;
@@ -128,11 +128,11 @@
             font-size: 12px;
             font-weight: bold;
         }
-
+        
         .camera-info {
             padding: 20px;
         }
-
+        
         .camera-title {
             font-size: 16px;
             color: #333;
@@ -425,7 +425,7 @@
             display: flex;
             gap: 30px;
         }
-
+        
         .modal-image-container {
             flex: 1;
             display: flex;
@@ -610,7 +610,7 @@
             left: 10px;
             background: none;
             border: none;
-            font-size: 16px;
+                font-size: 16px;
             cursor: pointer;
             color: #777;
         }
@@ -658,6 +658,54 @@
         
         .filtered-in {
             /* إضافة صنف للتحكم في المنتجات المعروضة بعد التصفية */
+        }
+
+        /* تنسيق محسن لزر تصفح جميع المنتجات */
+        .view-all-btn-container {
+            text-align: center;
+            margin: 30px auto 50px;
+        }
+
+        .view-all-products-btn {
+            display: inline-block;
+            background-color: #165b8a; /* تغيير اللون ليتناسب مع هوية الموقع */
+            color: white;
+            padding: 14px 40px;
+            font-size: 18px;
+            border-radius: 10px; /* تخفيض الانحناء ليتناسب أكثر مع التصميم العام */
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            border: 2px solid transparent;
+        }
+
+        .view-all-products-btn:hover {
+            background-color: white;
+            color: #165b8a;
+            border-color: #165b8a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(22, 91, 138, 0.2);
+        }
+
+        /* إضافة تأثير خلفية (gradient) للزر */
+        .view-all-products-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #165b8a 0%, #1a7bbd 100%);
+            border-radius: 10px;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .view-all-products-btn:hover::before {
+            opacity: 0;
         }
     </style>
 </head>
@@ -711,15 +759,15 @@
     <!-- Main Content -->
     <main class="cameras-page">
         <div class="container">
-            <div class="page-header">
-                <h1>جميع المنتجات</h1>
+    <div class="page-header">
+        <h1>جميع المنتجات</h1>
                 <p>اكتشف مجموعتنا الكاملة من معدات التصوير الفوتوغرافي والفيديو بأفضل الأسعار</p>
-            </div>
+    </div>
 
             <!-- Filters Section -->
             <section class="filters-section">
                 <div class="filters-grid">
-                    <div class="filter-group">
+        <div class="filter-group">
                         <label>الفئة</label>
                         <select name="category">
                             <option value="">الكل</option>
@@ -729,7 +777,7 @@
                             <option value="bags">الحقائب</option>
                             <option value="accessories">الإكسسوارات</option>
                         </select>
-                    </div>
+        </div>
                     <div class="filter-group">
                         <label>العلامة التجارية</label>
                         <select name="brand">
@@ -739,8 +787,8 @@
                             <option value="nikon">نيكون</option>
                             <option value="sigma">سيجما</option>
                             <option value="tamron">تامرون</option>
-                        </select>
-                    </div>
+            </select>
+        </div>
                     <div class="filter-group">
                         <label>السعر</label>
                         <select name="price">
@@ -751,7 +799,7 @@
                             <option value="2001-5000">2001 - 5000 ريال</option>
                             <option value="5001+">أكثر من 5000 ريال</option>
                         </select>
-                    </div>
+    </div>
                     <div class="filter-group">
                         <label>الترتيب</label>
                         <select name="sort">
@@ -760,6 +808,20 @@
                             <option value="price-desc">السعر: من الأعلى إلى الأقل</option>
                             <option value="newest">الأحدث</option>
                         </select>
+                    </div>
+                    <!-- إضافة في منطقة الفلاتر -->
+                    <div class="filter-group">
+                        <h3 class="filter-title">نوع التوفر</h3>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" name="availability" value="sale" checked>
+                                <span>متاح للبيع</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="availability" value="rent" checked>
+                                <span>متاح للتأجير</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -773,7 +835,7 @@
                     <div class="camera-image">
                         <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون رود">
                         <div class="camera-badge" style="background: #e74c3c;">الأكثر مبيعاً</div>
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">ميكروفون Rode VideoMic Pro+</h3>
                         <div class="camera-specs">
@@ -824,13 +886,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
                                 (4.5)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -853,7 +915,7 @@
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
                     </div>
@@ -909,15 +971,15 @@
                                 <i class="fas fa-star-half-alt"></i>
                                 (4.5)
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- حقيبة ظهر Lowepro -->
                 <div class="camera-card" data-category="bags" data-brand="lowepro">
                     <div class="camera-image">
                         <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو">
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
                         <div class="camera-specs">
@@ -972,13 +1034,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 (4.5)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -1001,7 +1063,7 @@
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
                     </div>
@@ -1053,16 +1115,16 @@
                                 <i class="fas fa-star-half-alt"></i>
                                 (4.5)
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- عدسة كانون مايكرو -->
                 <div class="camera-card" data-category="lenses" data-brand="canon">
                     <div class="camera-image">
                         <img src="canon RF24mm (1).jpg" alt="عدسة كانون مايكرو">
                         <div class="camera-badge">جديد</div>
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">عدسة كانون مايكرو</h3>
                         <div class="camera-specs">
@@ -1120,23 +1182,23 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                                 (5.0)
-                            </div>
-                        </div>
+                    </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- كرت ذاكرة SanDisk -->
                 <div class="camera-card" data-category="accessories" data-brand="sandisk">
                     <div class="camera-image">
                         <img src="SanDisk 128 (1).jpg" alt="كرت ذاكرة سانديسك">
                         <div class="camera-badge" style="background: #2ecc71;">خصم 20%</div>
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">كرت ذاكرة SanDisk Extreme Pro</h3>
                         <div class="camera-specs">
@@ -1198,13 +1260,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 (4.5)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -1227,7 +1289,7 @@
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
                     </div>
@@ -1286,16 +1348,16 @@
                                 <i class="fas fa-star"></i>
                                 (5.0)
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- بطارية Godox WB87 -->
                 <div class="camera-card" data-category="accessories" data-brand="godox">
                     <div class="camera-image">
                         <img src="Godox WB87 (1).jpg" alt="بطارية جودوكس">
                         <div class="camera-badge" style="background: #3498db;">متوفر</div>
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">بطارية Godox WB87</h3>
                         <div class="camera-specs">
@@ -1353,13 +1415,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
                                 (4.5)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -1378,7 +1440,7 @@
                         </div>
                         <div class="camera-price">٩٩٩ ﷼</div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
                     </div>
@@ -1430,16 +1492,16 @@
                                 <i class="fas fa-star-half-alt"></i>
                                 (4.5)
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- عدسة كانون RF24-105mm -->
                 <div class="camera-card" data-category="lenses" data-brand="canon">
                     <div class="camera-image">
                         <img src="canon RF24-105mm (1).jpg" alt="عدسة كانون RF24-105mm">
                         <div class="camera-badge" style="background: #2ecc71;">خصم 15%</div>
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">عدسة كانون RF24-105mm</h3>
                         <div class="camera-specs">
@@ -1497,13 +1559,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
                                 (4.0)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -1523,7 +1585,7 @@
                         </div>
                         <div class="camera-price">١٣٩٩ ﷼</div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
                     </div>
@@ -1575,16 +1637,16 @@
                                 <i class="fas fa-star"></i>
                                 (5.0)
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- مسجل صوت Zoom H5 -->
                 <div class="camera-card" data-category="audio" data-brand="zoom">
                     <div class="camera-image">
                         <img src="Zoom H5 Handy Recorder (1).jpg" alt="مسجل صوت زوم">
                         <div class="camera-badge" style="background: #2ecc71;">خصم 15%</div>
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">مسجل صوت Zoom H5 Handy Recorder</h3>
                         <div class="camera-specs">
@@ -1643,13 +1705,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                                 <i class="far fa-star"></i>
                                 (4.0)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -1672,7 +1734,7 @@
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
                     </div>
@@ -1728,15 +1790,15 @@
                                 <i class="far fa-star"></i>
                                 (4.0)
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- حقيبة كتف Peak Design -->
                 <div class="camera-card" data-category="bags" data-brand="peak-design">
                     <div class="camera-image">
                         <img src="Peak Design Everyday Sling 10L (1).jpg" alt="حقيبة كتف بيك ديزاين">
-                    </div>
+                </div>
                     <div class="camera-info">
                         <h3 class="camera-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
                         <div class="camera-specs">
@@ -1787,10 +1849,10 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                                 <i class="far fa-star"></i>
                                 (4.0)
                             </div>
@@ -1857,13 +1919,13 @@
                                 متوفر في المخزون
                             </div>
                             <div class="popup-rating">
-                                <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                                 (4.5)
-                            </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -1886,10 +1948,10 @@
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
                     </div>
+                </div>
                     <!-- نافذة منبثقة -->
                     <div class="product-popup">
                         <div class="popup-header">
@@ -1939,8 +2001,8 @@
                                 (4.5)
                             </div>
                         </div>
-                    </div>
-                </div>
+            </div>
+        </div>
 
                 <!-- عدسة تامرون -->
                 <div class="camera-card" data-category="lenses" data-brand="tamron">
@@ -2075,9 +2137,9 @@
                 </div>
             </section>
 
-            <!-- الترقيم -->
+        <!-- الترقيم -->
             <div class="pagination-container">
-                <div class="pagination">
+        <div class="pagination">
                     <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-chevron-right"></i> السابق</button>
                     <button class="page-btn active" data-page="1">1</button>
                     <button class="page-btn" data-page="2">2</button>
@@ -2085,8 +2147,8 @@
                     <button class="page-btn" data-page="4">4</button>
                     <button class="page-btn" data-page="5">5</button>
                     <button id="next-btn" class="nav-btn">التالي <i class="fas fa-chevron-left"></i></button>
-                </div>
-            </div>
+        </div>
+    </div>
         </div>
     </main>
 
@@ -2233,8 +2295,8 @@
             
             // إعادة تنشيط الصفحة الأولى
             pageButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
+                    btn.classList.remove('active');
+                });
             if (pageButtons.length > 0) {
                 pageButtons[0].classList.add('active');
             }
@@ -2318,7 +2380,7 @@
                     
                     // إضافة مستمع الحدث للزر
                     viewDetailsBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
+                e.preventDefault();
                         e.stopPropagation();
                         
                         // استخراج البيانات من البطاقة
@@ -2413,12 +2475,12 @@
             document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
                 alert('تمت إضافة المنتج إلى المفضلة');
                 this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
-            });
-
+        });
+        
             // إغلاق النافذة المنبثقة الصغيرة
             document.querySelectorAll('.popup-close').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
                     e.stopPropagation();
                     const popup = this.closest('.product-popup');
                     popup.style.display = 'none';
@@ -2462,6 +2524,180 @@
                 }
             });
         });
+
+        // إصلاح أزرار السلة والمفضلة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تفعيل زر السلة
+            const cartButtons = document.querySelectorAll('.add-to-cart, .cart-icon');
+            cartButtons.forEach(button => {
+                // إزالة أي مستمعات أحداث سابقة
+                const newButton = button.cloneNode(true);
+                button.parentNode.replaceChild(newButton, button);
+                
+                newButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    console.log('تمت إضافة المنتج للسلة');
+                    
+                    // إظهار رسالة تأكيد
+                    alert('تمت إضافة المنتج إلى السلة بنجاح');
+                    
+                    // يمكنك التعليق على السطر التالي إذا لم ترغب في الانتقال إلى صفحة السلة مباشرة
+                    // window.location.href = 'cart.html';
+                });
+            });
+            
+            // تفعيل زر المفضلة (بالاسمين: wishlist-btn و add-to-favorites)
+            const wishlistButtons = document.querySelectorAll('.wishlist-btn, .heart-icon, .add-to-favorites');
+            wishlistButtons.forEach(button => {
+                // إزالة أي مستمعات أحداث سابقة
+                const newButton = button.cloneNode(true);
+                button.parentNode.replaceChild(newButton, button);
+                
+                newButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    // تغيير أيقونة القلب (إن وجدت)
+                    const heartIcon = this.querySelector('i');
+                    if (heartIcon) {
+                        if (heartIcon.classList.contains('far')) {
+                            heartIcon.classList.remove('far');
+                            heartIcon.classList.add('fas');
+                        } else if (heartIcon.classList.contains('fas')) {
+                            // في حالة كان فاس بالفعل، لا تغير الأيقونة
+                            // لكن يمكننا عرض رسالة مختلفة
+                        }
+                    }
+                    
+                    console.log('تمت إضافة المنتج للمفضلة');
+                    
+                    // إظهار رسالة تأكيد
+                    alert('تمت إضافة المنتج إلى المفضلة بنجاح');
+                    
+                    // يمكنك التعليق على السطر التالي إذا لم ترغب في الانتقال إلى صفحة المفضلة مباشرة
+                    // window.location.href = 'favorites.html';
+                });
+            });
+            
+            console.log('تم تفعيل أزرار السلة والمفضلة لجميع المنتجات');
+        });
+    </script>
+
+    <!-- إصلاح شامل لأزرار السلة والمفضلة وروابط الموقع -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("بدء تنفيذ سكريبت الإصلاح الشامل");
+        
+        // 1. إصلاح وسم alt المكسور في الصور
+        document.querySelectorAll('alt').forEach(function(brokenTag) {
+            if (brokenTag.parentNode) {
+                const newImg = document.createElement('img');
+                newImg.src = "camera-logo.png";
+                
+                // نقل جميع السمات
+                Array.from(brokenTag.attributes).forEach(function(attr) {
+                    newImg.setAttribute(attr.name, attr.value);
+                });
+                
+                // استبدال العنصر
+                brokenTag.parentNode.replaceChild(newImg, brokenTag);
+                console.log("تم إصلاح وسم alt مكسور");
+            }
+        });
+        
+        // 2. توحيد سلوك أزرار السلة والمفضلة
+        
+        // تعريف الدالات المشتركة
+        function addToCart(productName) {
+            alert("تم إضافة " + (productName || "المنتج") + " إلى السلة بنجاح");
+            console.log("تمت إضافة المنتج للسلة: " + productName);
+        }
+        
+        function addToFavorites(productName) {
+            alert("تم إضافة " + (productName || "المنتج") + " إلى المفضلة بنجاح");
+            console.log("تمت إضافة المنتج للمفضلة: " + productName);
+        }
+        
+        // معالجة أزرار السلة (للأزرار button)
+        document.querySelectorAll('button.add-to-cart').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // العثور على اسم المنتج
+                const card = this.closest('.camera-card, .product-card, .camera-info, .product-info');
+                const productName = card ? (card.querySelector('h3') ? card.querySelector('h3').textContent : 'المنتج') : 'المنتج';
+                
+                addToCart(productName);
+            });
+        });
+        
+        // معالجة أزرار المفضلة (للأزرار button)
+        document.querySelectorAll('button.add-to-favorites, button.wishlist-btn').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // تغيير أيقونة القلب
+                const heartIcon = this.querySelector('i');
+                if (heartIcon) {
+                    heartIcon.classList.toggle('far');
+                    heartIcon.classList.toggle('fas');
+                }
+                
+                // العثور على اسم المنتج
+                const card = this.closest('.camera-card, .product-card, .camera-info, .product-info');
+                const productName = card ? (card.querySelector('h3') ? card.querySelector('h3').textContent : 'المنتج') : 'المنتج';
+                
+                addToFavorites(productName);
+            });
+        });
+        
+        // 3. معالجة روابط السلة والمفضلة في الهيدر
+        
+        // روابط السلة
+        document.querySelectorAll('a.cart-icon').forEach(function(link) {
+            const originalHref = link.getAttribute('href');
+            
+            link.addEventListener('click', function(e) {
+                // إذا كان الضغط على أيقونة السلة في منتج معين
+                if (this.closest('.camera-card, .product-card, .camera-info, .product-info')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const card = this.closest('.camera-card, .product-card, .camera-info, .product-info');
+                    const productName = card ? (card.querySelector('h3') ? card.querySelector('h3').textContent : 'المنتج') : 'المنتج';
+                    addToCart(productName);
+                }
+                // إذا كان الضغط على أيقونة السلة في الهيدر، اترك السلوك الافتراضي (التوجه لصفحة السلة)
+            });
+        });
+        
+        // روابط المفضلة
+        document.querySelectorAll('a.heart-icon').forEach(function(link) {
+            const originalHref = link.getAttribute('href');
+            
+            link.addEventListener('click', function(e) {
+                // إذا كان الضغط على أيقونة المفضلة في منتج معين
+                if (this.closest('.camera-card, .product-card, .camera-info, .product-info')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // تغيير أيقونة القلب
+                    const heartIcon = this.querySelector('i');
+                    if (heartIcon) {
+                        heartIcon.classList.toggle('far');
+                        heartIcon.classList.toggle('fas');
+                    }
+                    
+                    const card = this.closest('.camera-card, .product-card, .camera-info, .product-info');
+                    const productName = card ? (card.querySelector('h3') ? card.querySelector('h3').textContent : 'المنتج') : 'المنتج';
+                    addToFavorites(productName);
+                }
+                // إذا كان الضغط على أيقونة المفضلة في الهيدر، اترك السلوك الافتراضي (التوجه لصفحة المفضلة)
+            });
+        });
+        
+        console.log("تم تنفيذ جميع إصلاحات الأزرار والروابط بنجاح");
+    });
     </script>
 </body>
 </html> 
