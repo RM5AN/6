@@ -293,8 +293,7 @@
             z-index: 100;
             padding: 15px;
             transition: opacity 0.3s, transform 0.3s;
-            opacity: 0;
-            transform: translateY(10px);
+            text-align: left;
         }
 
         .camera-card .product-popup {
@@ -313,6 +312,7 @@
 
         .popup-details {
             margin-bottom: 15px;
+            text-align: left;
         }
 
         .popup-detail {
@@ -347,33 +347,30 @@
         }
 
         .popup-price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #165b8a;
-            margin: 10px 0;
-            text-align: right;
-            position: relative;
             display: flex;
             align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            direction: ltr;
             justify-content: flex-start;
+            text-align: left;
+            margin-left: 0;
+            padding-left: 0;
         }
-
-        .popup-price .popup-sar-symbol {
-            font-size: 1rem;
-            margin-right: 4px;
-            color: #165b8a;
-        }
-
-        .popup-price .popup-sar-symbol::before {
-            content: "";
-            font-size: 0.9rem;
-            margin-left: 4px;
-        }
-
-        .popup-price span {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #165b8a;
+        
+        .popup-sar-symbol {
+            width: 24px;
+            height: 24px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8dtoYHY6kKKBe60P4wKoBG-gLreYxhttk6Cx2EIpjSPbPnq07ht4vBf7kMY8m7Npogg&usqp=CAU");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+            order: -1;
         }
 
         .popup-footer {
@@ -510,6 +507,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            align-items: flex-start;
         }
 
         .modal-specs {
@@ -543,7 +541,19 @@
             font-weight: 700;
             font-size: 24px;
             margin: 10px 0;
-            direction: rtl;
+            flex-direction: row;
+            justify-content: flex-start;
+            text-align: left;
+            width: 100%;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .modal-price .popup-sar-symbol {
+            width: 28px;
+            height: 28px;
+            margin-right: 5px;
+            order: -1;
         }
 
         .modal-actions {
@@ -851,7 +861,7 @@
                         <div class="filter-options">
                             <label class="filter-option">
                                 <input type="checkbox" name="availability" value="sale" checked>
-                                <span>متاح للبيع</span>
+                                <span>متاح للشراء</span>
                             </label>
                             <label class="filter-option">
                                 <input type="checkbox" name="availability" value="rent" checked>
@@ -1468,7 +1478,10 @@
                             <span><i class="fas fa-music"></i> استجابة التردد: 5-35,000 Hz</span>
                             <span><i class="fas fa-plug"></i> كابل: 3 متر</span>
                         </div>
-                        <div class="camera-price">٩٩٩ ﷼</div>
+                         <div class="camera-price">
+                            <span class="price-number">٩٩٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
                         <div class="camera-actions">
                         <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1613,7 +1626,10 @@
                             <span><i class="fas fa-lock"></i> قفل TSA متوافق</span>
                             <span><i class="fas fa-dolly"></i> عجلات سيليكون صامتة</span>
                         </div>
-                        <div class="camera-price">١٣٩٩ ﷼</div>
+                        <div class="camera-price">
+                            <span class="price-number">١٣٩٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
                         <div class="camera-actions">
                         <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1836,7 +1852,10 @@
                             <span><i class="fas fa-expand-arrows-alt"></i> السعة: 10 لتر</span>
                             <span><i class="fas fa-shield-alt"></i> تصميم مقاوم للسرقة</span>
                         </div>
-                        <div class="camera-price">٦٤٩ ﷼</div>
+                        <div class="camera-price">
+                            <span class="price-number">٦٤٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -2048,7 +2067,7 @@
                             <span><i class="fas fa-clock"></i> إيجار يومي</span>
                         </div>
                         <div class="camera-price">
-                            <span class="price-number">١٥٠ ﷼/يوم</span>
+                            <span class="price-number">١٥٠ لليوم</span>
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
@@ -2085,7 +2104,7 @@
                         </div>
                         <div class="popup-price">
                             <span class="popup-sar-symbol"></span>
-                            <span>١٥٠ ﷼/يوم</span>
+                            <span>١٥٠ لليوم</span>
                         </div>
                         <div class="popup-footer">
                             <div class="popup-availability">
@@ -2118,7 +2137,7 @@
                             <span><i class="fas fa-clock"></i> إيجار يومي</span>
                         </div>
                         <div class="camera-price">
-                            <span class="price-number">١٥٠ ﷼/يوم</span>
+                            <span class="price-number">١٥٠ لليوم</span>
                             <span class="sar-symbol"></span>
                         </div>
                         <div class="camera-actions">
@@ -2155,7 +2174,7 @@
                         </div>
                         <div class="popup-price">
                             <span class="popup-sar-symbol"></span>
-                            <span>١٥٠ ﷼/يوم</span>
+                            <span>١٥٠ لليوم</span>
                         </div>
                         <div class="popup-footer">
                             <div class="popup-availability">
@@ -2424,6 +2443,11 @@
                         modalMainImage.src = image;
                         modalMainImage.alt = title;
                         modalPrice.innerHTML = `<span class="popup-sar-symbol"></span><span>${price}</span>`;
+                        modalPrice.style.justifyContent = 'flex-start';
+                        modalPrice.style.textAlign = 'left';
+                        modalPrice.style.direction = 'ltr';
+                        modalPrice.style.marginLeft = '0';
+                        modalPrice.style.paddingLeft = '0';
 
                         // إضافة الصور المصغرة من النافذة المنبثقة إذا وجدت
                         modalThumbnails.innerHTML = '';
@@ -2610,6 +2634,35 @@
             
             console.log('تم تفعيل أزرار السلة والمفضلة لجميع المنتجات');
         });
+
+        // الحصول على عناصر التصفية
+        const availabilityFilters = document.querySelectorAll('input[name="availability"]');
+        
+        // وظيفة تصفية المنتجات
+        function filterByAvailability() {
+            const showSale = document.querySelector('input[value="sale"]').checked;
+            const showRent = document.querySelector('input[value="rent"]').checked;
+            
+            document.querySelectorAll('.camera-card').forEach(card => {
+                const priceText = card.querySelector('.camera-price').textContent;
+                const isRentProduct = priceText.includes('لليوم');
+                
+                if ((showSale && !isRentProduct) || (showRent && isRentProduct)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // إضافة مستمعي الأحداث لخيارات التصفية
+        availabilityFilters.forEach(filter => {
+            filter.addEventListener('change', filterByAvailability);
+        });
+        
+        // تطبيق التصفية الأولية
+        filterByAvailability();
+    });
     </script>
 
     <!-- إصلاح شامل لأزرار السلة والمفضلة وروابط الموقع -->
@@ -2728,6 +2781,107 @@
         
         console.log("تم تنفيذ جميع إصلاحات الأزرار والروابط بنجاح");
     });
+    </script>
+
+    <!-- إضافة سكريبت التصفية -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const itemsPerPage = 8;
+            let currentPage = 1;
+            
+            // تفعيل التصفية حسب نوع التوفر
+            const availabilityFilters = document.querySelectorAll('input[name="availability"]');
+            
+            function filterAndPaginateProducts() {
+                const showSale = document.querySelector('input[value="sale"]').checked;
+                const showRent = document.querySelector('input[value="rent"]').checked;
+                
+                // تحديد المنتجات المرئية حسب الفلتر
+                const allProducts = Array.from(document.querySelectorAll('.camera-card'));
+                const filteredProducts = allProducts.filter(card => {
+                    const priceText = card.querySelector('.camera-price').textContent;
+                    const isRentProduct = priceText.includes('لليوم');
+                    return (showSale && !isRentProduct) || (showRent && isRentProduct);
+                });
+
+                // إخفاء جميع المنتجات أولاً
+                allProducts.forEach(card => {
+                    card.style.display = 'none';
+                });
+
+                // حساب نطاق المنتجات للصفحة الحالية
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
+
+                // إظهار المنتجات للصفحة الحالية فقط
+                for (let i = startIndex; i < endIndex; i++) {
+                    filteredProducts[i].style.display = 'block';
+                }
+
+                // تحديث أزرار الصفحات
+                updatePaginationButtons(filteredProducts.length);
+            }
+
+            function updatePaginationButtons(totalItems) {
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                const paginationContainer = document.querySelector('.pagination');
+                
+                if (paginationContainer) {
+                    paginationContainer.innerHTML = '';
+                    
+                    // زر الصفحة السابقة
+                    if (totalPages > 1) {
+                        const prevButton = document.createElement('button');
+                        prevButton.textContent = 'السابق';
+                        prevButton.disabled = currentPage === 1;
+                        prevButton.addEventListener('click', () => {
+                            if (currentPage > 1) {
+                                currentPage--;
+                                filterAndPaginateProducts();
+                            }
+                        });
+                        paginationContainer.appendChild(prevButton);
+                    }
+
+                    // أزرار الصفحات
+                    for (let i = 1; i <= totalPages; i++) {
+                        const pageButton = document.createElement('button');
+                        pageButton.textContent = i;
+                        pageButton.classList.toggle('active', i === currentPage);
+                        pageButton.addEventListener('click', () => {
+                            currentPage = i;
+                            filterAndPaginateProducts();
+                        });
+                        paginationContainer.appendChild(pageButton);
+                    }
+
+                    // زر الصفحة التالية
+                    if (totalPages > 1) {
+                        const nextButton = document.createElement('button');
+                        nextButton.textContent = 'التالي';
+                        nextButton.disabled = currentPage === totalPages;
+                        nextButton.addEventListener('click', () => {
+                            if (currentPage < totalPages) {
+                                currentPage++;
+                                filterAndPaginateProducts();
+                            }
+                        });
+                        paginationContainer.appendChild(nextButton);
+                    }
+                }
+            }
+            
+            // إضافة مستمعي الأحداث لخيارات التصفية
+            availabilityFilters.forEach(filter => {
+                filter.addEventListener('change', () => {
+                    currentPage = 1; // العودة للصفحة الأولى عند تغيير الفلتر
+                    filterAndPaginateProducts();
+                });
+            });
+            
+            // تطبيق التصفية الأولية
+            filterAndPaginateProducts();
+        });
     </script>
 </body>
 </html> 
