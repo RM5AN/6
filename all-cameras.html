@@ -826,7 +826,7 @@
                         <label>نوع العملية</label>
                         <select name="operation">
                             <option value="">الكل</option>
-                            <option value="buy">بيع</option>
+                            <option value="buy">شراء </option>
                             <option value="rent">إيجار</option>
                         </select>
                     </div>
@@ -1084,7 +1084,7 @@
                             <span><i class="fas fa-film"></i> تصوير 4K</span>
                             <span><i class="fas fa-clock"></i> إيجار يومي</span>
                         </div>
-                        <div class="camera-price">/  ١٥٠ يوم</div>
+                        <div class="camera-price">١٥٠ لليوم</div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> حجز الآن</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1118,7 +1118,7 @@
                             </div>
                         </div>
                         <div class="popup-price">
-                            <span>/  ١٥٠ يوم</span>
+                            <span>١٥٠ لليوم</span>
                             <span class="popup-sar-symbol"></span>
                         </div>
                         <div class="popup-footer">
@@ -1132,12 +1132,15 @@
             </section>
 
             <!-- Pagination -->
-            <div class="pagination">
-                <button>السابق</button>
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>التالي</button>
+            <div class="pagination-container">
+                <div class="pagination">
+                    <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-chevron-right"></i> السابق</button>
+                    <button class="page-btn active" data-page="1">1</button>
+                    <button class="page-btn" data-page="2">2</button>
+                    <button class="page-btn" data-page="3">3</button>
+                    <button class="page-btn" data-page="4">4</button>
+                    <button id="next-btn" class="nav-btn" disabled>التالي <i class="fas fa-chevron-left"></i></button>
+                </div>
             </div>
         </div>
     </main>
@@ -1442,6 +1445,100 @@
                 alert('تمت إضافة المنتج إلى المفضلة');
                 this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
             });
+            
+            // إضافة وظائف التنقل بين الصفحات
+            const paginationButtons = document.querySelectorAll('.pagination button');
+            const camerasGrid = document.querySelector('.cameras-grid');
+            const cameras = document.querySelectorAll('.camera-card');
+            const itemsPerPage = 8; // عدد المنتجات في كل صفحة
+            let currentPage = 1;
+            const totalPages = Math.ceil(cameras.length / itemsPerPage);
+            
+            // إضافة عنصر لعرض رسالة "لا توجد منتجات"
+            const noProductsMessage = document.createElement('div');
+            noProductsMessage.className = 'no-products-message';
+            noProductsMessage.style.textAlign = 'center';
+            noProductsMessage.style.padding = '30px';
+            noProductsMessage.style.fontSize = '18px';
+            noProductsMessage.style.color = '#666';
+            noProductsMessage.style.display = 'none';
+            noProductsMessage.textContent = 'لا توجد منتجات';
+            camerasGrid.appendChild(noProductsMessage);
+
+            // دالة لعرض المنتجات في الصفحة الحالية
+            function showPage(page) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                
+                // إخفاء جميع المنتجات
+                cameras.forEach(camera => {
+                    camera.style.display = 'none';
+                });
+                
+                // عرض المنتجات في الصفحة الحالية
+                let visibleCount = 0;
+                for (let i = start; i < end && i < cameras.length; i++) {
+                    cameras[i].style.display = 'block';
+                    visibleCount++;
+                }
+                
+                // عرض رسالة "لا توجد منتجات" إذا كانت الصفحة فارغة
+                if (visibleCount === 0) {
+                    noProductsMessage.style.display = 'block';
+                } else {
+                    noProductsMessage.style.display = 'none';
+                }
+                
+                // تحديث حالة الأزرار
+                paginationButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+                
+                // تحديد الزر النشط
+                if (page === 1) {
+                    document.getElementById('prev-btn').disabled = true; // تعطيل زر السابق
+                } else {
+                    document.getElementById('prev-btn').disabled = false;
+                }
+                
+                if (page === 4) {
+                    document.getElementById('next-btn').disabled = true; // تعطيل زر التالي
+                } else {
+                    document.getElementById('next-btn').disabled = false;
+                }
+                
+                // تحديد زر الصفحة الحالية
+                const pageButton = document.querySelector(`.page-btn[data-page="${page}"]`);
+                if (pageButton) {
+                    pageButton.classList.add('active');
+                }
+                
+                currentPage = page;
+            }
+
+            // إضافة مستمعي الأحداث لأزرار التنقل
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    showPage(currentPage - 1);
+                }
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', function() {
+                if (currentPage < 4) {
+                    showPage(currentPage + 1);
+                }
+            });
+            
+            // إضافة مستمعي الأحداث لأزرار الأرقام
+            document.querySelectorAll('.page-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pageNumber = parseInt(this.getAttribute('data-page'));
+                    showPage(pageNumber);
+                });
+            });
+
+            // عرض الصفحة الأولى عند تحميل الصفحة
+            showPage(1);
         });
     </script>
 </body>

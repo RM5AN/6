@@ -159,13 +159,33 @@
         }
 
         .camera-price {
+            font-size: 1.2rem;
             font-weight: bold;
             color: #165b8a;
+            margin: 10px 0;
+            text-align: center;
             position: relative;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            margin-bottom: 15px;
-            font-size: 18px;
+            justify-content: center;
+        }
+
+        .camera-price .sar-symbol {
+            font-size: 1rem;
+            margin-right: 4px;
+            color: #165b8a;
+        }
+
+        .camera-price .sar-symbol::before {
+            content: "";
+            font-size: 0.9rem;
+            margin-left: 4px;
+        }
+
+        .camera-price .price-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #165b8a;
         }
 
         .camera-actions {
@@ -327,17 +347,33 @@
         }
 
         .popup-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #165b8a;
+            margin: 10px 0;
+            text-align: right;
+            position: relative;
             display: flex;
             align-items: center;
-            color: #165b8a;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 10px;
-            direction: rtl;
+            justify-content: flex-start;
         }
 
-        .popup-sar-symbol {
-            margin-left: 5px;
+        .popup-price .popup-sar-symbol {
+            font-size: 1rem;
+            margin-right: 4px;
+            color: #165b8a;
+        }
+
+        .popup-price .popup-sar-symbol::before {
+            content: "";
+            font-size: 0.9rem;
+            margin-left: 4px;
+        }
+
+        .popup-price span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #165b8a;
         }
 
         .popup-footer {
@@ -843,7 +879,7 @@
                             <span><i class="fas fa-battery-full"></i> بطارية قابلة للشحن</span>
                             <span><i class="fas fa-filter"></i> فلتر قطع التردد المنخفض</span>
                         </div>
-                        <div class="camera-price">١٢٩٩ ﷼</div>
+                        <div class="camera-price">١٢٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -987,7 +1023,7 @@
                             <span><i class="fas fa-laptop"></i> مساحة للاب توب 15 بوصة</span>
                             <span><i class="fas fa-tint"></i> مقاومة للماء</span>
                         </div>
-                        <div class="camera-price">٧٩٩ ﷼</div>
+                        <div class="camera-price">٧٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1132,10 +1168,7 @@
                             <span><i class="fas fa-ruler"></i> البعد البؤري: 24mm</span>
                             <span><i class="fas fa-search"></i> تكبير 1:1</span>
                         </div>
-                        <div class="camera-price">
-                            <span class="price-number">٢,٠٠٠</span>
-                            <span class="sar-symbol"></span>
-                        </div>
+                        <div class="camera-price">٢,٠٠٠ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1206,10 +1239,7 @@
                             <span><i class="fas fa-tachometer-alt"></i> سرعة: 170MB/s</span>
                             <span><i class="fas fa-shield-alt"></i> مقاوم للماء</span>
                         </div>
-                        <div class="camera-price">
-                            <span class="price-number">٢٩٩</span>
-                            <span class="sar-symbol"></span>
-                        </div>
+                        <div class="camera-price">٢٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1654,7 +1684,7 @@
                             <span><i class="fas fa-sd-card"></i> يدعم بطاقة SD حتى 32GB</span>
                             <span><i class="fas fa-clock"></i> تسجيل حتى 15 ساعة</span>
                         </div>
-                        <div class="camera-price">١٥٩٩ ﷼</div>
+                        <div class="camera-price">١٥٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>

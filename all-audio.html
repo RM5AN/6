@@ -165,11 +165,30 @@
         }
 
         .camera-price {
-            font-size: 18px;
+            font-weight: bold;
             color: #165b8a;
-            font-weight: 600;
-            margin-bottom: 12px;
-            font-family: 'Tajawal', sans-serif;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .camera-price::after {
+            content: '';
+        }
+
+        .camera-price::before {
+            content: "";
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Saudi_Riyal.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 5px;
         }
 
         .camera-actions {
@@ -349,6 +368,7 @@
             font-size: 18px;
             margin-bottom: 10px;
             direction: ltr;
+            justify-content: flex-start;
         }
 
         .popup-sar-symbol {
@@ -550,7 +570,21 @@
             font-weight: 700;
             font-size: 24px;
             margin: 10px 0;
-            direction: rtl;
+            direction: ltr;
+            justify-content: flex-start;
+        }
+
+        .modal-price .popup-sar-symbol {
+            width: 24px;
+            height: 24px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8dtoYHY6kKKBe60P4wKoBG-gLreYxhttk6Cx2EIpjSPbPnq07ht4vBf7kMY8m7Npogg&usqp=CAU");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+            order: -1;
         }
 
         .modal-actions {
@@ -800,7 +834,7 @@
                             <span><i class="fas fa-battery-full"></i> بطارية قابلة للشحن</span>
                             <span><i class="fas fa-filter"></i> فلتر قطع التردد المنخفض</span>
                         </div>
-                        <div class="camera-price">١٢٩٩ ﷼</div>
+                        <div class="camera-price">١٢٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -866,7 +900,7 @@
                             <span><i class="fas fa-sd-card"></i> يدعم بطاقة SD حتى 32GB</span>
                             <span><i class="fas fa-clock"></i> تسجيل حتى 15 ساعة</span>
                         </div>
-                        <div class="camera-price">١٥٩٩ ﷼</div>
+                        <div class="camera-price">١٥٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -941,7 +975,7 @@
                             <span><i class="fas fa-music"></i> استجابة التردد: 5-35,000 Hz</span>
                             <span><i class="fas fa-plug"></i> كابل: 3 متر</span>
                         </div>
-                        <div class="camera-price">٩٩٩ ﷼</div>
+                        <div class="camera-price">٨٩٩ <span class="sar-symbol"></span></div>
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
@@ -1002,12 +1036,15 @@
             </section>
 
             <!-- Pagination -->
-            <div class="pagination">
-                <button>السابق</button>
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>التالي</button>
+            <div class="pagination-container">
+                <div class="pagination">
+                    <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-chevron-right"></i> السابق</button>
+                    <button class="page-btn active" data-page="1">1</button>
+                    <button class="page-btn" data-page="2">2</button>
+                    <button class="page-btn" data-page="3">3</button>
+                    <button class="page-btn" data-page="4">4</button>
+                    <button id="next-btn" class="nav-btn" disabled>التالي <i class="fas fa-chevron-left"></i></button>
+                </div>
             </div>
         </div>
     </main>
@@ -1237,7 +1274,7 @@
                 modalSpecs.appendChild(availabilityElement);
                 
                 // إضافة السعر
-                document.getElementById('modalPrice').textContent = price;
+                document.getElementById('modalPrice').innerHTML = `<span class="popup-sar-symbol"></span><span>${price}</span>`;
                 
                 // عرض النافذة المنبثقة
                 document.getElementById('productModal').style.display = 'block';
@@ -1277,6 +1314,100 @@
                 this.closest('.product-popup').style.display = 'none';
             });
         });
+
+        // وظائف الترقيم
+        const paginationButtons = document.querySelectorAll('.pagination button');
+            const camerasGrid = document.querySelector('.cameras-grid');
+            const cameras = document.querySelectorAll('.camera-card');
+            const itemsPerPage = 8; // عدد المنتجات في كل صفحة
+            let currentPage = 1;
+            const totalPages = Math.ceil(cameras.length / itemsPerPage);
+            
+            // إضافة عنصر لعرض رسالة "لا توجد منتجات"
+            const noProductsMessage = document.createElement('div');
+            noProductsMessage.className = 'no-products-message';
+            noProductsMessage.style.textAlign = 'center';
+            noProductsMessage.style.padding = '30px';
+            noProductsMessage.style.fontSize = '18px';
+            noProductsMessage.style.color = '#666';
+            noProductsMessage.style.display = 'none';
+            noProductsMessage.textContent = 'لا توجد منتجات';
+            camerasGrid.appendChild(noProductsMessage);
+
+            // دالة لعرض المنتجات في الصفحة الحالية
+            function showPage(page) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                
+                // إخفاء جميع المنتجات
+                cameras.forEach(camera => {
+                    camera.style.display = 'none';
+                });
+                
+                // عرض المنتجات في الصفحة الحالية
+                let visibleCount = 0;
+                for (let i = start; i < end && i < cameras.length; i++) {
+                    cameras[i].style.display = 'block';
+                    visibleCount++;
+                }
+                
+                // عرض رسالة "لا توجد منتجات" إذا كانت الصفحة فارغة
+                if (visibleCount === 0) {
+                    noProductsMessage.style.display = 'block';
+                } else {
+                    noProductsMessage.style.display = 'none';
+                }
+                
+                // تحديث حالة الأزرار
+                paginationButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+                
+                // تحديد الزر النشط
+                if (page === 1) {
+                    document.getElementById('prev-btn').disabled = true; // تعطيل زر السابق
+                } else {
+                    document.getElementById('prev-btn').disabled = false;
+                }
+                
+                if (page === 4) {
+                    document.getElementById('next-btn').disabled = true; // تعطيل زر التالي
+                } else {
+                    document.getElementById('next-btn').disabled = false;
+                }
+                
+                // تحديد زر الصفحة الحالية
+                const pageButton = document.querySelector(`.page-btn[data-page="${page}"]`);
+                if (pageButton) {
+                    pageButton.classList.add('active');
+                }
+                
+                currentPage = page;
+            }
+
+            // إضافة مستمعي الأحداث لأزرار التنقل
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    showPage(currentPage - 1);
+                }
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', function() {
+                if (currentPage < 4) {
+                    showPage(currentPage + 1);
+                }
+            });
+            
+            // إضافة مستمعي الأحداث لأزرار الأرقام
+            document.querySelectorAll('.page-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pageNumber = parseInt(this.getAttribute('data-page'));
+                    showPage(pageNumber);
+                });
+            });
+
+            // عرض الصفحة الأولى عند تحميل الصفحة
+            showPage(1);
     </script>
 </body>
 </html> 
