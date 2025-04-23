@@ -101,6 +101,11 @@
             transform: translateY(-5px);
         }
 
+        /* إخفاء النافذة المنبثقة عند تمرير المؤشر */
+        .camera-card:hover .product-popup {
+            display: none !important;
+        }
+
         .camera-image {
             position: relative;
             height: 180px;
@@ -730,6 +735,23 @@
             content: '';
         }
 
+        
+.cart-icon {
+    position: relative;
+}
+.cart-count {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+
         /* إضافة شعار الريال للنافذة المنبثقة */
         .popup-price span:last-child::before {
             content: "";
@@ -741,6 +763,27 @@
             background-repeat: no-repeat;
             background-position: center;
             margin-right: 5px;
+        }
+
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
         }
     </style>
 </head>
@@ -780,6 +823,7 @@
                     </a>
                     <a href="cart.html" class="cart-icon">
                         <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
                     </a>
                 </div>
                 
@@ -1207,7 +1251,7 @@
                     <div class="modal-price" id="modalPrice"></div>
                     <div class="modal-actions">
                         <button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
+                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i></button>
                     </div>
                 </div>
             </div>
@@ -1220,10 +1264,12 @@
             const type = document.querySelector('select[name="type"]').value;
             const brand = document.querySelector('select[name="brand"]').value;
             const operation = document.querySelector('select[name="operation"]').value;
+            const sort = document.querySelector('select[name="sort"]').value;
             
-            const cameras = document.querySelectorAll('.camera-card');
-            let visibleCount = 0;
+            const cameras = Array.from(document.querySelectorAll('.camera-card'));
+            let visibleCameras = [];
             
+            // تصفية الكاميرات
             cameras.forEach(camera => {
                 const matchType = !type || camera.dataset.type === type;
                 const matchBrand = !brand || camera.dataset.brand === brand;
@@ -1231,15 +1277,59 @@
                 
                 if (matchType && matchBrand && matchOperation) {
                     camera.style.display = 'block';
-                    visibleCount++;
+                    visibleCameras.push(camera);
                 } else {
                     camera.style.display = 'none';
                 }
             });
             
+            // تحويل الأرقام العربية إلى أرقام إنجليزية
+            function convertArabicToEnglish(str) {
+                const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+                const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                let result = str;
+                for (let i = 0; i < arabicNumbers.length; i++) {
+                    result = result.replace(new RegExp(arabicNumbers[i], 'g'), englishNumbers[i]);
+                }
+                return result;
+            }
+            
+            // استخراج السعر من النص
+            function extractPrice(priceText) {
+                const convertedText = convertArabicToEnglish(priceText);
+                const cleaned = convertedText.replace(/[^\d]/g, ''); // إزالة أي شيء غير رقمي
+                return parseInt(cleaned) || 0;
+            }
+            
+            // ترتيب الكاميرات المرئية
+            visibleCameras.sort((a, b) => {
+                const priceTextA = a.querySelector('.camera-price').textContent.trim();
+                const priceTextB = b.querySelector('.camera-price').textContent.trim();
+                
+                const priceA = extractPrice(priceTextA);
+                const priceB = extractPrice(priceTextB);
+                
+                switch(sort) {
+                    case 'price-low':
+                        return priceA - priceB;
+                    case 'price-high':
+                        return priceB - priceA;
+                    case 'newest':
+                        return a.dataset.type.localeCompare(b.dataset.type);
+                    default:
+                        return 0;
+                }
+            });
+            
+            // إعادة ترتيب الكاميرات في الصفحة
+            const camerasGrid = document.querySelector('.cameras-grid');
+            visibleCameras.forEach(camera => {
+                camerasGrid.appendChild(camera);
+            });
+            
             // إظهار رسالة إذا لم يتم العثور على نتائج
             const noResults = document.getElementById('no-results');
-            if (visibleCount === 0) {
+            if (visibleCameras.length === 0) {
                 if (!noResults) {
                     const message = document.createElement('div');
                     message.id = 'no-results';
@@ -1247,38 +1337,70 @@
                     message.style.padding = '20px';
                     message.style.width = '100%';
                     message.innerHTML = 'لا توجد كاميرات تطابق معايير البحث';
-                    document.querySelector('.cameras-grid').appendChild(message);
+                    camerasGrid.appendChild(message);
                 }
             } else if (noResults) {
                 noResults.remove();
             }
         }
 
-        // إضافة event listeners للتصفية
-        document.querySelectorAll('.filters-section select').forEach(select => {
-            select.addEventListener('change', filterCameras);
+        // إضافة event listeners للتصفية والترتيب
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.filters-section select').forEach(select => {
+                select.addEventListener('change', filterCameras);
+            });
         });
 
         // إضافة وظائف سلة التسوق والمفضلة
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                alert('تمت إضافة المنتج إلى سلة التسوق');
-            });
-        });
-
-        document.querySelectorAll('.add-to-favorites').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.querySelector('i').classList.toggle('active');
-                alert('تمت إضافة المنتج إلى المفضلة');
-            });
-        });
-
-        // إضافة المستمعين للنقر على بطاقات الكاميرا عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
+            // تحديث عداد السلة والمفضلة عند تحميل الصفحة
+            updateCartCount();
+            updateFavoritesCount();
+
+            // إضافة للسلة
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productCard = this.closest('.camera-card');
+                    const productName = productCard.querySelector('.camera-title').textContent;
+                    const productPrice = productCard.querySelector('.camera-price').textContent.trim();
+                    const productImage = productCard.querySelector('.camera-image img').src;
+                    
+                    // إضافة المنتج للسلة
+                    addToCart(productName, productPrice, productImage);
+                });
+            });
+
+            // إضافة للمفضلة
+            document.querySelectorAll('.add-to-favorites').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const card = this.closest('.camera-card');
+                    const productName = card.querySelector('.camera-title').textContent;
+                    const productPrice = card.querySelector('.camera-price').textContent;
+                    const productImage = card.querySelector('.camera-image img').src;
+                    const heartIcon = this.querySelector('i');
+                    
+                    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                    const isFavorite = favorites.some(item => item.name === productName);
+                    
+                    if (isFavorite) {
+                        // إزالة من المفضلة
+                        favorites = favorites.filter(item => item.name !== productName);
+                        heartIcon.style.color = '#333';
+                        showNotification('تم إزالة المنتج من المفضلة');
+                    } else {
+                        // إضافة للمفضلة
+                        favorites.push({ name: productName, price: productPrice, image: productImage });
+                        heartIcon.style.color = '#e74c3c';
+                        showNotification('تم إضافة المنتج للمفضلة');
+                    }
+                    
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    updateFavoritesCount();
+                });
+            });
+
             // وظائف النافذة المنبثقة (بوب أب)
             const modal = document.getElementById('productModal');
             const closeModal = document.querySelector('.close-modal');
@@ -1433,17 +1555,50 @@
 
                     // عرض النافذة المنبثقة
                     modal.style.display = 'block';
+
+                    // تحديث حالة القلب في النافذة المنبثقة عند فتحها
+                    updateModalFavoriteButton();
                 });
             });
 
             // إضافة مستمعي أحداث للأزرار في النافذة المنبثقة
             document.querySelector('.modal-add-to-cart').addEventListener('click', function() {
-                alert('تمت إضافة المنتج إلى سلة التسوق');
+                const productName = document.getElementById('modalTitle').textContent;
+                const productPrice = document.getElementById('modalPrice').textContent;
+                const productImage = document.getElementById('modalMainImage').src;
+                addToCart(productName, productPrice, productImage);
             });
 
             document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
-                alert('تمت إضافة المنتج إلى المفضلة');
-                this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
+                const productName = document.getElementById('modalTitle').textContent;
+                const productPrice = document.getElementById('modalPrice').textContent;
+                const productImage = document.getElementById('modalMainImage').src;
+                const heartIcon = this.querySelector('i');
+                
+                let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const isFavorite = favorites.some(item => item.name === productName);
+                
+                if (isFavorite) {
+                    // إزالة من المفضلة
+                    favorites = favorites.filter(item => item.name !== productName);
+                    heartIcon.style.color = '#333';
+                } else {
+                    // إضافة للمفضلة
+                    favorites.push({ name: productName, price: productPrice, image: productImage });
+                    heartIcon.style.color = '#e74c3c';
+                }
+                
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                updateFavoritesCount();
+                
+                // تحديث حالة القلب في البطاقة الرئيسية
+                const mainCard = document.querySelector(`.camera-card:has(.camera-title:contains('${productName}'))`);
+                if (mainCard) {
+                    const mainHeartIcon = mainCard.querySelector('.add-to-favorites i');
+                    if (mainHeartIcon) {
+                        mainHeartIcon.style.color = heartIcon.style.color;
+                    }
+                }
             });
             
             // إضافة وظائف التنقل بين الصفحات
@@ -1539,6 +1694,144 @@
 
             // عرض الصفحة الأولى عند تحميل الصفحة
             showPage(1);
+        });
+
+        // دالة إضافة المنتج للسلة
+        function addToCart(name, price, image) {
+            // الحصول على السلة الحالية من localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // التحقق مما إذا كان المنتج موجوداً بالفعل في السلة
+            const existingProduct = cart.find(item => item.name === name);
+            
+            if (existingProduct) {
+                // إذا كان المنتج موجوداً، نزيد الكمية
+                existingProduct.quantity += 1;
+            } else {
+                // إذا لم يكن موجوداً، نضيفه كمنتج جديد
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            // حفظ السلة المحدثة
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // تحديث عداد السلة
+            updateCartCount();
+            
+            // عرض إشعار نجاح
+            showNotification('تمت إضافة المنتج إلى السلة بنجاح', 'success');
+        }
+
+        // دالة إضافة المنتج للمفضلة
+        function addToFavorites(name, price, image) {
+            // الحصول على المفضلة الحالية من localStorage
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            
+            // التحقق مما إذا كان المنتج موجوداً بالفعل في المفضلة
+            const existingProduct = favorites.find(item => item.name === name);
+            
+            if (existingProduct) {
+                // إذا كان المنتج موجوداً، نزيله من المفضلة
+                favorites = favorites.filter(item => item.name !== name);
+                showNotification('تم إزالة المنتج من المفضلة', 'info');
+                
+                // تغيير لون القلب إلى اللون الأصلي
+                const button = document.querySelector(`.camera-card:has(.camera-title:contains('${name}')) .add-to-favorites`);
+                if (button) {
+                    button.classList.remove('active');
+                    const icon = button.querySelector('i');
+                    if (icon) {
+                        icon.style.color = '#333';
+                    }
+                }
+            } else {
+                // إذا لم يكن موجوداً، نضيفه للمفضلة
+                favorites.push({
+                    name: name,
+                    price: price,
+                    image: image
+                });
+                showNotification('تم إضافة المنتج إلى المفضلة', 'success');
+            }
+            
+            // حفظ المفضلة المحدثة
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // تحديث عداد المفضلة
+            updateFavoritesCount();
+        }
+
+        // دالة تحديث عداد السلة
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalQuantity = 0;
+            cart.forEach(item => {
+                totalQuantity += item.quantity || 1;
+            });
+
+            let cartCount = document.querySelector('.cart-count');
+            if (!cartCount) {
+                const icon = document.querySelector('.cart-icon');
+                cartCount = document.createElement('span');
+                cartCount.className = 'cart-count';
+                icon.appendChild(cartCount);
+            }
+            cartCount.textContent = totalQuantity;
+            cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+        }
+
+        // دالة تحديث عداد المفضلة
+        function updateFavoritesCount() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const favoritesCount = document.querySelector('.favorites-count');
+            if (favoritesCount) {
+                favoritesCount.textContent = favorites.length;
+            }
+
+            // تحديث حالة القلب عند تحميل الصفحة
+            document.querySelectorAll('.camera-card').forEach(card => {
+                const productName = card.querySelector('.camera-title').textContent;
+                const heartIcon = card.querySelector('.add-to-favorites i');
+                if (favorites.some(item => item.name === productName)) {
+                    heartIcon.style.color = '#e74c3c';
+                }
+            });
+        }
+
+        // دالة لعرض الإشعارات
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // تحديث حالة القلب في النافذة المنبثقة عند فتحها
+        function updateModalFavoriteButton() {
+            const productName = document.getElementById('modalTitle').textContent;
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const isFavorite = favorites.some(item => item.name === productName);
+            const modalFavoriteButton = document.querySelector('.modal-add-to-favorites i');
+            
+            if (isFavorite) {
+                modalFavoriteButton.style.color = '#e74c3c';
+            } else {
+                modalFavoriteButton.style.color = '#333';
+            }
+        }
+
+        // تحديث عداد السلة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
         });
     </script>
 </body>

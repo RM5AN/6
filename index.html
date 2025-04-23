@@ -401,14 +401,18 @@
         
         /* تنسيق المحتوى ليكون بالنص تماماً */
         .ticker-content {
-            display: flex;
-            justify-content: center; /* توسيط العناصر */
-            align-items: center;
-            gap: 15px; /* مسافات متقاربة بين العناصر */
-            flex-wrap: nowrap;
-            width: fit-content;
-            margin: 0 auto;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: nowrap;
+        width: 100%;
+        margin: 0 auto;
+        animation: none !important;
+        transform: none !important;
+        overflow: hidden !important;
+        white-space: nowrap;
+    }
         
         .ticker-item {
             color: #ffffff;
@@ -427,8 +431,18 @@
         /* تعديل للشاشات المتوسطة والصغيرة */
         @media (max-width: 992px) {
             .ticker-content {
-                gap: 10px;
-            }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: nowrap;
+        width: 100%;
+        margin: 0 auto;
+        animation: none !important;
+        transform: none !important;
+        overflow: hidden !important;
+        white-space: nowrap;
+    }
             
             .ticker-item {
                 font-size: 11px;
@@ -437,11 +451,18 @@
         
         @media (max-width: 768px) {
             .ticker-content {
-                overflow-x: auto;
-                justify-content: flex-start;
-                scrollbar-width: none;
-                padding: 0 10px;
-            }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: nowrap;
+        width: 100%;
+        margin: 0 auto;
+        animation: none !important;
+        transform: none !important;
+        overflow: hidden !important;
+        white-space: nowrap;
+    }
             
             .ticker-content::-webkit-scrollbar {
                 display: none;
@@ -572,6 +593,7 @@
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
+            line-clamp: 2;
             -webkit-box-orient: vertical;
         }
 
@@ -1124,44 +1146,63 @@
             }
         }
 
-        /* تحديث زر تصفح الكل */
-        .view-all-btn-container {
-            text-align: center;
-            margin: 30px 0 40px;
-            position: relative;
-        }
+        /* حاوية زر تصفح جميع المنتجات */
+.view-all-btn-container {
+    text-align: center;
+    margin: 40px 0 50px;
+    position: relative;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    clear: both;
+}
 
-        /* إزالة الخط الأفقي خلف زر تصفح جميع المنتجات */
-        .view-all-btn-container:before {
-            display: none; /* إخفاء الخط */
-        }
+/* إزالة أي تأثير قبل الزر */
+.view-all-btn-container::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
 
-        /* الحفاظ على باقي تنسيقات الزر كما هي */
-        .view-all-products-btn {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            padding: 14px 40px;
-            font-size: 18px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
+/* تنسيق زر تصفح جميع المنتجات */
+.view-all-products-btn {
+    display: inline-block;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+    color: white;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    border: 2px solid transparent; /* حدود شفافة */
+    outline: none; /* إخفاء الحدود الخارجية عند التركيز */
+    position: relative;
+    z-index: 5;
+    min-width: 220px;
+    letter-spacing: 0.5px;
+}
 
-        .view-all-products-btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
+/* تأثير hover للزر */
+.view-all-products-btn:hover {
+    background: linear-gradient(to bottom, #2980b9, #3498db);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border: 2px solid #2980b9;
+    filter: brightness(1.1);
+    text-decoration: none;
+    color: white;
+}
 
-        .view-all-products-btn i {
-            margin-left: 8px;
-        }
+/* إزالة تأثير التركيز */
+.view-all-products-btn:focus {
+    outline: none;
+    text-decoration: none;
+}
 
+        
         /* تنسيق عنوان تصفح المنتجات */
         .categories-title {
             text-align: center;
@@ -1675,7 +1716,7 @@
 <!-- زر تصفح جميع المنتجات -->
 <div class="view-all-btn-container">
     <a href="all-products.html" class="view-all-products-btn">
-        تصفح جميع المنتجات
+        تصفح جميع المنتجات <i class="fas fa-arrow-left"></i>
     </a>
 </div>
 
@@ -2092,6 +2133,12 @@
             <div class="product-details">
                 <h2>حقيبة كاميرا</h2>
                 <div class="product-price">٨٠ ﷼</div>
+<div class="camera-actions">
+  <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+  <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<a href="all-cameras.html" class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</a>
+
                 <p>حقيبة كاميرا - صندوق الكاميرا الرقمية متوافق مع العديد من الماركات مثل: Zheozeig، Duluvulu، TEBNGIHNM، Oiadek، KVUTCIEIN، Femivo، Fulealfly، AiTechny، VAHOIALD، Bifevsr، IWEUKJLO، Jumobuis للكاميرات الرقمية بدقة 4K.</p>
                 <p>حقيبة كاميرا الفيديو مناسبة أيضًا لكاميرا كانون باورشوت الرقمية [G7 X Mark II/III] وكاميرات XNSIAKXA للتصوير الفوتوغرافي. الأبعاد الداخلية لحامل كانون G7X هي 5.1 × 2.9 × 1.8 بوصة. (حقيبة حمل فقط، لا تشمل الكاميرا)</p>
                 <div class="product-actions">
@@ -2425,6 +2472,272 @@
         });
         
         console.log('تم تفعيل أزرار السلة والمفضلة وروابط المنتجات');
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. توحيد شكل أيقونة القلب في كل الصفحات
+        const allHeartIcons = document.querySelectorAll('.add-to-favorites-btn i, .favorite-btn i');
+        allHeartIcons.forEach(icon => {
+            // إزالة جميع الأصناف لمنع ظهور القلب الفارغ
+            icon.className = '';
+            // إضافة الصنف الذي يجعل القلب رمادي/رصاصي كامل
+            icon.classList.add('fas', 'fa-heart');
+            icon.style.color = '#888'; // لون رمادي/رصاصي
+        });
+
+        // 2. تفعيل زر المفضلة لجميع المنتجات
+        const favButtons = document.querySelectorAll('.add-to-favorites-btn, .favorite-btn');
+        
+        // تحميل المفضلات المخزنة مسبقاً
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        
+        // تعيين حالة الأزرار بناءً على المفضلات المخزنة
+        favButtons.forEach(btn => {
+            // العثور على معرف المنتج
+            const productId = btn.getAttribute('data-product-id') || btn.closest('[data-product-id]')?.getAttribute('data-product-id');
+            
+            if (productId && favorites.includes(productId)) {
+                const heartIcon = btn.querySelector('i');
+                if (heartIcon) {
+                    heartIcon.style.color = 'red';
+                }
+            }
+            
+            // إضافة حدث النقر على زر المفضلة
+            btn.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const productId = this.getAttribute('data-product-id') || this.closest('[data-product-id]')?.getAttribute('data-product-id');
+                const heartIcon = this.querySelector('i');
+                
+                if (productId && heartIcon) {
+                    if (favorites.includes(productId)) {
+                        // إزالة من المفضلة
+                        favorites = favorites.filter(id => id !== productId);
+                        heartIcon.style.color = '#888'; // رمادي
+                    } else {
+                        // إضافة إلى المفضلة
+                        favorites.push(productId);
+                        heartIcon.style.color = 'red';
+                    }
+                    
+                    // حفظ المفضلات في localStorage
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                }
+            });
+        });
+
+        // 3. استبدال عبارة "إضافة إلى السلة" بأيقونة سلة فقط
+        const cartButtons = document.querySelectorAll('.add-to-cart-btn');
+        cartButtons.forEach(btn => {
+            // حفظ الأيقونة الحالية إذا وجدت
+            const existingIcon = btn.querySelector('i');
+            
+            // إزالة جميع المحتويات وإضافة أيقونة السلة فقط
+            btn.innerHTML = '';
+            
+            // إنشاء أيقونة السلة
+            const cartIcon = existingIcon || document.createElement('i');
+            cartIcon.className = 'fas fa-shopping-cart';
+            
+            btn.appendChild(cartIcon);
+        });
+
+        // 4. إزالة النافذة المنبثقة عند تمرير الماوس على المنتج
+        const popups = document.querySelectorAll('.product-popup, .popup-content, .product-modal');
+        popups.forEach(popup => {
+            popup.style.display = 'none';
+        });
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. إضافة أزرار "إضافة للسلة" و"إضافة للمفضلة" لقسم المنتجات الأكثر شيوعًا
+        const popularProducts = document.querySelectorAll('.popular-products .product-card');
+        popularProducts.forEach((product, index) => {
+            if (!product.querySelector('.add-to-cart-btn') && !product.querySelector('.add-to-favorites-btn')) {
+                // إنشاء زر السلة إذا لم يكن موجوداً
+                const cartBtn = document.createElement('button');
+                cartBtn.className = 'add-to-cart-btn';
+                cartBtn.setAttribute('data-product-id', `popular-${index}`);
+                cartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+                
+                // إنشاء زر المفضلة إذا لم يكن موجوداً
+                const favBtn = document.createElement('button');
+                favBtn.className = 'add-to-favorites-btn';
+                favBtn.setAttribute('data-product-id', `popular-${index}`);
+                favBtn.innerHTML = '<i class="fas fa-heart"></i>';
+                
+                // إنشاء حاوية للأزرار إذا لم تكن موجودة
+                let actionsDiv = product.querySelector('.product-actions');
+                if (!actionsDiv) {
+                    actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'product-actions';
+                    product.appendChild(actionsDiv);
+                }
+                
+                // إضافة الأزرار إلى الحاوية
+                actionsDiv.appendChild(cartBtn);
+                actionsDiv.appendChild(favBtn);
+            }
+        });
+        
+        // 2. تفعيل زر المفضلة لجميع المنتجات
+        const favButtons = document.querySelectorAll('.add-to-favorites-btn, .favorite-btn');
+        
+        // تحميل المفضلات المخزنة مسبقاً
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        
+        // تطبيق الحالة الأولية على الأزرار
+        favButtons.forEach(btn => {
+            const productId = btn.getAttribute('data-product-id') || btn.closest('[data-product-id]')?.getAttribute('data-product-id');
+            const heartIcon = btn.querySelector('i');
+            
+            if (heartIcon) {
+                // توحيد شكل الأيقونة
+                heartIcon.className = 'fas fa-heart';
+                
+                // تعيين اللون بناءً على حالة المفضلة
+                if (productId && favorites.includes(productId)) {
+                    heartIcon.style.color = 'red';
+                } else {
+                    heartIcon.style.color = '#888'; // رمادي
+                }
+            }
+            
+            // إضافة حدث النقر
+            btn.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const productId = this.getAttribute('data-product-id') || this.closest('[data-product-id]')?.getAttribute('data-product-id');
+                const heartIcon = this.querySelector('i');
+                
+                if (productId && heartIcon) {
+                    if (favorites.includes(productId)) {
+                        // إزالة من المفضلة
+                        favorites = favorites.filter(id => id !== productId);
+                        heartIcon.style.color = '#888'; // رمادي
+                    } else {
+                        // إضافة إلى المفضلة
+                        favorites.push(productId);
+                        heartIcon.style.color = 'red';
+                    }
+                    
+                    // حفظ المفضلات في localStorage
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                }
+            });
+        });
+        
+        // 3. استبدال نص "إضافة إلى السلة" بأيقونة السلة فقط
+        const cartButtons = document.querySelectorAll('.add-to-cart-btn');
+        cartButtons.forEach(btn => {
+            // تحقق مما إذا كان الزر يحتوي على نص
+            if (btn.textContent.trim() !== '' && !btn.querySelector('i:only-child')) {
+                // حفظ أي أيقونة موجودة
+                const existingIcon = btn.querySelector('i');
+                
+                // تفريغ محتوى الزر
+                btn.innerHTML = '';
+                
+                // إضافة أيقونة السلة فقط
+                const cartIcon = existingIcon || document.createElement('i');
+                cartIcon.className = 'fas fa-shopping-cart';
+                btn.appendChild(cartIcon);
+            }
+        });
+        
+        // 4. إزالة النافذة المنبثقة
+        const popups = document.querySelectorAll('.product-popup, .popup-content, .product-modal');
+        popups.forEach(popup => {
+            popup.style.display = 'none';
+        });
+        
+        // إزالة أحداث hover التي قد تظهر النافذة المنبثقة
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            const clonedCard = card.cloneNode(true);
+            card.parentNode.replaceChild(clonedCard, card);
+        });
+    });
+    </script>
+
+    <script>
+    // ✅ توحيد شكل أيقونة المفضلة لتكون رمادية بالكامل
+    document.querySelectorAll('.fa-heart').forEach(icon => {
+      icon.classList.remove('far'); // قلب فاضي
+      icon.classList.add('fas');    // قلب ممتلئ
+      icon.style.color = '#aaa';    // اللون الرصاصي
+    });
+
+    // ✅ تفعيل زر "إضافة للمفضلة"
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const productId = this.dataset.id;
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        const icon = this.querySelector('.fa-heart');
+        if (favorites.includes(productId)) {
+          favorites = favorites.filter(id => id !== productId);
+          icon.style.color = '#aaa';
+        } else {
+          favorites.push(productId);
+          icon.style.color = 'red';
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+      });
+    });
+
+    // ✅ استبدال "إضافة للسلة" بأيقونة فقط
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+      btn.innerHTML = '<i class="fas fa-shopping-cart"></i>'; // أيقونة فقط
+    });
+
+    // ✅ إزالة البوب-أب اللي يطلع عند تمرير الماوس والاكتفاء بزر عرض التفاصيل
+    document.querySelectorAll('.product-popup').forEach(popup => {
+      popup.remove();
+    });
+
+    // ✅ التحقق من أن قسم "الأكثر شيوعًا" والكاميرات والعدسات فيها نفس الأزرار
+    document.querySelectorAll('.product-card').forEach(card => {
+      if (!card.querySelector('.add-to-cart-btn')) {
+        const cartBtn = document.createElement('button');
+        cartBtn.className = 'add-to-cart-btn';
+        cartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+        card.appendChild(cartBtn);
+      }
+
+      if (!card.querySelector('.favorite-btn')) {
+        const favBtn = document.createElement('button');
+        favBtn.className = 'favorite-btn';
+        favBtn.dataset.id = card.dataset.id || '';
+        favBtn.innerHTML = '<i class="fas fa-heart" style="color:#aaa"></i>';
+        card.appendChild(favBtn);
+      }
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .popular-card {
+                transition: all 0.3s ease-in-out;
+                will-change: transform;
+            }
+
+            .popular-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+        `;
+        document.head.appendChild(style);
     });
     </script>
 </body>

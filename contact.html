@@ -15,6 +15,28 @@
             }
         }, true);
     </script>
+    <style>
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -208,6 +230,27 @@
             });
         }
     });
+
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalQuantity = 0;
+        cart.forEach(item => {
+            totalQuantity += item.quantity || 1;
+        });
+
+        let cartCount = document.querySelector('.cart-count');
+        if (!cartCount) {
+            const icon = document.querySelector('.cart-icon');
+            cartCount = document.createElement('span');
+            cartCount.className = 'cart-count';
+            icon.appendChild(cartCount);
+        }
+        cartCount.textContent = totalQuantity;
+        cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+    }
+
+    // تحديث عداد السلة عند تحميل الصفحة
+    updateCartCount();
     </script>
 </body>
 </html> 

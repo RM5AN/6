@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+
+<html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جميع معدات الصوت - ShotSpot</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>جميع معدات الصوت - ShotSpot</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
         /* نفس الستايل الموجود في صفحة العدسات */
         .cameras-page {
             padding: 40px 0;
@@ -89,17 +90,7 @@
         }
 
         .camera-card:hover .product-popup {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 10;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.3s ease;
+            display: none;
         }
 
         @keyframes fadeIn {
@@ -719,604 +710,790 @@
         .view-details-btn i {
             font-size: 15px;
         }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.success {
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            min-width: 18px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <a href="index.html">
-                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
-                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
-                    <alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
-                </a>
-            </div>
+<!-- Header -->
+<header>
+<nav>
+<div class="logo">
+<a href="index.html">
+<img alt="ShotSpot Logo" src="shotspot-logo.png-removebg-preview.png" style="height: 45px;"/>
+<span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+<alt="camera logo"="" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+</alt="camera></a>
+</div>
+<div class="main-menu">
+<a href="index.html">الصفحة الرئيسية</a>
+<a href="about.html">من نحن</a>
+<a href="services.html">خدماتنا</a>
+<a href="contact.html">تواصل معنا</a>
+</div>
+<div class="header-actions">
+<div class="icons-group">
+<div class="account-dropdown">
+<a class="user-icon" href="login.html">
+<i class="fas fa-user"></i>
+</a>
+<div class="account-menu">
+<a href="login.html">تسجيل الدخول</a>
+<a href="register.html">حساب جديد</a>
+<a href="rent-request.html">طلب تأجير</a>
+</div>
+</div>
+<a class="heart-icon" href="favorites.html">
+<i class="fas fa-heart"></i>
+</a>
+<a class="cart-icon" href="cart.html">
+<i class="fas fa-shopping-cart"></i>
+<span class="cart-count">0</span>
+</a>
+</div>
+<div class="search-container">
+<input placeholder="ابحث عن منتجات..." type="text"/>
+<i class="fas fa-search search-icon"></i>
+</div>
+</div>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="cameras-page">
+<div class="container">
+<div class="page-header">
+<h1>جميع معدات الصوت</h1>
+<p>اكتشف مجموعتنا الكاملة من معدات الصوت الاحترافية لتصوير الفيديو بأفضل الأسعار</p>
+</div>
+<!-- Filters Section -->
+<section class="filters-section">
+<div class="filters-grid">
+<div class="filter-group">
+<label>النوع</label>
+<select name="type">
+<option value="">الكل</option>
+<option value="microphones">ميكروفونات</option>
+<option value="recorders">مسجلات صوت</option>
+<option value="wireless">ميكروفونات لاسلكية</option>
+<option value="mixers">مكسرات صوت</option>
+<option value="headphones">سماعات رأس</option>
+</select>
+</div>
+<div class="filter-group">
+<label>الماركة</label>
+<select name="brand">
+<option value="">الكل</option>
+<option value="rode">رود</option>
+<option value="sennheiser">سنهايزر</option>
+<option value="zoom">زوم</option>
+<option value="beyerdynamic">باير</option>
+</select>
+</div>
 
-            <div class="main-menu">
-                <a href="index.html">الصفحة الرئيسية</a>
-                <a href="about.html">من نحن</a>
-                <a href="services.html">خدماتنا</a>
-                <a href="contact.html">تواصل معنا</a>
-            </div>
 
-            <div class="header-actions">
-                <div class="icons-group">
-                    <div class="account-dropdown">
-                        <a href="login.html" class="user-icon">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <div class="account-menu">
-                            <a href="login.html">تسجيل الدخول</a>
-                            <a href="register.html">حساب جديد</a>
-                            <a href="rent-request.html">طلب تأجير</a>
-                        </div>
-                    </div>
-                    <a href="favorites.html" class="heart-icon">
-                        <i class="fas fa-heart"></i>
-                    </a>
-                    <a href="cart.html" class="cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </a>
-                </div>
-                
-                <div class="search-container">
-                    <input type="text" placeholder="ابحث عن منتجات...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-            </div>
-        </nav>
-    </header>
+<div class="filter-group">
+  <label>نوع العملية</label>
+  <select name="operation">
+    <option value="">الكل</option>
+    <option value="buy">شراء</option>
+    <option value="rent">إيجار</option>
+  </select>
+</div>
 
-    <!-- Main Content -->
-    <main class="cameras-page">
-        <div class="container">
-            <div class="page-header">
-                <h1>جميع معدات الصوت</h1>
-                <p>اكتشف مجموعتنا الكاملة من معدات الصوت الاحترافية لتصوير الفيديو بأفضل الأسعار</p>
-            </div>
 
-            <!-- Filters Section -->
-            <section class="filters-section">
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label>النوع</label>
-                        <select name="type">
-                            <option value="">الكل</option>
-                            <option value="microphones">ميكروفونات</option>
-                            <option value="recorders">مسجلات صوت</option>
-                            <option value="wireless">ميكروفونات لاسلكية</option>
-                            <option value="mixers">مكسرات صوت</option>
-                            <option value="headphones">سماعات رأس</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>الماركة</label>
-                        <select name="brand">
-                            <option value="">الكل</option>
-                            <option value="rode">رود</option>
-                            <option value="sennheiser">سنهايزر</option>
-                            <option value="zoom">زوم</option>
-                            <option value="beyerdynamic">باير</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>السعر</label>
-                        <select name="price">
-                            <option value="">الكل</option>
-                            <option value="0-200">أقل من 200 ريال</option>
-                            <option value="200-500">200 - 500 ريال</option>
-                            <option value="500-1000">500 - 1000 ريال</option>
-                            <option value="1000+">أكثر من 1000 ريال</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>الترتيب</label>
-                        <select name="sort">
-                            <option value="newest">الأحدث</option>
-                            <option value="price-low">السعر: من الأقل</option>
-                            <option value="price-high">السعر: من الأعلى</option>
-                        </select>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Audio Equipment Grid -->
-            <section class="cameras-grid">
-                <!-- Audio Equipment Card 1 -->
-                <div class="camera-card" data-type="microphones" data-brand="rode">
-                    <div class="camera-image">
-                        <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون رود">                    </div>
-                    <div class="camera-info">
-                        <h3 class="camera-title">ميكروفون Rode VideoMic Pro+</h3>
-                        <div class="camera-specs">
-                            <span><i class="fas fa-music"></i> نوع: اتجاهي</span>
-                            <span><i class="fas fa-battery-full"></i> بطارية قابلة للشحن</span>
-                            <span><i class="fas fa-filter"></i> فلتر قطع التردد المنخفض</span>
-                        </div>
-                        <div class="camera-price">١٢٩٩ <span class="sar-symbol"></span></div>
-                        <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
-                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
-                    </div>
-                    <!-- نافذة منبثقة -->
-                    <div class="product-popup">
-                        <div class="popup-header">
-                            <h3 class="popup-title">ميكروفون Rode VideoMic Pro+</h3>
-                            <button class="popup-close"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="popup-details">
-                            <div class="popup-detail">
-                                <span class="detail-label">تقنية الاتصال:</span>
-                                <span class="detail-value">USB</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">الأجهزة المتوافقة:</span>
-                                <span class="detail-value">كاميرات الفيديو، كاميرات DSLR ومسجلات الصوت المحمولة</span>
-                            </div>
-                        </div>
-                        <div class="popup-thumbs">
-                            <div class="popup-thumb">
-                                <img src="Rode VideoMic Pro (1).jpg" alt="ميكروفون رود - صورة 1">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Rode VideoMic Pro (2).jpg" alt="ميكروفون رود - صورة 2">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Rode VideoMic Pro (3).jpg" alt="ميكروفون رود - صورة 3">
-                            </div>
-                        </div>
-                        <div class="popup-price">
-                            <span class="popup-sar-symbol"></span>
-                            <span>١٢٩٩</span>
-                        </div>
-                        <div class="popup-footer">
-                            <div class="popup-availability">
-                                <i class="fas fa-check-circle"></i>
+<div class="filter-group">
+<label>الترتيب</label>
+<select name="sort">
+<option value="newest">الأحدث</option>
+<option value="price-low">السعر: من الأقل</option>
+<option value="price-high">السعر: من الأعلى</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Audio Equipment Grid -->
+<section class="cameras-grid">
+<!-- Audio Equipment Card 1 -->
+<div class="camera-card" data-brand="rode" data-type="microphones">
+<div class="camera-image">
+<img alt="ميكروفون رود" src="Rode VideoMic Pro (1).jpg"/> </div>
+<div class="camera-info">
+<h3 class="camera-title">ميكروفون Rode VideoMic Pro+</h3>
+<div class="camera-specs">
+<span><i class="fas fa-music"></i> نوع: اتجاهي</span>
+<span><i class="fas fa-battery-full"></i> بطارية قابلة للشحن</span>
+<span><i class="fas fa-filter"></i> فلتر قطع التردد المنخفض</span>
+</div>
+<div class="camera-price">١٢٩٩ <span class="sar-symbol"></span></div>
+<div class="camera-actions">
+<button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+</div>
+<!-- نافذة منبثقة -->
+<div class="product-popup">
+<div class="popup-header">
+<h3 class="popup-title">ميكروفون Rode VideoMic Pro+</h3>
+<button class="popup-close"><i class="fas fa-times"></i></button>
+</div>
+<div class="popup-details">
+<div class="popup-detail">
+<span class="detail-label">تقنية الاتصال:</span>
+<span class="detail-value">USB</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">الأجهزة المتوافقة:</span>
+<span class="detail-value">كاميرات الفيديو، كاميرات DSLR ومسجلات الصوت المحمولة</span>
+</div>
+</div>
+<div class="popup-thumbs">
+<div class="popup-thumb">
+<img alt="ميكروفون رود - صورة 1" src="Rode VideoMic Pro (1).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="ميكروفون رود - صورة 2" src="Rode VideoMic Pro (2).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="ميكروفون رود - صورة 3" src="Rode VideoMic Pro (3).jpg"/>
+</div>
+</div>
+<div class="popup-price">
+<span class="popup-sar-symbol"></span>
+<span>١٢٩٩</span>
+</div>
+<div class="popup-footer">
+<div class="popup-availability">
+<i class="fas fa-check-circle"></i>
                                 متوفر في المخزون
                             </div>
-                            <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+<div class="popup-rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star-half-alt"></i>
                                 (4.5)
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Audio Equipment Card 2 -->
-                <div class="camera-card" data-type="recorders" data-brand="zoom">
-                    <div class="camera-image">
-                        <img src="Zoom H5 Handy Recorder (1).jpg" alt="مسجل صوت زوم">                    </div>
-                    <div class="camera-info">
-                        <h3 class="camera-title">مسجل صوت Zoom H5 Handy Recorder</h3>
-                        <div class="camera-specs">
-                            <span><i class="fas fa-microphone"></i> ميكروفونات متعددة الاتجاهات</span>
-                            <span><i class="fas fa-sd-card"></i> يدعم بطاقة SD حتى 32GB</span>
-                            <span><i class="fas fa-clock"></i> تسجيل حتى 15 ساعة</span>
-                        </div>
-                        <div class="camera-price">١٥٩٩ <span class="sar-symbol"></span></div>
-                        <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
-                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
-                    </div>
-                    <!-- نافذة منبثقة -->
-                    <div class="product-popup">
-                        <div class="popup-header">
-                            <h3 class="popup-title">مسجل صوت Zoom H5 Handy Recorder</h3>
-                            <button class="popup-close"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="popup-details">
-                            <div class="popup-detail">
-                                <span class="detail-label">واجهة الأجهزة:</span>
-                                <span class="detail-value">USB</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">نوع الميكروفون:</span>
-                                <span class="detail-value">مدمج</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">الصيغة:</span>
-                                <span class="detail-value">WAV, MP3 Audio</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">منفذ سماعة الرأس:</span>
-                                <span class="detail-value">3.5 مليمتر</span>
-                            </div>
-                        </div>
-                        <div class="popup-thumbs">
-                            <div class="popup-thumb">
-                                <img src="Zoom H5 Handy Recorder (1).jpg" alt="مسجل صوت زوم - صورة 1">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Zoom H5 Handy Recorder (2).jpg" alt="مسجل صوت زوم - صورة 2">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Zoom H5 Handy Recorder (3).jpg" alt="مسجل صوت زوم - صورة 3">
-                            </div>
-                        </div>
-                        <div class="popup-price">
-                            <span class="popup-sar-symbol"></span>
-                            <span>١٥٩٩</span>
-                        </div>
-                        <div class="popup-footer">
-                            <div class="popup-availability">
-                                <i class="fas fa-check-circle"></i>
+</div>
+</div>
+</div>
+<!-- Audio Equipment Card 2 -->
+<div class="camera-card" data-brand="zoom" data-type="recorders">
+<div class="camera-image">
+<img alt="مسجل صوت زوم" src="Zoom H5 Handy Recorder (1).jpg"/> </div>
+<div class="camera-info">
+<h3 class="camera-title">مسجل صوت Zoom H5 Handy Recorder</h3>
+<div class="camera-specs">
+<span><i class="fas fa-microphone"></i> ميكروفونات متعددة الاتجاهات</span>
+<span><i class="fas fa-sd-card"></i> يدعم بطاقة SD حتى 32GB</span>
+<span><i class="fas fa-clock"></i> تسجيل حتى 15 ساعة</span>
+</div>
+<div class="camera-price">١٥٩٩ <span class="sar-symbol"></span></div>
+<div class="camera-actions">
+<button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+</div>
+<!-- نافذة منبثقة -->
+<div class="product-popup">
+<div class="popup-header">
+<h3 class="popup-title">مسجل صوت Zoom H5 Handy Recorder</h3>
+<button class="popup-close"><i class="fas fa-times"></i></button>
+</div>
+<div class="popup-details">
+<div class="popup-detail">
+<span class="detail-label">واجهة الأجهزة:</span>
+<span class="detail-value">USB</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">نوع الميكروفون:</span>
+<span class="detail-value">مدمج</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">الصيغة:</span>
+<span class="detail-value">WAV, MP3 Audio</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">منفذ سماعة الرأس:</span>
+<span class="detail-value">3.5 مليمتر</span>
+</div>
+</div>
+<div class="popup-thumbs">
+<div class="popup-thumb">
+<img alt="مسجل صوت زوم - صورة 1" src="Zoom H5 Handy Recorder (1).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="مسجل صوت زوم - صورة 2" src="Zoom H5 Handy Recorder (2).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="مسجل صوت زوم - صورة 3" src="Zoom H5 Handy Recorder (3).jpg"/>
+</div>
+</div>
+<div class="popup-price">
+<span class="popup-sar-symbol"></span>
+<span>١٥٩٩</span>
+</div>
+<div class="popup-footer">
+<div class="popup-availability">
+<i class="fas fa-check-circle"></i>
                                 متوفر في المخزون
                             </div>
-                            <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+<div class="popup-rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="far fa-star"></i>
                                 (4.0)
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Audio Equipment Card 3 -->
-                <div class="camera-card" data-type="headphones" data-brand="beyerdynamic">
-                    <div class="camera-image">
-                        <img src="Beyerdynamic DT 770 Pro (1).jpg" alt="سماعات باير">
-                    </div>
-                    <div class="camera-info">
-                        <h3 class="camera-title">سماعات Beyerdynamic DT 770 Pro</h3>
-                        <div class="camera-specs">
-                            <span><i class="fas fa-headphones"></i> نوع: مغلقة</span>
-                            <span><i class="fas fa-music"></i> استجابة التردد: 5-35,000 Hz</span>
-                            <span><i class="fas fa-plug"></i> كابل: 3 متر</span>
-                        </div>
-                        <div class="camera-price">٨٩٩ <span class="sar-symbol"></span></div>
-                        <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
-                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
-                    </div>
-                    <!-- نافذة منبثقة -->
-                    <div class="product-popup">
-                        <div class="popup-header">
-                            <h3 class="popup-title">سماعات Beyerdynamic DT 770 Pro</h3>
-                            <button class="popup-close"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="popup-details">
-                            <div class="popup-detail">
-                                <span class="detail-label">المقاومة:</span>
-                                <span class="detail-value">250 أوم</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">التحكم في الضوضاء:</span>
-                                <span class="detail-value">عزل سلبي للضوضاء</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">الحساسية:</span>
-                                <span class="detail-value">96 ديسيبل</span>
-                            </div>
-                        </div>
-                        <div class="popup-thumbs">
-                            <div class="popup-thumb">
-                                <img src="Beyerdynamic DT 770 Pro (1).jpg" alt="سماعات باير - صورة 1">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Beyerdynamic DT 770 Pro (2).jpg" alt="سماعات باير - صورة 2">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Beyerdynamic DT 770 Pro (3).jpg" alt="سماعات باير - صورة 3">
-                            </div>
-                        </div>
-                        <div class="popup-price">
-                            <span class="popup-sar-symbol"></span>
-                            <span>٩٩٩</span>
-                        </div>
-                        <div class="popup-footer">
-                            <div class="popup-availability">
-                                <i class="fas fa-check-circle"></i>
+</div>
+</div>
+</div>
+<!-- Audio Equipment Card 3 -->
+<div class="camera-card" data-brand="beyerdynamic" data-type="headphones">
+<div class="camera-image">
+<img alt="سماعات باير" src="Beyerdynamic DT 770 Pro (1).jpg"/>
+</div>
+<div class="camera-info">
+<h3 class="camera-title">سماعات Beyerdynamic DT 770 Pro</h3>
+<div class="camera-specs">
+<span><i class="fas fa-headphones"></i> نوع: مغلقة</span>
+<span><i class="fas fa-music"></i> استجابة التردد: 5-35,000 Hz</span>
+<span><i class="fas fa-plug"></i> كابل: 3 متر</span>
+</div>
+<div class="camera-price">٨٩٩ <span class="sar-symbol"></span></div>
+<div class="camera-actions">
+<button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+</div>
+<!-- نافذة منبثقة -->
+<div class="product-popup">
+<div class="popup-header">
+<h3 class="popup-title">سماعات Beyerdynamic DT 770 Pro</h3>
+<button class="popup-close"><i class="fas fa-times"></i></button>
+</div>
+<div class="popup-details">
+<div class="popup-detail">
+<span class="detail-label">المقاومة:</span>
+<span class="detail-value">250 أوم</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">التحكم في الضوضاء:</span>
+<span class="detail-value">عزل سلبي للضوضاء</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">الحساسية:</span>
+<span class="detail-value">96 ديسيبل</span>
+</div>
+</div>
+<div class="popup-thumbs">
+<div class="popup-thumb">
+<img alt="سماعات باير - صورة 1" src="Beyerdynamic DT 770 Pro (1).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="سماعات باير - صورة 2" src="Beyerdynamic DT 770 Pro (2).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="سماعات باير - صورة 3" src="Beyerdynamic DT 770 Pro (3).jpg"/>
+</div>
+</div>
+<div class="popup-price">
+<span class="popup-sar-symbol"></span>
+<span>٩٩٩</span>
+</div>
+<div class="popup-footer">
+<div class="popup-availability">
+<i class="fas fa-check-circle"></i>
                                 متوفر في المخزون
                             </div>
-                            <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+<div class="popup-rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star-half-alt"></i>
                                 (4.5)
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+</div>
+</div>
+</div>
+</section>
+<!-- Pagination -->
+<div class="pagination-container">
+<div class="pagination">
+<button class="nav-btn" disabled="" id="prev-btn"><i class="fas fa-chevron-right"></i> السابق</button>
+<button class="page-btn active" data-page="1">1</button>
+<button class="page-btn" data-page="2">2</button>
+<button class="page-btn" data-page="3">3</button>
+<button class="page-btn" data-page="4">4</button>
+<button class="nav-btn" disabled="" id="next-btn">التالي <i class="fas fa-chevron-left"></i></button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-section">
+<h3>ShotSpot</h3>
+<p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+</div>
+<div class="footer-section">
+<h3>روابط سريعة</h3>
+<ul>
+<li><a href="index.html">الرئيسية</a></li>
+<li><a href="all-products.html">المنتجات</a></li>
+<li><a href="about.html">من نحن</a></li>
+<li><a href="contact.html">تواصل معنا</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>اتصل بنا</h3>
+<p><i class="fas fa-phone"></i> +966 11 234 5678</p>
+<p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
+</div>
+<div class="footer-section">
+<h3>وسائل الدفع</h3>
+<div class="payment-methods-footer">
+<img alt="مدى" src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;"/>
+<img alt="Visa" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;"/>
+</div>
+</div>
+</div>
+<div class="social-links">
+<a href="#"><i class="fab fa-youtube"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+</div>
+<div class="footer-bottom">
+<p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+</div>
+</footer>
+<!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
+<div class="modal" id="productModal">
+<div class="modal-content">
+<span class="close-modal">×</span>
+<div class="modal-header">
+<h2 id="modalTitle"></h2>
+</div>
+<div class="modal-body">
+<div class="modal-image-container">
+<img alt="صورة المنتج" id="modalMainImage" src=""/>
+<div class="modal-thumbnails" id="modalThumbnails"></div>
+</div>
+<div class="modal-details">
+<div class="modal-specs" id="modalSpecs"></div>
+<div class="modal-price" id="modalPrice"></div>
+<div class="modal-actions">
+<button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="modal-add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحديث عداد السلة عند تحميل الصفحة
+            updateCartCount();
 
-            <!-- Pagination -->
-            <div class="pagination-container">
-                <div class="pagination">
-                    <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-chevron-right"></i> السابق</button>
-                    <button class="page-btn active" data-page="1">1</button>
-                    <button class="page-btn" data-page="2">2</button>
-                    <button class="page-btn" data-page="3">3</button>
-                    <button class="page-btn" data-page="4">4</button>
-                    <button id="next-btn" class="nav-btn" disabled>التالي <i class="fas fa-chevron-left"></i></button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>ShotSpot</h3>
-                <p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
-            </div>
-
-            <div class="footer-section">
-                <h3>روابط سريعة</h3>
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="all-products.html">المنتجات</a></li>
-                    <li><a href="about.html">من نحن</a></li>
-                    <li><a href="contact.html">تواصل معنا</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3>اتصل بنا</h3>
-                <p><i class="fas fa-phone"></i> +966 11 234 5678</p>
-                <p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
-            </div>
-
-            <div class="footer-section">
-                <h3>وسائل الدفع</h3>
-                <div class="payment-methods-footer">
-                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;">
-                </div>
-            </div>
-        </div>
-
-        <div class="social-links">
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
-
-    <!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <h2 id="modalTitle"></h2>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image-container">
-                    <img id="modalMainImage" src="" alt="صورة المنتج">
-                    <div class="modal-thumbnails" id="modalThumbnails"></div>
-                </div>
-                <div class="modal-details">
-                    <div class="modal-specs" id="modalSpecs"></div>
-                    <div class="modal-price" id="modalPrice"></div>
-                    <div class="modal-actions">
-                        <button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // وظائف التصفية والفرز
-        function filterAccessories() {
-            const type = document.querySelector('select[name="type"]').value;
-            const brand = document.querySelector('select[name="brand"]').value;
-            const price = document.querySelector('select[name="price"]').value;
-            
-            const accessories = document.querySelectorAll('.camera-card');
-            let visibleCount = 0;
-            
-            accessories.forEach(accessory => {
-                const matchType = !type || accessory.dataset.type === type;
-                const matchBrand = !brand || accessory.dataset.brand === brand;
-                const price_value = parseInt(accessory.querySelector('.camera-price').textContent.replace(/[^\d]/g, ''));
-                let matchPrice = true;
-                
-                if (price) {
-                    const [min, max] = price.split('-').map(Number);
-                    if (max) {
-                        matchPrice = price_value >= min && price_value <= max;
-                    } else {
-                        matchPrice = price_value >= min;
-                    }
-                }
-                
-                if (matchType && matchBrand && matchPrice) {
-                    accessory.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    accessory.style.display = 'none';
-                }
-            });
-            
-            // إظهار رسالة إذا لم يتم العثور على نتائج
-            const noResults = document.getElementById('no-results');
-            if (visibleCount === 0) {
-                if (!noResults) {
-                    const message = document.createElement('div');
-                    message.id = 'no-results';
-                    message.style.textAlign = 'center';
-                    message.style.padding = '20px';
-                    message.style.width = '100%';
-                    message.innerHTML = 'لا توجد إكسسوارات تطابق معايير البحث';
-                    document.querySelector('.cameras-grid').appendChild(message);
-                }
-            } else if (noResults) {
-                noResults.remove();
-            }
-        }
-
-        // إضافة event listeners للتصفية
-        document.querySelectorAll('.filters-section select').forEach(select => {
-            select.addEventListener('change', filterAccessories);
-        });
-
-        // إضافة وظائف سلة التسوق والمفضلة
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                alert('تمت إضافة المنتج إلى سلة التسوق');
-            });
-        });
-
-        document.querySelectorAll('.add-to-favorites').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.querySelector('i').classList.toggle('active');
-                alert('تمت إضافة المنتج إلى المفضلة');
-            });
-        });
-        
-        // إضافة وظيفة زر عرض التفاصيل
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // الحصول على بيانات البطاقة
-                const card = this.closest('.camera-card');
-                const title = card.querySelector('.camera-title').textContent;
-                const image = card.querySelector('.camera-image img').src;
-                const price = card.querySelector('.camera-price').textContent;
-                
-                // تحديث بيانات النافذة المنبثقة
-                document.getElementById('modalTitle').textContent = title;
-                document.getElementById('modalMainImage').src = image;
-                
-                // إنشاء الصور المصغرة
-                const thumbnailsContainer = document.getElementById('modalThumbnails');
-                thumbnailsContainer.innerHTML = '';
-                
-                // استخدام الصور المصغرة الفعلية من البطاقة
-                const thumbnails = card.querySelectorAll('.popup-thumbs .popup-thumb img');
-                
-                thumbnails.forEach((thumbImg, index) => {
-                    const thumb = document.createElement('div');
-                    thumb.className = 'modal-thumb';
-                    thumb.innerHTML = `<img src="${thumbImg.src}" alt="${title} - صورة ${index+1}">`;
+            // إضافة وظيفة القلب
+            document.querySelectorAll('.add-to-favorites, .modal-add-to-favorites').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const isModal = this.classList.contains('modal-add-to-favorites');
+                    const productCard = isModal ? 
+                        document.querySelector(`.camera-card:has(.camera-title:contains('${document.getElementById('modalTitle').textContent}'))`) :
+                        this.closest('.camera-card');
                     
-                    // تغيير الصورة الرئيسية عند النقر على المصغرة
-                    thumb.addEventListener('click', function() {
-                        document.getElementById('modalMainImage').src = this.querySelector('img').src;
+                    const productName = productCard.querySelector('.camera-title').textContent;
+                    const productPrice = productCard.querySelector('.camera-price').textContent.trim();
+                    const productImage = productCard.querySelector('.camera-image img').src;
+                    
+                    toggleFavorite(productName, productPrice, productImage, this);
+                });
+            });
+
+            // دالة إضافة/إزالة من المفضلة
+            function toggleFavorite(name, price, image, clickedButton) {
+                let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const isFavorite = favorites.some(item => item.name === name);
+                
+                if (isFavorite) {
+                    // إزالة من المفضلة
+                    favorites = favorites.filter(item => item.name !== name);
+                    clickedButton.style.color = '#333';
+                    showNotification('تم إزالة المنتج من المفضلة', 'success');
+                } else {
+                    // إضافة إلى المفضلة
+                    favorites.push({ name, price, image });
+                    clickedButton.style.color = '#e74c3c';
+                    showNotification('تم إضافة المنتج إلى المفضلة', 'success');
+                }
+                
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // تحديث القلب الآخر
+                const isModal = clickedButton.classList.contains('modal-add-to-favorites');
+                const otherButton = isModal ? 
+                    document.querySelector(`.camera-card:has(.camera-title:contains('${name}')) .add-to-favorites`) :
+                    document.querySelector('.modal-add-to-favorites');
+                
+                if (otherButton) {
+                    otherButton.style.color = clickedButton.style.color;
+                }
+            }
+
+            // تحديث حالة القلب عند تحميل الصفحة
+            function updateHeartStatus() {
+                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                document.querySelectorAll('.camera-card').forEach(card => {
+                    const name = card.querySelector('.camera-title').textContent;
+                    const button = card.querySelector('.add-to-favorites');
+                    if (favorites.some(item => item.name === name)) {
+                        button.style.color = '#e74c3c';
+                    } else {
+                        button.style.color = '#333';
+                    }
+                });
+            }
+
+            // تحديث حالة القلب عند تحميل الصفحة
+            updateHeartStatus();
+
+            // إضافة للسلة
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productCard = this.closest('.camera-card');
+                    const productName = productCard.querySelector('.camera-title').textContent;
+                    const productPrice = productCard.querySelector('.camera-price').textContent.trim();
+                    const productImage = productCard.querySelector('.camera-image img').src;
+                    
+                    // إضافة المنتج للسلة
+                    addToCart(productName, productPrice, productImage);
+                });
+            });
+
+            // دالة إضافة المنتج للسلة
+            function addToCart(name, price, image) {
+                // الحصول على السلة الحالية من localStorage
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                // التحقق مما إذا كان المنتج موجوداً بالفعل في السلة
+                const existingProduct = cart.find(item => item.name === name);
+                
+                if (existingProduct) {
+                    // إذا كان المنتج موجوداً، نزيد الكمية
+                    existingProduct.quantity += 1;
+                } else {
+                    // إذا لم يكن موجوداً، نضيفه كمنتج جديد
+                    cart.push({
+                        name: name,
+                        price: price,
+                        image: image,
+                        quantity: 1
+                    });
+                }
+                
+                // حفظ السلة المحدثة
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // تحديث عداد السلة
+                updateCartCount();
+                
+                // عرض إشعار نجاح
+                showNotification('تمت إضافة المنتج إلى السلة بنجاح', 'success');
+            }
+
+            // دالة تحديث عداد السلة
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                let totalQuantity = 0;
+                cart.forEach(item => {
+                    totalQuantity += item.quantity || 1;
+                });
+
+                let cartCount = document.querySelector('.cart-count');
+                if (!cartCount) {
+                    const icon = document.querySelector('.cart-icon');
+                    cartCount = document.createElement('span');
+                    cartCount.className = 'cart-count';
+                    icon.appendChild(cartCount);
+                }
+                cartCount.textContent = totalQuantity;
+                cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+            }
+
+            // دالة لعرض الإشعارات
+            function showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+
+            // وظائف التصفية والفرز
+            function filterAccessories() {
+                const type = document.querySelector('select[name="type"]').value;
+                const brand = document.querySelector('select[name="brand"]').value;
+                const price = document.querySelector('select[name="price"]').value;
+                
+                const accessories = document.querySelectorAll('.camera-card');
+                let visibleCount = 0;
+                
+                accessories.forEach(accessory => {
+                    const matchType = !type || accessory.dataset.type === type;
+                    const matchBrand = !brand || accessory.dataset.brand === brand;
+                    const price_value = parseInt(accessory.querySelector('.camera-price').textContent.replace(/[^\d]/g, ''));
+                    let matchPrice = true;
+                    
+                    if (price) {
+                        const [min, max] = price.split('-').map(Number);
+                        if (max) {
+                            matchPrice = price_value >= min && price_value <= max;
+                        } else {
+                            matchPrice = price_value >= min;
+                        }
+                    }
+                    
+                    if (matchType && matchBrand && matchPrice) {
+                        accessory.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        accessory.style.display = 'none';
+                    }
+                });
+                
+                // إظهار رسالة إذا لم يتم العثور على نتائج
+                const noResults = document.getElementById('no-results');
+                if (visibleCount === 0) {
+                    if (!noResults) {
+                        const message = document.createElement('div');
+                        message.id = 'no-results';
+                        message.style.textAlign = 'center';
+                        message.style.padding = '20px';
+                        message.style.width = '100%';
+                        message.innerHTML = 'لا توجد إكسسوارات تطابق معايير البحث';
+                        document.querySelector('.cameras-grid').appendChild(message);
+                    }
+                } else if (noResults) {
+                    noResults.remove();
+                }
+            }
+
+            // إضافة event listeners للتصفية
+            document.querySelectorAll('.filters-section select').forEach(select => {
+                select.addEventListener('change', filterAccessories);
+            });
+
+            // إضافة وظائف زر عرض التفاصيل
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // الحصول على بيانات البطاقة
+                    const card = this.closest('.camera-card');
+                    const title = card.querySelector('.camera-title').textContent;
+                    const image = card.querySelector('.camera-image img').src;
+                    const price = card.querySelector('.camera-price').textContent;
+                    
+                    // تحديث بيانات النافذة المنبثقة
+                    document.getElementById('modalTitle').textContent = title;
+                    document.getElementById('modalMainImage').src = image;
+                    
+                    // إنشاء الصور المصغرة
+                    const thumbnailsContainer = document.getElementById('modalThumbnails');
+                    thumbnailsContainer.innerHTML = '';
+                    
+                    // استخدام الصور المصغرة الفعلية من البطاقة
+                    const thumbnails = card.querySelectorAll('.popup-thumbs .popup-thumb img');
+                    
+                    thumbnails.forEach((thumbImg, index) => {
+                        const thumb = document.createElement('div');
+                        thumb.className = 'modal-thumb';
+                        thumb.innerHTML = `<img src="${thumbImg.src}" alt="${title} - صورة ${index+1}">`;
+                        
+                        // تغيير الصورة الرئيسية عند النقر على المصغرة
+                        thumb.addEventListener('click', function() {
+                            document.getElementById('modalMainImage').src = this.querySelector('img').src;
+                        });
+                        
+                        thumbnailsContainer.appendChild(thumb);
                     });
                     
-                    thumbnailsContainer.appendChild(thumb);
-                });
-                
-                // تعيين الصورة الأولى كصورة رئيسية افتراضياً
-                if (thumbnails.length > 0) {
-                    document.getElementById('modalMainImage').src = thumbnails[0].src;
-                }
-                
-                // إضافة المواصفات
-                const modalSpecs = document.getElementById('modalSpecs');
-                modalSpecs.innerHTML = '';
-                
-                // إضافة عنوان للمواصفات
-                const specsTitle = document.createElement('h3');
-                specsTitle.textContent = 'المواصفات';
-                modalSpecs.appendChild(specsTitle);
-                
-                // نسخ المواصفات من البطاقة
-                const specs = card.querySelectorAll('.camera-specs span');
-                const specsList = document.createElement('ul');
-                
-                specs.forEach(spec => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = spec.innerHTML;
-                    specsList.appendChild(listItem);
-                });
-                
-                modalSpecs.appendChild(specsList);
-                
-                // إضافة معلومات إضافية من النافذة المنبثقة الصغيرة إذا وجدت
-                const popupDetails = card.querySelector('.product-popup .popup-details');
-                if (popupDetails) {
-                    const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
-                    popupDetailItems.forEach(item => {
-                        const label = item.querySelector('.detail-label').textContent;
-                        const value = item.querySelector('.detail-value').textContent;
-                        
+                    // تعيين الصورة الأولى كصورة رئيسية افتراضياً
+                    if (thumbnails.length > 0) {
+                        document.getElementById('modalMainImage').src = thumbnails[0].src;
+                    }
+                    
+                    // إضافة المواصفات
+                    const modalSpecs = document.getElementById('modalSpecs');
+                    modalSpecs.innerHTML = '';
+                    
+                    // إضافة عنوان للمواصفات
+                    const specsTitle = document.createElement('h3');
+                    specsTitle.textContent = 'المواصفات';
+                    modalSpecs.appendChild(specsTitle);
+                    
+                    // نسخ المواصفات من البطاقة
+                    const specs = card.querySelectorAll('.camera-specs span');
+                    const specsList = document.createElement('ul');
+                    
+                    specs.forEach(spec => {
                         const listItem = document.createElement('li');
-                        listItem.innerHTML = `<i class="fas fa-info-circle"></i> <strong>${label}</strong> ${value}`;
+                        listItem.innerHTML = spec.innerHTML;
                         specsList.appendChild(listItem);
                     });
-                }
-                
-                // إضافة معلومات التوفر مباشرة بعد المواصفات
-                const availabilityElement = document.createElement('div');
-                availabilityElement.className = 'modal-availability';
-                availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
-                modalSpecs.appendChild(availabilityElement);
-                
-                // إضافة السعر
-                document.getElementById('modalPrice').innerHTML = `<span class="popup-sar-symbol"></span><span>${price}</span>`;
-                
-                // عرض النافذة المنبثقة
-                document.getElementById('productModal').style.display = 'block';
+                    
+                    modalSpecs.appendChild(specsList);
+                    
+                    // إضافة معلومات إضافية من النافذة المنبثقة الصغيرة إذا وجدت
+                    const popupDetails = card.querySelector('.product-popup .popup-details');
+                    if (popupDetails) {
+                        const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
+                        popupDetailItems.forEach(item => {
+                            const label = item.querySelector('.detail-label').textContent;
+                            const value = item.querySelector('.detail-value').textContent;
+                            
+                            const listItem = document.createElement('li');
+                            listItem.innerHTML = `<i class="fas fa-info-circle"></i> <strong>${label}</strong> ${value}`;
+                            specsList.appendChild(listItem);
+                        });
+                    }
+                    
+                    // إضافة معلومات التوفر مباشرة بعد المواصفات
+                    const availabilityElement = document.createElement('div');
+                    availabilityElement.className = 'modal-availability';
+                    availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
+                    modalSpecs.appendChild(availabilityElement);
+                    
+                    // إضافة السعر
+                    document.getElementById('modalPrice').innerHTML = `<span class="popup-sar-symbol"></span><span>${price}</span>`;
+                    
+                    // عرض النافذة المنبثقة
+                    document.getElementById('productModal').style.display = 'block';
+
+                    // إضافة مستمع الحدث لزر إضافة للسلة في النافذة المنبثقة
+                    const modalAddToCart = document.querySelector('.modal-add-to-cart');
+                    modalAddToCart.onclick = function(e) {
+                        e.preventDefault();
+                        const productName = document.getElementById('modalTitle').textContent;
+                        const productPrice = document.getElementById('modalPrice').textContent.trim();
+                        const productImage = document.getElementById('modalMainImage').src;
+                        
+                        // إضافة المنتج للسلة
+                        addToCart(productName, productPrice, productImage);
+                    };
+
+                    // إضافة مستمع الحدث للقلب في النافذة المنبثقة
+                    const modalHeartBtn = document.querySelector('.modal-add-to-favorites');
+                    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                    if (favorites.some(item => item.name === title)) {
+                        modalHeartBtn.style.color = '#e74c3c';
+                    } else {
+                        modalHeartBtn.style.color = '#333';
+                    }
+
+                    // إضافة مستمع الحدث للقلب في النافذة المنبثقة
+                    modalHeartBtn.onclick = function(e) {
+                        e.preventDefault();
+                        const productName = document.getElementById('modalTitle').textContent;
+                        const productPrice = document.getElementById('modalPrice').textContent.trim();
+                        const productImage = document.getElementById('modalMainImage').src;
+                        
+                        // إضافة/إزالة من المفضلة
+                        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                        const isFavorite = favorites.some(item => item.name === productName);
+                        
+                        if (isFavorite) {
+                            favorites = favorites.filter(item => item.name !== productName);
+                            this.style.color = '#333';
+                            showNotification('تم إزالة المنتج من المفضلة', 'success');
+                        } else {
+                            favorites.push({ name: productName, price: productPrice, image: productImage });
+                            this.style.color = '#e74c3c';
+                            showNotification('تم إضافة المنتج إلى المفضلة', 'success');
+                        }
+                        
+                        localStorage.setItem('favorites', JSON.stringify(favorites));
+                        
+                        // تحديث لون القلب في البطاقة الرئيسية
+                        
+const cards = document.querySelectorAll('.camera-card');
+let mainCard = null;
+cards.forEach(card => {
+    const title = card.querySelector('.camera-title')?.textContent.trim();
+    if (title === productName) {
+        mainCard = card;
+    }
+});
+
+                        if (mainCard) {
+                            const mainHeart = mainCard.querySelector('.add-to-favorites');
+                            mainHeart.style.color = this.style.color;
+                        }
+                    };
+                });
             });
-        });
 
-        // وظائف النافذة المنبثقة
-        const modal = document.getElementById('productModal');
-        const closeBtn = document.getElementsByClassName('close-modal')[0];
+            // وظائف النافذة المنبثقة
+            const modal = document.getElementById('productModal');
+            const closeBtn = document.getElementsByClassName('close-modal')[0];
 
-        // إغلاق النافذة المنبثقة عند النقر على زر الإغلاق
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        }
-
-        // إغلاق النافذة المنبثقة عند النقر خارج المحتوى
-        window.onclick = function(event) {
-            if (event.target == modal) {
+            // إغلاق النافذة المنبثقة عند النقر على زر الإغلاق
+            closeBtn.onclick = function() {
                 modal.style.display = 'none';
             }
-        }
 
-        // إضافة وظائف لأزرار النافذة المنبثقة
-        document.querySelector('.modal-add-to-cart').addEventListener('click', function() {
-            alert('تمت إضافة المنتج إلى سلة التسوق');
-        });
-        
-        document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
-            alert('تمت إضافة المنتج إلى المفضلة');
-            this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
-        });
-        
-        // إضافة وظائف لإغلاق النوافذ المنبثقة الصغيرة
-        document.querySelectorAll('.popup-close').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                this.closest('.product-popup').style.display = 'none';
-            });
-        });
+            // إغلاق النافذة المنبثقة عند النقر خارج المحتوى
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
 
-        // وظائف الترقيم
-        const paginationButtons = document.querySelectorAll('.pagination button');
+            // وظائف الترقيم
+            const paginationButtons = document.querySelectorAll('.pagination button');
             const camerasGrid = document.querySelector('.cameras-grid');
             const cameras = document.querySelectorAll('.camera-card');
             const itemsPerPage = 8; // عدد المنتجات في كل صفحة
@@ -1408,6 +1585,115 @@
 
             // عرض الصفحة الأولى عند تحميل الصفحة
             showPage(1);
+        });
     </script>
-</body>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const selects = ['type', 'brand', 'price', 'sort'].map(n => document.querySelector(`select[name="${n}"]`));
+    const container = document.querySelector('.cameras-grid');
+    const cards = Array.from(container.querySelectorAll('.camera-card'));
+    let filteredCards = cards;
+    let currentPage = 1;
+    const itemsPerPage = 8;
+
+    function convertArabicToEnglish(text) {
+        const arabic = '٠١٢٣٤٥٦٧٨٩';
+        const english = '0123456789';
+        return text.replace(/[٠-٩]/g, d => english[arabic.indexOf(d)]);
+    }
+
+    function extractPrice(card) {
+        const raw = card.querySelector('.camera-price')?.textContent || '';
+        const clean = convertArabicToEnglish(raw).replace(/[^\d]/g, '');
+        return parseInt(clean, 10) || 0;
+    }
+
+    function inRange(price, value) {
+        if (!value) return true;
+        if (value === "0-200") return price < 200;
+        if (value === "200-500") return price >= 200 && price <= 500;
+        if (value === "500-1000") return price > 500 && price <= 1000;
+        if (value === "1000+") return price > 1000;
+        return true;
+    }
+
+    function filterAndSort() {
+        const [typeSel, brandSel, priceSel, sortSel] = selects;
+        const type = typeSel?.value.toLowerCase() || "";
+        const brand = brandSel?.value.toLowerCase() || "";
+        const priceVal = priceSel?.value || "";
+        const sortVal = sortSel?.value || "";
+
+        filteredCards = cards.filter(card => {
+            const cType = card.dataset.type?.toLowerCase() || "";
+            const cBrand = card.dataset.brand?.toLowerCase() || "";
+            const cPrice = extractPrice(card);
+            return (!type || cType === type) &&
+                   (!brand || cBrand === brand) &&
+                   inRange(cPrice, priceVal);
+        });
+
+        if (sortVal === "price-low") {
+            filteredCards.sort((a, b) => extractPrice(a) - extractPrice(b));
+        } else if (sortVal === "price-high") {
+            filteredCards.sort((a, b) => extractPrice(b) - extractPrice(a));
+        }
+
+        currentPage = 1;
+        showPage(currentPage);
+    }
+
+    function showPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        cards.forEach(card => card.style.display = "none");
+
+        const visible = filteredCards.slice(start, end);
+        visible.forEach(card => {
+            card.style.display = "block";
+            container.appendChild(card);
+        });
+
+        const noResults = document.getElementById("no-results");
+        if (visible.length === 0) {
+            if (!noResults) {
+                const msg = document.createElement("div");
+                msg.id = "no-results";
+                msg.style.textAlign = "center";
+                msg.style.padding = "20px";
+                msg.style.width = "100%";
+                msg.innerHTML = "لا توجد إكسسوارات تطابق معايير البحث";
+                container.appendChild(msg);
+            }
+        } else {
+            if (noResults) noResults.remove();
+        }
+    }
+
+    selects.forEach(select => select?.addEventListener("change", filterAndSort));
+    filterAndSort();
+
+    document.querySelectorAll('.page-btn').forEach(btn => {
+        btn.addEventListener("click", () => {
+            currentPage = parseInt(btn.dataset.page);
+            showPage(currentPage);
+        });
+    });
+
+    document.getElementById("prev-btn")?.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    document.getElementById("next-btn")?.addEventListener("click", () => {
+        if (currentPage < 4) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+});
+</script></body>
 </html> 

@@ -555,13 +555,13 @@
             margin-right: 5px;
             order: -1;
         }
-
+        
         .modal-actions {
             display: flex;
             gap: 15px;
             margin-top: 10px;
         }
-
+        
         .modal-actions button {
             flex: 1;
             padding: 12px;
@@ -576,12 +576,12 @@
             justify-content: center;
             gap: 8px;
         }
-
+        
         .modal-add-to-cart {
             background-color: #165b8a;
             color: white;
         }
-
+        
         .modal-add-to-favorites {
             background-color: #f1f1f1;
             color: #333;
@@ -752,6 +752,27 @@
 
         .view-all-products-btn:hover::before {
             opacity: 0;
+        }
+
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
         }
     </style>
 </head>
@@ -2281,15 +2302,53 @@
             let visibleCount = 0;
             let visibleProducts = [];
             
+            // تحليل نطاق السعر
+            let minPrice = 0;
+            let maxPrice = Infinity;
+            
+            if (price) {
+                if (price === '0-500') {
+                    minPrice = 0;
+                    maxPrice = 500;
+                } else if (price === '501-1000') {
+                    minPrice = 501;
+                    maxPrice = 1000;
+                } else if (price === '1001-2000') {
+                    minPrice = 1001;
+                    maxPrice = 2000;
+                } else if (price === '2001-5000') {
+                    minPrice = 2001;
+                    maxPrice = 5000;
+                } else if (price === '5001+') {
+                    minPrice = 5001;
+                    maxPrice = Infinity;
+                }
+            }
+            
             products.forEach(product => {
                 const matchCategory = !category || product.dataset.category === category;
                 const matchBrand = !brand || product.dataset.brand === brand;
-                // يمكن إضافة تصفية السعر هنا
                 
-                if (matchCategory && matchBrand) {
+                // استخراج السعر من نص السعر
+                let productPrice = 0;
+                const priceElement = product.querySelector('.camera-price, .price, .product-price');
+                if (priceElement) {
+                    const priceText = priceElement.textContent.trim();
+                    // التعامل مع الأرقام العربية والإنجليزية
+                    let numericPrice = priceText.replace(/[^\d٠١٢٣٤٥٦٧٨٩]/g, '');
+                    // تحويل الأرقام العربية إلى إنجليزية
+                    numericPrice = numericPrice.replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+                    productPrice = parseInt(numericPrice, 10) || 0;
+                }
+                
+                // تصفية السعر
+                const matchPrice = !price || (productPrice >= minPrice && productPrice <= maxPrice);
+                
+                if (matchCategory && matchBrand && matchPrice) {
                     product.classList.add('filtered-in');
                     visibleCount++;
                     visibleProducts.push(product);
+                    product.style.display = '';
                 } else {
                     product.classList.remove('filtered-in');
                     product.style.display = 'none';
@@ -2662,7 +2721,7 @@
         
         // تطبيق التصفية الأولية
         filterByAvailability();
-    });
+    
     </script>
 
     <!-- إصلاح شامل لأزرار السلة والمفضلة وروابط الموقع -->
@@ -2883,5 +2942,172 @@
             filterAndPaginateProducts();
         });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // تحديث عداد السلة عند تحميل الصفحة
+        updateCartCount();
+        updateFavoritesCount();
+
+        // إضافة للسلة
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productCard = this.closest('.camera-card');
+                const productName = productCard.querySelector('.camera-title').textContent;
+                const productPrice = productCard.querySelector('.camera-price').textContent.trim();
+                const productImage = productCard.querySelector('.camera-image img').src;
+                
+                // إضافة المنتج للسلة
+                addToCart(productName, productPrice, productImage);
+            });
+        });
+        
+        // إضافة للمفضلة
+        document.querySelectorAll('.add-to-favorites').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productCard = this.closest('.camera-card');
+                const productName = productCard.querySelector('.camera-title').textContent;
+                const productPrice = productCard.querySelector('.camera-price').textContent.trim();
+                const productImage = productCard.querySelector('.camera-image img').src;
+                
+                // إضافة المنتج للمفضلة
+                addToFavorites(productName, productPrice, productImage);
+                
+                // تغيير لون الزر
+                this.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.style.color = this.classList.contains('active') ? '#e74c3c' : '#333';
+                }
+            });
+        });
+    });
+
+    // دالة إضافة المنتج للسلة
+    function addToCart(name, price, image) {
+        // الحصول على السلة الحالية من localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // التحقق مما إذا كان المنتج موجوداً بالفعل في السلة
+        const existingProduct = cart.find(item => item.name === name);
+        
+        if (existingProduct) {
+            // إذا كان المنتج موجوداً، نزيد الكمية
+            existingProduct.quantity += 1;
+        } else {
+            // إذا لم يكن موجوداً، نضيفه كمنتج جديد
+            cart.push({
+                name: name,
+                price: price,
+                image: image,
+                quantity: 1
+            });
+        }
+        
+        // حفظ السلة المحدثة
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // تحديث عداد السلة
+        updateCartCount();
+        
+        // عرض إشعار نجاح
+        showNotification('تمت إضافة المنتج إلى السلة بنجاح', 'success');
+    }
+
+    // دالة إضافة المنتج للمفضلة
+    function addToFavorites(name, price, image) {
+        // الحصول على المفضلة الحالية من localStorage
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        
+        // التحقق مما إذا كان المنتج موجوداً بالفعل في المفضلة
+        const existingProduct = favorites.find(item => item.name === name);
+        
+        if (existingProduct) {
+            // إذا كان المنتج موجوداً، نزيله من المفضلة
+            favorites = favorites.filter(item => item.name !== name);
+            showNotification('تمت إزالة المنتج من المفضلة', 'info');
+        } else {
+            // إذا لم يكن موجوداً، نضيفه للمفضلة
+            favorites.push({
+                name: name,
+                price: price,
+                image: image
+            });
+            showNotification('تمت إضافة المنتج إلى المفضلة', 'success');
+        }
+        
+        // حفظ المفضلة المحدثة
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        
+        // تحديث عداد المفضلة
+        updateFavoritesCount();
+    }
+
+    // دالة تحديث عداد السلة
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalQuantity = 0;
+        cart.forEach(item => {
+            totalQuantity += item.quantity || 1;
+        });
+
+        let cartCount = document.querySelector('.cart-count');
+        if (!cartCount) {
+            const icon = document.querySelector('.cart-icon');
+            cartCount = document.createElement('span');
+            cartCount.className = 'cart-count';
+            icon.appendChild(cartCount);
+        }
+        cartCount.textContent = totalQuantity;
+        cartCount.style.display = totalQuantity > 0 ? 'flex' : 'none';
+    }
+
+    // دالة تحديث عداد المفضلة
+    function updateFavoritesCount() {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favoritesCount = document.querySelector('.favorites-count');
+        if (favoritesCount) {
+            favoritesCount.textContent = favorites.length;
+        }
+
+        // تحديث حالة أزرار المفضلة
+        document.querySelectorAll('.add-to-favorites').forEach(button => {
+            const productCard = button.closest('.camera-card');
+            const productName = productCard.querySelector('.camera-title').textContent;
+            const isInFavorites = favorites.some(item => item.name === productName);
+            
+            if (isInFavorites) {
+                button.classList.add('active');
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.style.color = '#e74c3c';
+                }
+                } else {
+                button.classList.remove('active');
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.style.color = '#333';
+                }
+            }
+        });
+    }
+
+    // دالة لعرض الإشعارات
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+    </script>
+
+    <!-- استدعاء ملف التصفية الرئيسي -->
+    <script src="all-products.js"></script>
 </body>
 </html> 

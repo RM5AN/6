@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+
+<html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جميع حقائب الكاميرات - ShotSpot</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>جميع حقائب الكاميرات - ShotSpot</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
         /* نفس الستايل الموجود في صفحة العدسات */
         .cameras-page {
             padding: 40px 0;
@@ -689,691 +690,556 @@
         .view-details-btn i {
             font-size: 15px;
         }
+
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-icon, .heart-icon {
+            position: relative;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <a href="index.html">
-                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
-                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
-                    <alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
-                </a>
-            </div>
-
-            <div class="main-menu">
-                <a href="index.html">الصفحة الرئيسية</a>
-                <a href="about.html">من نحن</a>
-                <a href="services.html">خدماتنا</a>
-                <a href="contact.html">تواصل معنا</a>
-            </div>
-
-            <div class="header-actions">
-                <div class="icons-group">
-                    <div class="account-dropdown">
-                        <a href="login.html" class="user-icon">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <div class="account-menu">
-                            <a href="login.html">تسجيل الدخول</a>
-                            <a href="register.html">حساب جديد</a>
-                            <a href="rent-request.html">طلب تأجير</a>
-                        </div>
-                    </div>
-                    <a href="favorites.html" class="heart-icon">
-                        <i class="fas fa-heart"></i>
-                    </a>
-                    <a href="cart.html" class="cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </a>
-                </div>
-                
-                <div class="search-container">
-                    <input type="text" placeholder="ابحث عن منتجات...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="cameras-page">
-        <div class="container">
-            <div class="page-header">
-                <h1>جميع حقائب الكاميرات</h1>
-                <p>اكتشف مجموعتنا الكاملة من حقائب الكاميرات الاحترافية بأفضل الأسعار</p>
-            </div>
-
-            <!-- Filters Section -->
-            <section class="filters-section">
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label>النوع</label>
-                        <select name="type">
-                            <option value="">الكل</option>
-                            <option value="backpacks">حقائب ظهر</option>
-                            <option value="shoulder">حقائب كتف</option>
-                            <option value="cases">حقائب حماية</option>
-                            <option value="messenger">حقائب ساعي</option>
-                            <option value="lens-pouches">حقائب عدسات</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>الماركة</label>
-                        <select name="brand">
-                            <option value="">الكل</option>
-                            <option value="lowepro">لوبرو</option>
-                            <option value="peak-design">بيك ديزاين</option>
-                            <option value="manfrotto">مانفروتو</option>
-                            <option value="think-tank">ثينك تانك</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>نوع العملية</label>
-                        <select name="operation">
-                            <option value="">الكل</option>
-                            <option value="buy">شراء </option>
-                            <option value="rent">إيجار</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>الترتيب</label>
-                        <select name="sort">
+<!-- Header -->
+<header>
+<nav>
+<div class="logo">
+<a href="index.html">
+<img alt="ShotSpot Logo" src="shotspot-logo.png-removebg-preview.png" style="height: 45px;"/>
+<span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+<alt="camera logo"="" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+</alt="camera></a>
+</div>
+<div class="main-menu">
+<a href="index.html">الصفحة الرئيسية</a>
+<a href="about.html">من نحن</a>
+<a href="services.html">خدماتنا</a>
+<a href="contact.html">تواصل معنا</a>
+</div>
+<div class="header-actions">
+<div class="icons-group">
+<div class="account-dropdown">
+<a class="user-icon" href="login.html">
+<i class="fas fa-user"></i>
+</a>
+<div class="account-menu">
+<a href="login.html">تسجيل الدخول</a>
+<a href="register.html">حساب جديد</a>
+<a href="rent-request.html">طلب تأجير</a>
+</div>
+</div>
+<a class="heart-icon" href="favorites.html">
+<i class="fas fa-heart"></i>
+</a>
+<a class="cart-icon" href="cart.html">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+<div class="search-container">
+<input placeholder="ابحث عن منتجات..." type="text"/>
+<i class="fas fa-search search-icon"></i>
+</div>
+</div>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="cameras-page">
+<div class="container">
+<div class="page-header">
+<h1>جميع حقائب الكاميرات</h1>
+<p>اكتشف مجموعتنا الكاملة من حقائب الكاميرات الاحترافية بأفضل الأسعار</p>
+</div>
+<!-- Filters Section -->
+<section class="filters-section">
+<div class="filters-grid">
+<div class="filter-group">
+<label>النوع</label>
+<select name="type">
+<option value="">الكل</option>
+<option value="backpacks">حقائب ظهر</option>
+<option value="shoulder">حقائب كتف</option>
+<option value="cases">حقائب حماية</option>
+<option value="messenger">حقائب ساعي</option>
+<option value="lens-pouches">حقائب عدسات</option>
+</select>
+</div>
+<div class="filter-group">
+<label>الماركة</label>
+<select name="brand">
+<option value="">الكل</option>
+<option value="lowepro">لوبرو</option>
+<option value="peak-design">بيك ديزاين</option>
+<option value="manfrotto">مانفروتو</option>
+<option value="think-tank">ثينك تانك</option>
+</select>
+</div>
+<div class="filter-group">
+<label>نوع العملية</label>
+<select name="operation">
+<option value="">الكل</option>
+<option value="buy">شراء </option>
+<option value="rent">إيجار</option>
+</select>
+</div>
+<div class="filter-group">
+<label>الترتيب</label>
+<select name="sort">
                             <option value="newest">الأحدث</option>
                             <option value="price-low">السعر: من الأقل</option>
                             <option value="price-high">السعر: من الأعلى</option>
                         </select>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Bags Grid -->
-            <section class="cameras-grid">
-                <!-- Bag Card 1 -->
-                <div class="camera-card" data-type="backpacks" data-brand="lowepro">
-                    <div class="camera-image">
-                        <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو">
-                    </div>
-                    <div class="camera-info">
-                        <h3 class="camera-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
-                        <div class="camera-specs">
-                            <span><i class="fas fa-camera"></i> تتسع لـ: 2 كاميرا DSLR</span>
-                            <span><i class="fas fa-laptop"></i> مساحة للاب توب 15 بوصة</span>
-                            <span><i class="fas fa-tint"></i> مقاومة للماء</span>
-                        </div>
-                        <div class="camera-price">
-                            <span>٧٩٩</span>
-                            <span class="sar-symbol"></span>
-                        </div>
-                        <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
-                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
-                    </div>
-                    <!-- نافذة منبثقة -->
-                    <div class="product-popup">
-                        <div class="popup-header">
-                            <h3 class="popup-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
-                            <button class="popup-close"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="popup-details">
-                            <div class="popup-detail">
-                                <span class="detail-label">السعة:</span>
-                                <span class="detail-value">2 كاميرا DSLR + 8 عدسات</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">الأبعاد:</span>
-                                <span class="detail-value">34.8 × 27 × 48.3 سم</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">المميزات:</span>
-                                <span class="detail-value">مقاومة للماء، حماية من الصدمات</span>
-                            </div>
-                        </div>
-                        <div class="popup-thumbs">
-                            <div class="popup-thumb">
-                                <img src="Lowepro ProTactic 450 AW II (1).jpg" alt="حقيبة ظهر لوبرو - صورة 1">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Lowepro ProTactic 450 AW II (2).jpg" alt="حقيبة ظهر لوبرو - صورة 2">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Lowepro ProTactic 450 AW II (3).jpg" alt="حقيبة ظهر لوبرو - صورة 3">
-                            </div>
-                        </div>
-                        <div class="popup-price">
-                            <span>٧٩٩</span>
-                            <span class="sar-symbol"></span>
-                        </div>
-                        <div class="popup-footer">
-                            <div class="popup-availability">
-                                <i class="fas fa-check-circle"></i>
+</div>
+</div>
+</section>
+<!-- Bags Grid -->
+<section class="cameras-grid">
+<!-- Bag Card 1 -->
+<div class="camera-card" data-brand="lowepro" data-type="backpacks">
+<div class="camera-image">
+<img alt="حقيبة ظهر لوبرو" src="Lowepro ProTactic 450 AW II (1).jpg"/>
+</div>
+<div class="camera-info">
+<h3 class="camera-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
+<div class="camera-specs">
+<span><i class="fas fa-camera"></i> تتسع لـ: 2 كاميرا DSLR</span>
+<span><i class="fas fa-laptop"></i> مساحة للاب توب 15 بوصة</span>
+<span><i class="fas fa-tint"></i> مقاومة للماء</span>
+</div>
+<div class="camera-price">
+<span>٧٩٩</span>
+<span class="sar-symbol"></span>
+</div>
+<div class="camera-actions">
+<button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+</div>
+<!-- نافذة منبثقة -->
+<div class="product-popup">
+<div class="popup-header">
+<h3 class="popup-title">حقيبة ظهر Lowepro ProTactic 450 AW II</h3>
+<button class="popup-close"><i class="fas fa-times"></i></button>
+</div>
+<div class="popup-details">
+<div class="popup-detail">
+<span class="detail-label">السعة:</span>
+<span class="detail-value">2 كاميرا DSLR + 8 عدسات</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">الأبعاد:</span>
+<span class="detail-value">34.8 × 27 × 48.3 سم</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">المميزات:</span>
+<span class="detail-value">مقاومة للماء، حماية من الصدمات</span>
+</div>
+</div>
+<div class="popup-thumbs">
+<div class="popup-thumb">
+<img alt="حقيبة ظهر لوبرو - صورة 1" src="Lowepro ProTactic 450 AW II (1).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="حقيبة ظهر لوبرو - صورة 2" src="Lowepro ProTactic 450 AW II (2).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="حقيبة ظهر لوبرو - صورة 3" src="Lowepro ProTactic 450 AW II (3).jpg"/>
+</div>
+</div>
+<div class="popup-price">
+<span>٧٩٩</span>
+<span class="sar-symbol"></span>
+</div>
+<div class="popup-footer">
+<div class="popup-availability">
+<i class="fas fa-check-circle"></i>
                                 متوفر في المخزون
                             </div>
-                            <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+<div class="popup-rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star-half-alt"></i>
                                 (4.5)
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bag Card 2 -->
-                <div class="camera-card" data-type="shoulder" data-brand="peak-design">
-                    <div class="camera-image">
-                        <img src="Peak Design Everyday Sling 10L (1).jpg" alt="حقيبة كتف بيك ديزاين">
-                    </div>
-                    <div class="camera-info">
-                        <h3 class="camera-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
-                        <div class="camera-specs">
-                            <span><i class="fas fa-weight-hanging"></i> الوزن: 0.9 كجم</span>
-                            <span><i class="fas fa-expand-arrows-alt"></i> السعة: 10 لتر</span>
-                            <span><i class="fas fa-shield-alt"></i> تصميم مقاوم للسرقة</span>
-                        </div>
-                        <div class="camera-price">
-                            <span>٦٤٩</span>
-                            <span class="sar-symbol"></span>
-                        </div>
-                        <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
-                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
-                    </div>
-                    <!-- نافذة منبثقة -->
-                    <div class="product-popup">
-                        <div class="popup-header">
-                            <h3 class="popup-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
-                            <button class="popup-close"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="popup-details">
-                            <div class="popup-detail">
-                                <span class="detail-label">المواد:</span>
-                                <span class="detail-value">نايلون مضاد للماء 100%</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">السعة:</span>
-                                <span class="detail-value">كاميرا + عدستين + ملحقات</span>
-                            </div>
-                        </div>
-                        <div class="popup-thumbs">
-                            <div class="popup-thumb">
-                                <img src="Peak Design Everyday Sling 10L (1).jpg" alt="حقيبة كتف بيك ديزاين - صورة 1">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Peak Design Everyday Sling 10L (2).jpg" alt="حقيبة كتف بيك ديزاين - صورة 2">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Peak Design Everyday Sling 10L (3).jpg" alt="حقيبة كتف بيك ديزاين - صورة 3">
-                            </div>
-                        </div>
-                        <div class="popup-price">
-                            <span>٦٤٩</span>
-                            <span class="sar-symbol"></span>
-                        </div>
-                        <div class="popup-footer">
-                            <div class="popup-availability">
-                                <i class="fas fa-check-circle"></i>
+</div>
+</div>
+</div>
+<!-- Bag Card 2 -->
+<div class="camera-card" data-brand="peak-design" data-type="shoulder">
+<div class="camera-image">
+<img alt="حقيبة كتف بيك ديزاين" src="Peak Design Everyday Sling 10L (1).jpg"/>
+</div>
+<div class="camera-info">
+<h3 class="camera-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
+<div class="camera-specs">
+<span><i class="fas fa-weight-hanging"></i> الوزن: 0.9 كجم</span>
+<span><i class="fas fa-expand-arrows-alt"></i> السعة: 10 لتر</span>
+<span><i class="fas fa-shield-alt"></i> تصميم مقاوم للسرقة</span>
+</div>
+<div class="camera-price">
+<span>٦٤٩</span>
+<span class="sar-symbol"></span>
+</div>
+<div class="camera-actions">
+<button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+</div>
+<!-- نافذة منبثقة -->
+<div class="product-popup">
+<div class="popup-header">
+<h3 class="popup-title">حقيبة كتف Peak Design Everyday Sling 10L</h3>
+<button class="popup-close"><i class="fas fa-times"></i></button>
+</div>
+<div class="popup-details">
+<div class="popup-detail">
+<span class="detail-label">المواد:</span>
+<span class="detail-value">نايلون مضاد للماء 100%</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">السعة:</span>
+<span class="detail-value">كاميرا + عدستين + ملحقات</span>
+</div>
+</div>
+<div class="popup-thumbs">
+<div class="popup-thumb">
+<img alt="حقيبة كتف بيك ديزاين - صورة 1" src="Peak Design Everyday Sling 10L (1).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="حقيبة كتف بيك ديزاين - صورة 2" src="Peak Design Everyday Sling 10L (2).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="حقيبة كتف بيك ديزاين - صورة 3" src="Peak Design Everyday Sling 10L (3).jpg"/>
+</div>
+</div>
+<div class="popup-price">
+<span>٦٤٩</span>
+<span class="sar-symbol"></span>
+</div>
+<div class="popup-footer">
+<div class="popup-availability">
+<i class="fas fa-check-circle"></i>
                                 متوفر في المخزون
                             </div>
-                            <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+<div class="popup-rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="far fa-star"></i>
                                 (4.0)
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bag Card 3 -->
-                <div class="camera-card" data-type="cases" data-brand="think-tank">
-                    <div class="camera-image">
-                        <img src="Think Tank Airport Security V3.0 (1).jpg" alt="حقيبة حماية ثينك تانك">
-                        <div class="camera-badge">جديد</div>
-                    </div>
-                    <div class="camera-info">
-                        <h3 class="camera-title">حقيبة حماية Think Tank Airport Security V3.0</h3>
-                        <div class="camera-specs">
-                            <span><i class="fas fa-plane"></i> مناسبة للسفر الجوي</span>
-                            <span><i class="fas fa-lock"></i> قفل TSA متوافق</span>
-                            <span><i class="fas fa-dolly"></i> عجلات سيليكون صامتة</span>
-                        </div>
-                        <div class="camera-price">
-                            <span>١٣٩٩</span>
-                            <span class="sar-symbol"></span>
-                        </div>
-                        <div class="camera-actions">
-                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
-                        </div>
-                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
-                    </div>
-                    <!-- نافذة منبثقة -->
-                    <div class="product-popup">
-                        <div class="popup-header">
-                            <h3 class="popup-title">حقيبة حماية Think Tank Airport Security V3.0</h3>
-                            <button class="popup-close"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="popup-details">
-                            <div class="popup-detail">
-                                <span class="detail-label">الأبعاد:</span>
-                                <span class="detail-value">35.6 × 20.3 × 53.3 سم</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">الوزن:</span>
-                                <span class="detail-value">5.4 كجم</span>
-                            </div>
-                            <div class="popup-detail">
-                                <span class="detail-label">المميزات:</span>
-                                <span class="detail-value">مقاومة للصدمات، نظام حماية متطور</span>
-                            </div>
-                        </div>
-                        <div class="popup-thumbs">
-                            <div class="popup-thumb">
-                                <img src="Think Tank Airport Security V3.0 (1).jpg" alt="حقيبة حماية ثينك تانك - صورة 1">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Think Tank Airport Security V3.0 (2).jpg" alt="حقيبة حماية ثينك تانك - صورة 2">
-                            </div>
-                            <div class="popup-thumb">
-                                <img src="Think Tank Airport Security V3.0 (3).jpg" alt="حقيبة حماية ثينك تانك - صورة 3">
-                            </div>
-                        </div>
-                        <div class="popup-price">
-                            <span>١٣٩٩</span>
-                                <span class="sar-symbol"></span>
-                        </div>
-                        <div class="popup-footer">
-                            <div class="popup-availability">
-                                <i class="fas fa-check-circle"></i>
+</div>
+</div>
+</div>
+<!-- Bag Card 3 -->
+<div class="camera-card" data-brand="think-tank" data-type="cases">
+<div class="camera-image">
+<img alt="حقيبة حماية ثينك تانك" src="Think Tank Airport Security V3.0 (1).jpg"/>
+<div class="camera-badge">جديد</div>
+</div>
+<div class="camera-info">
+<h3 class="camera-title">حقيبة حماية Think Tank Airport Security V3.0</h3>
+<div class="camera-specs">
+<span><i class="fas fa-plane"></i> مناسبة للسفر الجوي</span>
+<span><i class="fas fa-lock"></i> قفل TSA متوافق</span>
+<span><i class="fas fa-dolly"></i> عجلات سيليكون صامتة</span>
+</div>
+<div class="camera-price">
+<span>١٣٩٩</span>
+<span class="sar-symbol"></span>
+</div>
+<div class="camera-actions">
+<button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+</div>
+<button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+</div>
+<!-- نافذة منبثقة -->
+<div class="product-popup">
+<div class="popup-header">
+<h3 class="popup-title">حقيبة حماية Think Tank Airport Security V3.0</h3>
+<button class="popup-close"><i class="fas fa-times"></i></button>
+</div>
+<div class="popup-details">
+<div class="popup-detail">
+<span class="detail-label">الأبعاد:</span>
+<span class="detail-value">35.6 × 20.3 × 53.3 سم</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">الوزن:</span>
+<span class="detail-value">5.4 كجم</span>
+</div>
+<div class="popup-detail">
+<span class="detail-label">المميزات:</span>
+<span class="detail-value">مقاومة للصدمات، نظام حماية متطور</span>
+</div>
+</div>
+<div class="popup-thumbs">
+<div class="popup-thumb">
+<img alt="حقيبة حماية ثينك تانك - صورة 1" src="Think Tank Airport Security V3.0 (1).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="حقيبة حماية ثينك تانك - صورة 2" src="Think Tank Airport Security V3.0 (2).jpg"/>
+</div>
+<div class="popup-thumb">
+<img alt="حقيبة حماية ثينك تانك - صورة 3" src="Think Tank Airport Security V3.0 (3).jpg"/>
+</div>
+</div>
+<div class="popup-price">
+<span>١٣٩٩</span>
+<span class="sar-symbol"></span>
+</div>
+<div class="popup-footer">
+<div class="popup-availability">
+<i class="fas fa-check-circle"></i>
                                 متوفر في المخزون
                             </div>
-                            <div class="popup-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+<div class="popup-rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
                                 (5.0)
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+</div>
+</div>
+</div>
+</section>
+<!-- Pagination -->
+<div class="pagination-container">
+<div class="pagination">
+<button class="nav-btn" disabled="" id="prev-btn"><i class="fas fa-chevron-right"></i> السابق</button>
+<button class="page-btn active" data-page="1">1</button>
+<button class="page-btn" data-page="2">2</button>
+<button class="page-btn" data-page="3">3</button>
+<button class="page-btn" data-page="4">4</button>
+<button class="nav-btn" disabled="" id="next-btn">التالي <i class="fas fa-chevron-left"></i></button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-section">
+<h3>ShotSpot</h3>
+<p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+</div>
+<div class="footer-section">
+<h3>روابط سريعة</h3>
+<ul>
+<li><a href="index.html">الرئيسية</a></li>
+<li><a href="all-products.html">المنتجات</a></li>
+<li><a href="about.html">من نحن</a></li>
+<li><a href="contact.html">تواصل معنا</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>اتصل بنا</h3>
+<p><i class="fas fa-phone"></i> +966 11 234 5678</p>
+<p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
+</div>
+<div class="footer-section">
+<h3>وسائل الدفع</h3>
+<div class="payment-methods-footer">
+<img alt="مدى" src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;"/>
+<img alt="Visa" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;"/>
+</div>
+</div>
+</div>
+<div class="social-links">
+<a href="#"><i class="fab fa-youtube"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+</div>
+<div class="footer-bottom">
+<p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+</div>
+</footer>
+<!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
+<div class="modal" id="productModal">
+<div class="modal-content">
+<span class="close-modal">×</span>
+<div class="modal-header">
+<h2 id="modalTitle"></h2>
+</div>
+<div class="modal-body">
+<div class="modal-image-container">
+<img alt="صورة المنتج" id="modalMainImage" src=""/>
+<div class="modal-thumbnails" id="modalThumbnails"></div>
+</div>
+<div class="modal-details">
+<div class="modal-specs" id="modalSpecs"></div>
+<div class="modal-price" id="modalPrice"></div>
+<div class="modal-actions">
+<button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+<button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const typeSelect = document.querySelector('select[name="type"]');
+    const brandSelect = document.querySelector('select[name="brand"]');
+    const sortSelect = document.querySelector('select[name="sort"]');
+    const cards = Array.from(document.querySelectorAll(".camera-card"));
+    const grid = document.querySelector(".cameras-grid");
 
-            <!-- Pagination -->
-            <div class="pagination-container">
-                <div class="pagination">
-                    <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-chevron-right"></i> السابق</button>
-                    <button class="page-btn active" data-page="1">1</button>
-                    <button class="page-btn" data-page="2">2</button>
-                    <button class="page-btn" data-page="3">3</button>
-                    <button class="page-btn" data-page="4">4</button>
-                    <button id="next-btn" class="nav-btn" disabled>التالي <i class="fas fa-chevron-left"></i></button>
-                </div>
-            </div>
-        </div>
-    </main>
+    function extractPrice(card) {
+        const raw = card.querySelector(".camera-price")?.textContent || '';
+        const clean = raw.replace(/[^\d]/g, '');
+        return parseInt(clean, 10) || 0;
+    }
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>ShotSpot</h3>
-                <p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
-            </div>
-
-            <div class="footer-section">
-                <h3>روابط سريعة</h3>
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="all-products.html">المنتجات</a></li>
-                    <li><a href="about.html">من نحن</a></li>
-                    <li><a href="contact.html">تواصل معنا</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3>اتصل بنا</h3>
-                <p><i class="fas fa-phone"></i> +966 11 234 5678</p>
-                <p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
-            </div>
-
-            <div class="footer-section">
-                <h3>وسائل الدفع</h3>
-                <div class="payment-methods-footer">
-                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;">
-                </div>
-            </div>
-        </div>
-
-        <div class="social-links">
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
-
-    <!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <h2 id="modalTitle"></h2>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image-container">
-                    <img id="modalMainImage" src="" alt="صورة المنتج">
-                    <div class="modal-thumbnails" id="modalThumbnails"></div>
-                </div>
-                <div class="modal-details">
-                    <div class="modal-specs" id="modalSpecs"></div>
-                    <div class="modal-price" id="modalPrice"></div>
-                    <div class="modal-actions">
-                        <button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
-                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const paginationButtons = document.querySelectorAll('.pagination button');
-            const camerasGrid = document.querySelector('.cameras-grid');
-            const cameras = document.querySelectorAll('.camera-card');
-            const itemsPerPage = 8; // عدد المنتجات في كل صفحة
-            let currentPage = 1;
-            const totalPages = Math.ceil(cameras.length / itemsPerPage);
-            
-            // إضافة عنصر لعرض رسالة "لا توجد منتجات"
-            const noProductsMessage = document.createElement('div');
-            noProductsMessage.className = 'no-products-message';
-            noProductsMessage.style.textAlign = 'center';
-            noProductsMessage.style.padding = '30px';
-            noProductsMessage.style.fontSize = '18px';
-            noProductsMessage.style.color = '#666';
-            noProductsMessage.style.display = 'none';
-            noProductsMessage.textContent = 'لا توجد منتجات';
-            camerasGrid.appendChild(noProductsMessage);
-
-            // دالة لعرض المنتجات في الصفحة الحالية
-            function showPage(page) {
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                
-                // إخفاء جميع المنتجات
-                cameras.forEach(camera => {
-                    camera.style.display = 'none';
-                });
-                
-                // عرض المنتجات في الصفحة الحالية
-                let visibleCount = 0;
-                for (let i = start; i < end && i < cameras.length; i++) {
-                    cameras[i].style.display = 'block';
-                    visibleCount++;
-                }
-                
-                // عرض رسالة "لا توجد منتجات" إذا كانت الصفحة فارغة
-                if (visibleCount === 0) {
-                    noProductsMessage.style.display = 'block';
-                } else {
-                    noProductsMessage.style.display = 'none';
-                }
-                
-                // تحديث حالة الأزرار
-                paginationButtons.forEach(button => {
-                    button.classList.remove('active');
-                });
-                
-                // تحديد الزر النشط
-                if (page === 1) {
-                    document.getElementById('prev-btn').disabled = true; // تعطيل زر السابق
-                } else {
-                    document.getElementById('prev-btn').disabled = false;
-                }
-                
-                if (page === 4) {
-                    document.getElementById('next-btn').disabled = true; // تعطيل زر التالي
-                } else {
-                    document.getElementById('next-btn').disabled = false;
-                }
-                
-                // تحديد زر الصفحة الحالية
-                const pageButton = document.querySelector(`.page-btn[data-page="${page}"]`);
-                if (pageButton) {
-                    pageButton.classList.add('active');
-                }
-                
-                currentPage = page;
+    function updateFavoritesUI() {
+        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+        document.querySelectorAll(".camera-card").forEach(card => {
+            const title = card.querySelector(".camera-title").textContent.trim();
+            const heart = card.querySelector(".add-to-favorites i");
+            if (favorites.includes(title)) {
+                heart.style.color = "#e74c3c";
+            } else {
+                heart.style.color = "";
             }
-
-            // إضافة مستمعي الأحداث لأزرار التنقل
-            document.getElementById('prev-btn').addEventListener('click', function() {
-                if (currentPage > 1) {
-                    showPage(currentPage - 1);
-                }
-            });
-            
-            document.getElementById('next-btn').addEventListener('click', function() {
-                if (currentPage < 4) {
-                    showPage(currentPage + 1);
-                }
-            });
-            
-            // إضافة مستمعي الأحداث لأزرار الأرقام
-            document.querySelectorAll('.page-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const pageNumber = parseInt(this.getAttribute('data-page'));
-                    showPage(pageNumber);
-                });
-            });
-
-            // عرض الصفحة الأولى عند تحميل الصفحة
-            showPage(1);
-
-            // وظائف التصفية والفرز
-            function filterBags() {
-                const type = document.querySelector('select[name="type"]').value;
-                const brand = document.querySelector('select[name="brand"]').value;
-                const price = document.querySelector('select[name="price"]').value;
-                
-                const bags = document.querySelectorAll('.camera-card');
-                let visibleCount = 0;
-                
-                bags.forEach(bag => {
-                    const matchType = !type || bag.dataset.type === type;
-                    const matchBrand = !brand || bag.dataset.brand === brand;
-                    const price_value = parseInt(bag.querySelector('.camera-price').textContent.replace(/[^\d]/g, ''));
-                    let matchPrice = true;
-                    
-                    if (price) {
-                        const [min, max] = price.split('-').map(Number);
-                        if (max) {
-                            matchPrice = price_value >= min && price_value <= max;
-                        } else {
-                            matchPrice = price_value >= min;
-                        }
-                    }
-                    
-                    if (matchType && matchBrand && matchPrice) {
-                        bag.style.display = 'block';
-                        visibleCount++;
-                    } else {
-                        bag.style.display = 'none';
-                    }
-                });
-                
-                // إعادة عرض الصفحة الأولى بعد التصفية
-                currentPage = 1;
-                showPage(1);
-            }
-
-            // إضافة event listeners للتصفية
-            document.querySelectorAll('.filters-section select').forEach(select => {
-                select.addEventListener('change', filterBags);
-            });
-
-            // إضافة وظائف سلة التسوق والمفضلة
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    alert('تمت إضافة المنتج إلى سلة التسوق');
-                });
-            });
-
-            document.querySelectorAll('.add-to-favorites').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.querySelector('i').classList.toggle('active');
-                    alert('تمت إضافة المنتج إلى المفضلة');
-                });
-            });
-            
-            // إضافة وظيفة زر عرض التفاصيل
-            document.querySelectorAll('.view-details-btn').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // الحصول على بيانات البطاقة
-                    const card = this.closest('.camera-card');
-                    const title = card.querySelector('.camera-title').textContent;
-                    const image = card.querySelector('.camera-image img').src;
-                    const price = card.querySelector('.camera-price').textContent;
-                    
-                    // تحديث بيانات النافذة المنبثقة
-                    document.getElementById('modalTitle').textContent = title;
-                    document.getElementById('modalMainImage').src = image;
-                    
-                    // إنشاء الصور المصغرة
-                    const thumbnailsContainer = document.getElementById('modalThumbnails');
-                    thumbnailsContainer.innerHTML = '';
-                    
-                    // استخدام الصور المصغرة الفعلية من البطاقة
-                    const thumbnails = card.querySelectorAll('.popup-thumbs .popup-thumb img');
-                    
-                    thumbnails.forEach((thumbImg, index) => {
-                        const thumb = document.createElement('div');
-                        thumb.className = 'modal-thumb';
-                        thumb.innerHTML = `<img src="${thumbImg.src}" alt="${title} - صورة ${index+1}">`;
-                        
-                        // تغيير الصورة الرئيسية عند النقر على المصغرة
-                        thumb.addEventListener('click', function() {
-                            document.getElementById('modalMainImage').src = this.querySelector('img').src;
-                        });
-                        
-                        thumbnailsContainer.appendChild(thumb);
-                    });
-                    
-                    // تعيين الصورة الأولى كصورة رئيسية افتراضياً
-                    if (thumbnails.length > 0) {
-                        document.getElementById('modalMainImage').src = thumbnails[0].src;
-                    }
-                    
-                    // إضافة المواصفات
-                    const modalSpecs = document.getElementById('modalSpecs');
-                    modalSpecs.innerHTML = '';
-                    
-                    // إضافة عنوان للمواصفات
-                    const specsTitle = document.createElement('h3');
-                    specsTitle.textContent = 'المواصفات';
-                    modalSpecs.appendChild(specsTitle);
-                    
-                    // نسخ المواصفات من البطاقة
-                    const specs = card.querySelectorAll('.camera-specs span');
-                    const specsList = document.createElement('ul');
-                    
-                    specs.forEach(spec => {
-                        const listItem = document.createElement('li');
-                        listItem.innerHTML = spec.innerHTML;
-                        specsList.appendChild(listItem);
-                    });
-                    
-                    modalSpecs.appendChild(specsList);
-                    
-                    // إضافة معلومات إضافية من النافذة المنبثقة الصغيرة إذا وجدت
-                    const popupDetails = card.querySelector('.product-popup .popup-details');
-                    if (popupDetails) {
-                        const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
-                        popupDetailItems.forEach(item => {
-                            const label = item.querySelector('.detail-label').textContent;
-                            const value = item.querySelector('.detail-value').textContent;
-                            
-                            const listItem = document.createElement('li');
-                            listItem.innerHTML = `<i class="fas fa-info-circle"></i> <strong>${label}</strong> ${value}`;
-                            specsList.appendChild(listItem);
-                        });
-                    }
-                    
-                    // إضافة معلومات التوفر مباشرة بعد المواصفات
-                    const availabilityElement = document.createElement('div');
-                    availabilityElement.className = 'modal-availability';
-                    availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
-                    modalSpecs.appendChild(availabilityElement);
-                    
-                    // إضافة السعر
-                    const modalPrice = document.getElementById('modalPrice');
-                    modalPrice.innerHTML = `${price} <span class="sar-symbol"></span>`;
-                    
-                    // عرض النافذة المنبثقة
-                    document.getElementById('productModal').style.display = 'block';
-                });
-            });
-
-            // وظائف النافذة المنبثقة
-            const modal = document.getElementById('productModal');
-            const closeBtn = document.getElementsByClassName('close-modal')[0];
-
-            // إغلاق النافذة المنبثقة عند النقر على زر الإغلاق
-            closeBtn.onclick = function() {
-                modal.style.display = 'none';
-            }
-
-            // إغلاق النافذة المنبثقة عند النقر خارج المحتوى
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                }
-            }
-
-            // إضافة وظائف لأزرار النافذة المنبثقة
-            document.querySelector('.modal-add-to-cart').addEventListener('click', function() {
-                alert('تمت إضافة المنتج إلى سلة التسوق');
-            });
-            
-            document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
-                alert('تمت إضافة المنتج إلى المفضلة');
-                this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
-            });
-            
-            // إضافة وظائف لإغلاق النوافذ المنبثقة الصغيرة
-            document.querySelectorAll('.popup-close').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    this.closest('.product-popup').style.display = 'none';
-                });
-            });
         });
-    </script>
-</body>
+        const modalHeart = document.querySelector(".modal-add-to-favorites i");
+        const modalTitle = document.getElementById("modalTitle").textContent.trim();
+        if (modalHeart && favorites.includes(modalTitle)) {
+            modalHeart.style.color = "#e74c3c";
+        } else if (modalHeart) {
+            modalHeart.style.color = "";
+        }
+    }
+
+    function applyFiltersAndSorting() {
+        let filtered = cards;
+        const type = typeSelect.value;
+        const brand = brandSelect.value;
+        const sort = sortSelect.value;
+
+        if (type) filtered = filtered.filter(c => c.dataset.type === type);
+        if (brand) filtered = filtered.filter(c => c.dataset.brand === brand);
+
+        if (sort === "price-low") {
+            filtered.sort((a, b) => extractPrice(a) - extractPrice(b));
+        } else if (sort === "price-high") {
+            filtered.sort((a, b) => extractPrice(b) - extractPrice(a));
+        }
+
+        cards.forEach(c => c.style.display = "none");
+        filtered.forEach(c => c.style.display = "block");
+        filtered.forEach(c => grid.appendChild(c));
+    }
+
+    [typeSelect, brandSelect, sortSelect].forEach(select => {
+        select.addEventListener("change", applyFiltersAndSorting);
+    });
+
+    applyFiltersAndSorting();
+    updateFavoritesUI();
+
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const card = btn.closest(".camera-card");
+            const name = card.querySelector(".camera-title").textContent.trim();
+            const price = card.querySelector(".camera-price").textContent.trim();
+            const img = card.querySelector("img")?.src;
+            addToCart(name, price, img);
+        });
+    });
+
+    document.querySelectorAll(".add-to-favorites").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const title = btn.closest(".camera-card").querySelector(".camera-title").textContent.trim();
+            const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            const idx = favorites.indexOf(title);
+            if (idx > -1) favorites.splice(idx, 1);
+            else favorites.push(title);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            updateFavoritesUI();
+        });
+    });
+
+    // نافذة عرض التفاصيل
+    document.querySelectorAll(".view-details-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const card = btn.closest(".camera-card");
+            const title = card.querySelector(".camera-title").textContent.trim();
+            const price = card.querySelector(".camera-price").textContent.trim();
+            const img = card.querySelector("img")?.src;
+
+            document.getElementById("modalTitle").textContent = title;
+            document.getElementById("modalMainImage").src = img;
+            document.getElementById("modalPrice").innerHTML = `${price} <span class='sar-symbol'></span>`;
+
+            document.getElementById("productModal").style.display = "block";
+            updateFavoritesUI();
+        });
+    });
+
+    document.querySelector(".modal-add-to-cart").addEventListener("click", () => {
+        const title = document.getElementById("modalTitle").textContent.trim();
+        const price = document.getElementById("modalPrice").textContent.trim();
+        const img = document.getElementById("modalMainImage").src;
+        addToCart(title, price, img);
+    });
+
+    document.querySelector(".modal-add-to-favorites").addEventListener("click", () => {
+        const title = document.getElementById("modalTitle").textContent.trim();
+        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+        const idx = favorites.indexOf(title);
+        if (idx > -1) favorites.splice(idx, 1);
+        else favorites.push(title);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        updateFavoritesUI();
+    });
+
+    document.querySelector(".close-modal").addEventListener("click", () => {
+        document.getElementById("productModal").style.display = "none";
+    });
+
+    function addToCart(name, price, image) {
+        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const existing = cart.find(item => item.name === name);
+        if (existing) existing.quantity += 1;
+        else cart.push({ name, price, image, quantity: 1 });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const badge = document.querySelector(".cart-count");
+        if (badge) {
+            badge.textContent = count;
+            badge.style.display = count > 0 ? "flex" : "none";
+        }
+    }
+
+    updateCartCount();
+});
+</script></body>
 </html> 

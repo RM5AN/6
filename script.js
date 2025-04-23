@@ -2,125 +2,174 @@
 function pulseEffect(element) {
     element.style.animation = "pulse 0.3s ease-in-out";
     setTimeout(() => {
-        element.style.animation = "";
+      element.style.animation = "";
     }, 300);
-}
-
-// تهيئة الرسائل التفاعلية
-function initToasts() {
+  }
+  
+  // تهيئة الرسائل التفاعلية
+  function initToasts() {
     // إنشاء حاوية الرسائل التفاعلية إذا لم تكن موجودة
     if (!document.querySelector('.toast-container')) {
-        const toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
+      const toastContainer = document.createElement('div');
+      toastContainer.className = 'toast-container';
+      document.body.appendChild(toastContainer);
     }
-    
+  
     // إضافة مستمعات الأحداث لأزرار المفضلة
-    const wishlistButtons = document.querySelectorAll('.wishlist-btn, .heart-icon');
+    const wishlistButtons = document.querySelectorAll('.wishlist-btn, .heart-icon, .favorite-btn');
     wishlistButtons.forEach(button => {
-        // إزالة مستمعات الأحداث السابقة لتجنب التكرار
-        button.removeEventListener('click', handleWishlistClick);
-        // إضافة مستمع جديد
-        button.addEventListener('click', handleWishlistClick);
+      button.removeEventListener('click', handleWishlistClick);
+      button.addEventListener('click', handleWishlistClick);
     });
-    
+  
     // إضافة مستمعات الأحداث لأزرار سلة التسوق
-    const cartButtons = document.querySelectorAll('.add-to-cart, .cart-icon');
+    const cartButtons = document.querySelectorAll('.add-to-cart, .cart-icon, .add-to-cart-btn');
     cartButtons.forEach(button => {
-        // إزالة مستمعات الأحداث السابقة لتجنب التكرار
-        button.removeEventListener('click', handleCartClick);
-        // إضافة مستمع جديد
-        button.addEventListener('click', handleCartClick);
+      button.removeEventListener('click', handleCartClick);
+      button.addEventListener('click', handleCartClick);
     });
-}
-
-// معالج النقر على زر المفضلة
-function handleWishlistClick(e) {
-    // منع السلوك الافتراضي فقط إذا كان الزر ليس رابطًا للانتقال لصفحة المفضلة
+  }
+  
+  // معالج النقر على زر المفضلة
+  function handleWishlistClick(e) {
     if (!this.classList.contains('heart-icon')) {
-        e.preventDefault();
+      e.preventDefault();
     }
-    
-    // إضافة تأثير النبض للأيقونة
+  
     const heartIcon = this.querySelector('i') || this;
     if (heartIcon.closest('.heart-icon')) {
-        heartIcon.closest('.heart-icon').classList.add('pulse');
-        
-        // إزالة تأثير النبض بعد انتهاء الرسوم المتحركة
-        setTimeout(() => {
-            heartIcon.closest('.heart-icon').classList.remove('pulse');
-        }, 500);
+      heartIcon.closest('.heart-icon').classList.add('pulse');
+      setTimeout(() => {
+        heartIcon.closest('.heart-icon').classList.remove('pulse');
+      }, 500);
     }
-    
-    // عرض رسالة تفاعلية
+  
+    // تحديث المفضلة في localStorage وتغيير اللون
+    const productId = this.dataset.id;
+    if (productId) {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const icon = this.querySelector('.fa-heart');
+  
+      if (favorites.includes(productId)) {
+        favorites = favorites.filter(id => id !== productId);
+        icon.style.color = '#aaa';
+      } else {
+        favorites.push(productId);
+        icon.style.color = 'red';
+      }
+  
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+  
     showToast('تمت إضافة المنتج إلى المفضلة', 'wishlist', 'fas fa-heart');
-}
-
-// معالج النقر على زر سلة التسوق
-function handleCartClick(e) {
-    // منع السلوك الافتراضي فقط إذا كان الزر ليس رابطًا للانتقال لصفحة السلة
+  }
+  
+  // معالج النقر على زر سلة التسوق
+  function handleCartClick(e) {
     if (!this.classList.contains('cart-icon')) {
-        e.preventDefault();
+      e.preventDefault();
     }
-    
-    // إضافة تأثير النبض للأيقونة
+  
     const cartIcon = this.querySelector('i') || this;
     if (cartIcon.closest('.cart-icon')) {
-        cartIcon.closest('.cart-icon').classList.add('pulse');
-        
-        // إزالة تأثير النبض بعد انتهاء الرسوم المتحركة
-        setTimeout(() => {
-            cartIcon.closest('.cart-icon').classList.remove('pulse');
-        }, 500);
+      cartIcon.closest('.cart-icon').classList.add('pulse');
+      setTimeout(() => {
+        cartIcon.closest('.cart-icon').classList.remove('pulse');
+      }, 500);
     }
-    
-    // عرض رسالة تفاعلية
+  
     showToast('تمت إضافة المنتج إلى سلة التسوق', 'cart', 'fas fa-shopping-cart');
-}
-
-// دالة لعرض الرسائل التفاعلية
-function showToast(message, type, icon) {
+  }
+  
+  // دالة لعرض الرسائل التفاعلية
+  function showToast(message, type, icon) {
     const toastContainer = document.querySelector('.toast-container');
     if (!toastContainer) return;
-    
-    // إنشاء عنصر الرسالة
+  
     const toast = document.createElement('div');
     toast.className = `toast-message ${type}`;
-    
-    // إضافة محتوى الرسالة
     toast.innerHTML = `
-        <i class="${icon}"></i>
-        <span>${message}</span>
-        <button class="toast-close" aria-label="إغلاق">
-            <i class="fas fa-times"></i>
-        </button>
+      <i class="${icon}"></i>
+      <span>${message}</span>
+      <button class="toast-close" aria-label="إغلاق">
+        <i class="fas fa-times"></i>
+      </button>
     `;
-    
-    // إضافة مستمع حدث لزر الإغلاق
+  
     const closeButton = toast.querySelector('.toast-close');
-    closeButton.addEventListener('click', function() {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
+    closeButton.addEventListener('click', function () {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
     });
-    
-    // إضافة الرسالة إلى الحاوية
+  
     toastContainer.appendChild(toast);
-    
-    // إظهار الرسالة بتأثير انزلاقي
+  
     setTimeout(() => {
-        toast.classList.add('show');
+      toast.classList.add('show');
     }, 10);
-    
-    // إزالة الرسالة بعد 3 ثوانٍ
+  
     setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
     }, 3000);
-}
-
-// تهيئة الرسائل التفاعلية عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', initToasts);
+  }
+  
+  // تهيئة التعديلات عند تحميل الصفحة
+  document.addEventListener('DOMContentLoaded', () => {
+    initToasts();
+  
+    // تلوين المفضلة إذا كانت محفوظة
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+      const icon = btn.querySelector('.fa-heart');
+      if (favorites.includes(btn.dataset.id)) {
+        icon.style.color = 'red';
+      } else {
+        icon.style.color = '#aaa';
+      }
+    });
+  
+    // تحويل كل الأزرار إلى الشكل الموحد
+    document.querySelectorAll('.fa-heart').forEach(icon => {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+      icon.style.color = '#aaa';
+    });
+  
+    // استبدال "إضافة للسلة" بأيقونة فقط
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+      btn.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+    });
+  
+    // إزالة النوافذ المنبثقة
+    document.querySelectorAll('.product-popup').forEach(popup => popup.remove());
+  
+    // التأكد من أن كل منتج يحتوي على أزرار
+    document.querySelectorAll('.product-card').forEach(card => {
+      if (!card.querySelector('.add-to-cart-btn')) {
+        const cartBtn = document.createElement('button');
+        cartBtn.className = 'add-to-cart-btn';
+        cartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+        card.appendChild(cartBtn);
+      }
+  
+      if (!card.querySelector('.favorite-btn')) {
+        const favBtn = document.createElement('button');
+        favBtn.className = 'favorite-btn';
+        favBtn.dataset.id = card.dataset.id || '';
+        favBtn.innerHTML = '<i class="fas fa-heart" style="color:#aaa"></i>';
+        card.appendChild(favBtn);
+      }
+    });
+  });
+  
+  // ملاحظة: إعادة التهيئة في حال تم إضافة منتجات ديناميكيًا
+  const observer = new MutationObserver(() => {
+    initToasts();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+  
